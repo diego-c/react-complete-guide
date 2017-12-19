@@ -3,12 +3,12 @@ import './Person.css';
 
 const Person = props => (
     <div className="Person">
-        <h1>Hi! My name is { props.name }, I'm {props.age} and my hobbies are: {props.hobbies.join(', ')}.</h1>
-
-        { props.id === 1 ? 
-        <input type="text" onChange={props.nameChangedHandler} defaultValue={ props.name } />
-        :
-        <input type="text" onChange={props.nameChangedHandler} defaultValue={ props.name } readOnly /> }
+        <p className="Person__btn" onClick={props.click}>X</p>
+        <div className="Person__content">
+            <h1>Hi! My name is { props.name }, I'm {props.age} and my hobbies are: {props.hobbies.join(', ')}.</h1>
+            
+            <input type="text" onChange={props.nameChangedHandler} defaultValue={ props.name } />
+        </div>
     </div>
 );
 

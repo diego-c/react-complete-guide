@@ -5,21 +5,21 @@ export default class People extends Component {
     state = {
             people: [
                 {
-                    id: 1,
+                    id: 0,
                     name: 'John',
                     age: 30,
                     employed: false,
                     hobbies: ['computers', 'games', 'movies', 'reading']
                 },
                 {
-                    id: 2,
+                    id: 1,
                     name: 'Jane',
                     age: 20,
                     employed: false,
                     hobbies: ['drinking', 'dancing', 'cute stuff']
                 },
                 {
-                    id: 3,
+                    id: 2,
                     name: 'June',
                     age: 30,
                     employed: true,
@@ -39,38 +39,33 @@ export default class People extends Component {
         })
     }
 
-    nameChangedHandler = e => {       
-        this.setState({
-            people: [
-                {
-                    id: 1,
-                    name: e.target.value,
-                    age: 30,
-                    employed: false,
-                    hobbies: ['computers', 'games', 'movies', 'reading']
-                },
-                {
-                    id: 2,
-                    name: 'Jane',
-                    age: 20,
-                    employed: false,
-                    hobbies: ['drinking', 'dancing', 'cute stuff']
-                },
-                {
-                    id: 3,
-                    name: 'June',
-                    age: 30,
-                    employed: true,
-                    hobbies: ['pachinko', 'martial arts']
-                }
-            ]
+    // deep clone: clone both the array AND the object that we want to modify
+
+    // if we just clone the array into a new reference then modify one of its objects, we are actually modifying the original object on the original array, because they have the same reference!
+    nameChangedHandler = (e, i) => {  
+        const value = e.target.value;     
+        this.setState(prevState => {
+            const newPeople = [...prevState.people];
+            const selected = newPeople.findIndex(person => Number(person.id) === Number(i));
+            const wanted = {...newPeople[selected]};
+            wanted.name = value
+            newPeople[selected] = wanted;
+            return { people: newPeople }
         })
-    }
+    }   
 
     togglePersonsHandler = () => {
         this.setState(prevState => ({
             showPersons: !prevState.showPersons
         }))
+    }
+
+    deletePersonHandler = k => {        
+        this.setState(prevState => {
+            const newPeople = Object.assign([], prevState.people);
+            newPeople.splice(k, 1);
+            return {people: newPeople};
+        })
     }
 
     render() {
@@ -89,12 +84,27 @@ export default class People extends Component {
         if (this.state.showPersons) {
             persons = (
                 <div>
-                <Person name={ this.state.people[0].name } age={ this.state.people[0].age } employed={ this.state.people[0].employed } hobbies={ this.state.people[0].hobbies } nameChangedHandler={ this.nameChangedHandler } id={ this.state.people[0].id } />
 
-                <Person name={ this.state.people[1].name } age={ this.state.people[1].age } employed={ this.state.people[1].employed } hobbies={ this.state.people[1].hobbies } id={ this.state.people[1].id } />
+                    {this.state.people.map((person, index) => 
+                    <Person 
+                    name = { person.name } 
+                    age = { person.age } 
+                    employed = { person.employed } 
+                    hobbies = { person.hobbies } 
+                    id = { person.id } 
+                    key= { person.id }
+                    nameChangedHandler = { (e) => this.nameChangedHandler(e, person.id) }
+                    click={ this.deletePersonHandler.bind(this, index) } />)}
 
-                <Person name={ this.state.people[2].name } age={ this.state.people[2].age } employed={ this.state.people[2].employed } hobbies={ this.state.people[2].hobbies } id={ this.state.people[2].id } />
-                </div>
+                    { /*
+                    <Person name={ this.state.people[0].name } age={ this.state.people[0].age } employed={ this.state.people[0].employed } hobbies={ this.state.people[0].hobbies } nameChangedHandler={ this.nameChangedHandler } id={ this.state.people[0].id } />
+
+                    <Person name={ this.state.people[1].name } age={ this.state.people[1].age } employed={ this.state.people[1].employed } hobbies={ this.state.people[1].hobbies } id={ this.state.people[1].id } />
+
+                    <Person name={ this.state.people[2].name } age={ this.state.people[2].age } employed={ this.state.people[2].employed } hobbies={ this.state.people[2].hobbies } id={ this.state.people[2].id } />
+
+                     */}
+                    </div>                   
             );
         }
 
