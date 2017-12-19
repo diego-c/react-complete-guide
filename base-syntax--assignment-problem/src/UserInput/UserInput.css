@@ -1,0 +1,20 @@
+.UserInput {
+    text-align: center;
+    padding: 4rem;
+    margin-bottom: 2rem;
+}
+
+.UserInput__input {
+    padding: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    background-color: #b1cbbb;
+    color: #444444;
+    border: .2rem solid #ef7373;
+    transition: all .3s;
+}
+
+.UserInput__input:focus {
+    border-color: #44bf53;
+    color: #8e459b;
+}
