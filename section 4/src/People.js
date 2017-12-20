@@ -42,7 +42,7 @@ export default class People extends Component {
     // deep clone: clone both the array AND the object that we want to modify
 
     // if we just clone the array into a new reference then modify one of its objects, we are actually modifying the original object on the original array, because they have the same reference!
-    nameChangedHandler = (e, i) => {  
+    nameChangedHandler = (i, e) => {  
         const value = e.target.value;     
         this.setState(prevState => {
             const newPeople = [...prevState.people];
@@ -93,17 +93,9 @@ export default class People extends Component {
                     hobbies = { person.hobbies } 
                     id = { person.id } 
                     key= { person.id }
-                    nameChangedHandler = { (e) => this.nameChangedHandler(e, person.id) }
+                    nameChangedHandler = { this.nameChangedHandler.bind(this, person.id) }
                     click={ this.deletePersonHandler.bind(this, index) } />)}
 
-                    { /*
-                    <Person name={ this.state.people[0].name } age={ this.state.people[0].age } employed={ this.state.people[0].employed } hobbies={ this.state.people[0].hobbies } nameChangedHandler={ this.nameChangedHandler } id={ this.state.people[0].id } />
-
-                    <Person name={ this.state.people[1].name } age={ this.state.people[1].age } employed={ this.state.people[1].employed } hobbies={ this.state.people[1].hobbies } id={ this.state.people[1].id } />
-
-                    <Person name={ this.state.people[2].name } age={ this.state.people[2].age } employed={ this.state.people[2].employed } hobbies={ this.state.people[2].hobbies } id={ this.state.people[2].id } />
-
-                     */}
                     </div>                   
             );
         }
