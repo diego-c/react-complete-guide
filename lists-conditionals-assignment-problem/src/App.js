@@ -6,54 +6,50 @@ import Char from './Char/Char';
 class App extends Component {
 
   state = {
-    currentId: 0,
-    count: 0,
     txt: '',
-    txtArr: [],
     chars: []    
   }
 
   countCharsHandler = e => {
     const txt = e.target.value;
-    const count = e.target.value.length;
     this.setState(prevState => {
       const newState = {...prevState};
-
-      newState.currentId++;
-      newState.count = count;
-      newState.txt = txt;
-      newState.txtArr = [...txt];      
+      newState.txt = txt;      
       let newChars = [];
-      newChars = newState.txtArr.reduce((previous, next, index) => {
-        const newId = newState.currentId + index;
+      
+      newChars = [...newState.txt].reduce((previous, next, index) => {
         previous.push({
-          next,
-          id: newId
+          char: next,
+          id: index
         })
         return previous;
-      }, [])
-      newChars = newState.txtArr.map(char => ({
-        char,
-        id: prevState.currentId + 1
-      }))
-      newState.chars = newChars;
+      }, []);
 
-      console.log(newState);
+      newState.chars = newChars;
       return newState;
     })
   }
 
-  removeCharHandler = (id, e) => {
-    console.log(id);
+  removeCharHandler = id => {
+    this.setState(prevState => {
+      const newState = {...prevState};
+      const newChars = [...newState.chars];
+      const toBeRemoved = newChars.findIndex(char => Number(char.id) === Number(id));
+
+      newChars.splice(toBeRemoved, 1);
+      newState.chars = newChars;
+
+      return newState;      
+    })
   }
   render() {
     return (
       <div className="App">
         <input type="text" placeholder="Enter text..." onChange={ this.countCharsHandler } />
-        <p>Length: { this.state.count }</p>
-        <Validation length = { this.state.length } />
+        <p>Length: { this.state.chars.length }</p>
+        <Validation length = { this.state.chars.length } />
 
-        { this.state.chars.map(char => <Char letter = { char.char } click = { this.removeCharHandler.bind(this, char.id) } />) }
+        { this.state.chars.map(char => <Char letter = { char.char } click = { this.removeCharHandler.bind(this, char.id) } key = { char.id } />) }
 
         <ol>
           <li>Create an input field (in App component) with a change listener which outputs the length of the entered text below it (e.g. in a paragraph).</li>
