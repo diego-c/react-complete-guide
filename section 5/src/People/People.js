@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Person from '../Person/Person';
-import Radium from 'radium';
 import './People.css';
 
 class People extends Component {
@@ -79,12 +78,7 @@ class People extends Component {
             color: '#fff',
             boxShadow: '0 5px 10px #ccc',
             border: '1px solid blue',
-            cursor: 'pointer',
-
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
+            cursor: 'pointer'           
         }
 
         let persons = null;
@@ -108,11 +102,6 @@ class People extends Component {
             );
 
             btnStyle.backgroundColor = 'red';
-
-            btnStyle[':hover'] = {
-                backgroundColor: 'lightcoral',
-                color: 'black'
-            }
         }
 
         const classes = [];
@@ -135,7 +124,7 @@ class People extends Component {
                 }
                 <p className={classes.join(' ')}>Welcome to React App!!</p>
 
-                <button onClick={ this.togglePersonsHandler } style={ btnStyle }>Toggle persons!</button>
+                <button onClick={ this.togglePersonsHandler }>Toggle persons!</button>
                
                 {persons}                
             </div>
@@ -143,5 +132,4 @@ class People extends Component {
     }
 }
 
-People = Radium(People);
 export default People;
