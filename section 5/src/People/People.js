@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Person from '../Person/Person';
-import './People.css';
+import classes from './People.css';
 
 class People extends Component {
     state = {
@@ -96,7 +96,8 @@ class People extends Component {
                     id = { person.id } 
                     key= { person.id }
                     nameChangedHandler = { this.nameChangedHandler.bind(this, person.id) }
-                    click={ this.deletePersonHandler.bind(this, person.id) } />)}
+                    click={ this.deletePersonHandler.bind(this, person.id) }
+                    className={classes.red} />)}
 
                     </div>                   
             );
