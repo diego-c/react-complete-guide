@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Person from './Person/Person';
+// global styles
+import './People.css'
 
 export default class People extends Component {
     state = {
