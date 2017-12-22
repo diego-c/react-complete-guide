@@ -5,3 +5,24 @@
 .bold {
     font-weight: bold;
 }
+
+.btn {
+    padding: 16px;
+    background-color: green;
+    outline: none;
+    color: #fff;
+    box-shadow: 0 5px 10px #ccc;
+    border: 1px solid blue;
+    cursor: pointer
+}
+.btn:hover {
+    background-color: lightgreen;
+    color: black;
+}
+.btn--red {
+    background-color: red;
+}
+.btn--red:hover {
+    background-color: salmon;
+    color: black;
+}

@@ -71,17 +71,10 @@ class People extends Component {
     }
 
     render() {
-        const btnStyle = {
-            padding: '16px',
-            backgroundColor: 'green',
-            outline: 'none',
-            color: '#fff',
-            boxShadow: '0 5px 10px #ccc',
-            border: '1px solid blue',
-            cursor: 'pointer'           
-        }
 
         let persons = null;
+        const btnClasses = [];
+        btnClasses.push(classes.btn);
 
         if (this.state.showPersons) {
             persons = (
@@ -97,21 +90,22 @@ class People extends Component {
                     key= { person.id }
                     nameChangedHandler = { this.nameChangedHandler.bind(this, person.id) }
                     click={ this.deletePersonHandler.bind(this, person.id) }
-                    className={classes.red} />)}
+                    />)}
 
                     </div>                   
             );
 
-            btnStyle.backgroundColor = 'red';
+            btnClasses.push(classes['btn--red']);
+            
         }
 
-        const classes = [];
+        const classesAdded = [];
 
         if (this.state.people.length <= 2) {
-            classes.push('red');
+            classesAdded.push(classes.red);
         }
         if (this.state.people.length <= 1) {
-            classes.push('bold');
+            classesAdded.push(classes.bold);
         }
 
         return (
@@ -123,9 +117,9 @@ class People extends Component {
                     USE this.fn.bind(...)
                     */
                 }
-                <p className={classes.join(' ')}>Welcome to React App!!</p>
+                <p className={classesAdded.join(' ')}>Welcome to React App!!</p>
 
-                <button onClick={ this.togglePersonsHandler }>Toggle persons!</button>
+                <button onClick={ this.togglePersonsHandler } className={ btnClasses.join(' ') }>Toggle persons!</button>
                
                 {persons}                
             </div>
