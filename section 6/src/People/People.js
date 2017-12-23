@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Person from '../Person/Person';
 import classes from './People.css';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 class People extends Component {
     state = {
@@ -80,18 +81,19 @@ class People extends Component {
             persons = (
                 <div>
 
-                    {this.state.people.map((person, index) => 
-                    <Person 
-                    name = { person.name } 
-                    age = { person.age } 
-                    employed = { person.employed } 
-                    hobbies = { person.hobbies } 
-                    id = { person.id } 
-                    key= { person.id }
-                    nameChangedHandler = { this.nameChangedHandler.bind(this, person.id) }
-                    click={ this.deletePersonHandler.bind(this, person.id) }
-                    />)}
-
+                    {this.state.people.map((person, index) => (
+                        <ErrorBoundary key= { person.id }>
+                        <Person 
+                        name = { person.name } 
+                        age = { person.age } 
+                        employed = { person.employed } 
+                        hobbies = { person.hobbies } 
+                        id = { person.id }                         
+                        nameChangedHandler = { this.nameChangedHandler.bind(this, person.id) }
+                        click={ this.deletePersonHandler.bind(this, person.id) }
+                        />                        
+                        </ErrorBoundary>)                        
+                    )}                    
                     </div>                   
             );
 
@@ -110,7 +112,7 @@ class People extends Component {
             classesAdded.push(classes.bold);
         }
 
-        return (
+        return (            
             <div>
                 { 
                     /*
@@ -124,7 +126,7 @@ class People extends Component {
                 <button onClick={ this.togglePersonsHandler } className={ btnClasses.join(' ') }>Toggle persons!</button>
                
                 {persons}                
-            </div>
+            </div>           
         )
     }
 }
