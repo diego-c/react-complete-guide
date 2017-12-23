@@ -101,6 +101,8 @@ class People extends Component {
 
         const classesAdded = [];
 
+        classesAdded.push(classes.subtitle);
+
         if (this.state.people.length <= 2) {
             classesAdded.push(classes.red);
         }
