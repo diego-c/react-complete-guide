@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Persons from '../components/Persons/Persons';
 import './App.css';
 
 class App extends Component {
@@ -7,24 +7,53 @@ class App extends Component {
     persons: [
       {
         id: 1,
-        name: 'diego',
+        name: 'john',
         age: 25
       },
       {
         id: 2,
-        name: 'lusi',
+        name: 'jane',
         age: 29
       },
       {
         id: 3,
-        name: 'korean guy',
+        name: 'june',
         age: 30
       }
     ]
   }
 
+  changeNameHandler = (id, e) => {
+    const newName = e.target.value;    
+    this.setState(prevState => {
+      const newPersons = [...prevState.persons];
+      const wanted = newPersons.findIndex(person => person.id === Number(id));
+      const newPerson = {...newPersons[wanted]};
+      newPerson.name = newName;
+      newPersons[wanted] = newPerson;
+
+      return {persons: newPersons};
+    })
+  }
+
+  removePersonHandler = (id) => {
+    this.setState(prevState => {
+      const newPersons = [...prevState.persons];
+      const removedIndex = newPersons.findIndex(person => person.id === Number(id));
+      newPersons.splice(removedIndex, 1);
+
+      return {persons: newPersons};
+    })
+  }
+
   render() {
-    
+    return (
+    <Persons 
+    persons={ this.state.persons }
+    clicked={ this.removePersonHandler }
+    changed={ this.changeNameHandler }
+    />
+    )
   }
 }
 

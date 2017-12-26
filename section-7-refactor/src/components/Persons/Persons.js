@@ -4,11 +4,10 @@ import Person from './Person/Person';
 const Persons = props => (
     <div>
         { props.persons.map((person, index) => (
-            <div>   
+            <div key = { person.id }>   
                 <Person
                 name = { person.name }
-                age = { person.age }
-                key = { person.id }
+                age = { person.age }                
                 clicked = { () => props.clicked(person.id) }
                 changed = { (e) => props.changed(person.id, e) }
                 />
