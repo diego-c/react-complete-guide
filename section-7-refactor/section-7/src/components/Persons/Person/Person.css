@@ -1,0 +1,35 @@
+.Person {
+    margin: 6rem auto;
+    font-size: 2rem;
+    display: inline-block;
+    width: 50vw;
+}
+
+.Person::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.Person__btn {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    left: 5%;
+    font-weight: 700;
+    color: #d84d4a;
+    font-size: 2.5rem;
+    padding: 1rem;
+}
+
+.Person__input {
+    padding: 1rem;
+    display: inline-block;
+    margin-bottom: 5rem;
+}
+
+.Person__title {    
+    font-size: 3rem;
+    letter-spacing: .08rem;
+    word-spacing: .1rem;
+}
