@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 import classes from './App.css';
 
 class App extends Component {
@@ -55,22 +56,17 @@ class App extends Component {
 
   render() {
     let persons = null;
-    let btnClasses = [classes.App__btn];
     if (this.state.showPersons) {
       persons = <Persons 
       persons={ this.state.persons }
       clicked={ this.removePersonHandler }
       changed={ this.changeNameHandler }
       />;
-
-      btnClasses.push(classes['App__btn--hide']);
-    } else {
-      btnClasses.push(classes['App__btn--show']);
     }
    
     return (
       <div className={ classes.App }>
-        <button className = { btnClasses.join(' ') } onClick={ this.showPersonsHandler }>{ this.state.showPersons ? "Hide persons" : "Show persons" }</button>
+        <Cockpit show={ this.state.showPersons } click= { this.showPersonsHandler } />
       { persons }
       </div>
     )

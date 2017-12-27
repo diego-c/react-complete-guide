@@ -20,16 +20,34 @@
     color: #d84d4a;
     font-size: 2.5rem;
     padding: 1rem;
+    transition: all .3s;
+}
+
+.Person__btn:hover {
+    color: #f4e542;
 }
 
 .Person__input {
     padding: 1rem;
     display: inline-block;
     margin-bottom: 5rem;
+    outline: none;
+    transition: all .3s;
+}
+
+.Person__input:focus {
+    box-shadow: 0 .5rem 1rem #777;
+    outline: #41f45c solid .08rem;
 }
 
 .Person__title {    
     font-size: 3rem;
     letter-spacing: .08rem;
     word-spacing: .1rem;
+}
+
+.Person__name {
+    color: #5d15db;
+    padding-bottom: 1rem;
+    border-bottom: .5rem solid #dc00ff;
 }
