@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Persons from '../components/Persons/Persons';
-import './App.css';
+import classes from './App.css';
 
 class App extends Component {
   state = {
@@ -20,7 +20,14 @@ class App extends Component {
         name: 'june',
         age: 30
       }
-    ]
+    ],
+    showPersons: true
+  }
+
+  showPersonsHandler = () => {
+    this.setState({
+      showPersons: !this.state.showPersons
+    })
   }
 
   changeNameHandler = (id, e) => {
@@ -47,12 +54,25 @@ class App extends Component {
   }
 
   render() {
+    let persons = null;
+    let btnClasses = [classes.App__btn];
+    if (this.state.showPersons) {
+      persons = <Persons 
+      persons={ this.state.persons }
+      clicked={ this.removePersonHandler }
+      changed={ this.changeNameHandler }
+      />;
+
+      btnClasses.push(classes['App__btn--hide']);
+    } else {
+      btnClasses.push(classes['App__btn--show']);
+    }
+   
     return (
-    <Persons 
-    persons={ this.state.persons }
-    clicked={ this.removePersonHandler }
-    changed={ this.changeNameHandler }
-    />
+      <div className={ classes.App }>
+        <button className = { btnClasses.join(' ') } onClick={ this.showPersonsHandler }>{ this.state.showPersons ? "Hide persons" : "Show persons" }</button>
+      { persons }
+      </div>
     )
   }
 }
