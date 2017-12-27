@@ -4,7 +4,34 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import classes from './App.css';
 
 class App extends Component {
-  state = {
+
+  constructor(props) {
+    super(props);
+    console.log('[App.js] Inside Constructor\n', props);
+
+    // old way of initializing the state
+    this.state = {
+      persons: [
+        {
+          id: 1,
+          name: 'john',
+          age: 25
+        },
+        {
+          id: 2,
+          name: 'jane',
+          age: 29
+        },
+        {
+          id: 3,
+          name: 'june',
+          age: 30
+        }
+      ],
+      showPersons: false
+    }
+  }
+  /* state = {
     persons: [
       {
         id: 1,
@@ -23,7 +50,7 @@ class App extends Component {
       }
     ],
     showPersons: true
-  }
+  } */
 
   showPersonsHandler = () => {
     this.setState({
@@ -54,7 +81,16 @@ class App extends Component {
     })
   }
 
+  componentWillMount() {
+    console.log('[App.js] Inside componentWillMount');
+  }
+
+  componentDidMount() {
+    console.log('[App.js] Inside componentDidMount');
+  }
+
   render() {
+    console.log('[App.js] Inside render');
     let persons = null;
     if (this.state.showPersons) {
       persons = <Persons 
