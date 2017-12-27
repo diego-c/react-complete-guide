@@ -11,7 +11,7 @@ const Cockpit = props => {
 
     return (
         <div className={ classes.Cockpit }>
-            <h1 className={ classes.Cockpit__title }>Welcome to Persons App!</h1>
+            <h1 className={ classes.Cockpit__title }>{ props.appTitle }</h1>
             <button onClick={ props.click } className={ btnClasses.join(' ') }>{ props.show ? "Hide persons" : "Show persons" }</button>
         </div>
     );
