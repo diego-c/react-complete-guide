@@ -10,6 +10,7 @@ const Persons = props => (
                 age = { person.age }                
                 clicked = { () => props.clicked(person.id) }
                 changed = { (e) => props.changed(person.id, e) }
+                currentName = { person.name }
                 />
             </div>
         ))}
