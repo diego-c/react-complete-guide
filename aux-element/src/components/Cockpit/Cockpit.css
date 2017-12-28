@@ -1,0 +1,42 @@
+.Cockpit__title {
+    font-size: 3rem;
+    letter-spacing: .08rem;
+    word-spacing: .1rem;
+}
+.Cockpit__btn {
+    font-size: 2.5rem;
+    display: inline-block;
+    margin: 3rem auto;
+    outline: none;
+    border: none;
+    padding: 1rem 2rem;
+    background-color: #d64946;
+    color: #f2f2f2;
+    cursor: pointer;
+    box-shadow: 0 .5rem 3rem #777;
+    position: relative;
+    transition: all .3s;
+  }
+  
+  .Cockpit__btn--hide:hover {
+    transform: translateY(2px);
+    box-shadow: 0 .3rem 2rem #777;
+    background-color: #2cb23e;
+  }
+  .Cockpit__btn--hide:active {
+    transform: translateY(4px);
+    box-shadow: 0 .1rem 1rem #777;
+    background-color: #2cb23e;
+  }
+  
+  .Cockpit__btn--show:hover {
+    transform: translateY(2px);
+    box-shadow: 0 .3rem 2rem #777;
+    background-color: hsl(318, 60%, 44%);
+  }
+  .Cockpit__btn--show:active {
+    transform: translateY(4px);
+    box-shadow: 0 .1rem 1rem #777;
+    background-color: hsl(318, 60%, 44%);
+  }
+  
