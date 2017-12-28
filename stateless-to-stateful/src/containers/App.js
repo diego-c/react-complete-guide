@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import classes from './App.css';
 
-class App extends Component {
+class App extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -89,6 +89,23 @@ class App extends Component {
     console.log('[App.js] Inside componentDidMount');
   }
 
+  // Lifecycle updates - triggered by internal state changes!
+
+  /* shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] Inside shouldComponentUpdate', nextProps, nextState);
+    return nextProps.title !== this.props.title ||
+           nextState.persons !== this.state.persons ||
+           nextState.showPersons !== this.state.showPersons;
+  } */
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log('[App.js] Inside componentWillUpdate', nextProps, nextState);
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] Inside componentDidUpdate', this.props, this.state);
+  }
+
   render() {
     console.log('[App.js] Inside render');
     let persons = null;
@@ -102,6 +119,7 @@ class App extends Component {
    
     return (
       <div className={ classes.App }>
+        <button onClick = {() => this.setState({showPersons: true})}>Show persons</button>
         <Cockpit show={ this.state.showPersons }
          click= { this.showPersonsHandler }
          appTitle={ this.props.title } />
