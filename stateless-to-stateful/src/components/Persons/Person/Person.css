@@ -1,0 +1,82 @@
+.Person {
+    margin: 6rem auto;
+    font-size: 2rem;
+    display: inline-block;
+    width: 50vw;
+}
+
+.Person::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.Person__btn {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    left: 5%;
+    font-weight: 700;
+    color: #d84d4a;
+    font-size: 2.5rem;
+    padding: 1rem;
+    transition: all .3s;
+}
+
+.Person__btn:hover {
+    color: #f4e542;
+}
+
+.Person__input {
+    padding: 1rem;
+    display: inline-block;
+    margin-bottom: 5rem;
+    outline: none;
+    transition: all .3s;
+}
+
+.Person__input:focus {
+    box-shadow: 0 .5rem 1rem #777;
+    outline: #41f45c solid .08rem;
+}
+
+.Person__title {    
+    font-size: 3rem;
+    letter-spacing: .08rem;
+    word-spacing: .1rem;
+}
+
+.Person__name {
+    color: #5d15db;
+    padding-bottom: 1rem;
+    border-bottom: .5rem solid #dc00ff;
+}
+
+@media (max-width: 414px) {
+    .Person {
+    width: 100%;
+    font-size: .8rem;
+    padding: 0;
+    }
+}
+
+@media (min-width: 414px) and (max-width: 768px) {
+    .Person {
+    width: 80%;
+    font-size: 1rem;
+    }    
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .Person {
+    width: 70%;
+    font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .Person {
+    width: 60%;
+    font-size: 1.4rem;
+    }
+}

@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Lato', 'Helvetica', sans-serif;
+  box-sizing: border-box;
+  background-color: #4bbed8;
+  color: #002A2A;
+}
