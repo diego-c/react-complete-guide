@@ -11,8 +11,26 @@ class Persons extends Component {
         console.log('[Persons.js] Inside componentWillMount');
     }
     
-      componentDidMount() {
+    componentDidMount() {
         console.log('[Persons.js] Inside componentDidMount');
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('[UPDATE Persons.js] Inside componentWillReceiveProps', nextProps);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[UPDATE Persons.js Inside shouldComponentUpdate', nextProps, nextState);
+        return nextProps.persons !== this.props.persons;
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log('[UPDATE Persons.js] Inside componentWillUpdate', nextProps, nextState);
+    }
+
+    // no nextProps or nextState, because at this point render() was already called!
+    componentDidUpdate() {
+        console.log('[UPDATE Persons.js] Inside componentDidUpdate :)');
     }
 
     render() {
