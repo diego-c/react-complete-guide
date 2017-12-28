@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const withClass = ({ children, classes }) => (
+/* const withClass = (WrappedElement, classes) => {
+    return props => (
     <div className = { classes } >
-        { children }
+        { // important: spread operator {...props} to assign whatever props need to be passed down to the component 
+        }
+        <WrappedElement {...props} />
     </div>
-);
+    );
+}; */
+
+// convert to stateful component to use lifecycle hooks:
+const withClass = (WrappedComponent, classes) => {
+    return class withClass extends Component {
+        render() {
+            return (
+                <div className = { classes }>
+                    <WrappedComponent {...this.props} />
+                </div>
+            )
+        }
+    }
+}
 
 export default withClass;

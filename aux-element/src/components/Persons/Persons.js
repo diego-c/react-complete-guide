@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Person from './Person/Person';
+import Aux from '../hoc/Aux';
 
 class Persons extends PureComponent {
     constructor(props) {
@@ -38,7 +39,7 @@ class Persons extends PureComponent {
     render() {
         console.log('[Persons.js] Inside render');
         return (
-            <div>
+            <Aux>
                 { this.props.persons.map((person, index) => (
                     <div key = { person.id }>   
                         <Person
@@ -50,7 +51,7 @@ class Persons extends PureComponent {
                         />
                     </div>
                 ))}
-            </div>
+            </Aux>
         )
     }
 }
