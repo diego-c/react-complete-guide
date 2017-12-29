@@ -13,6 +13,7 @@ class App extends PureComponent {
 
     // old way of initializing the state
     this.state = {
+      clickCounter: 0,
       persons: [
         {
           id: 1,
@@ -55,9 +56,10 @@ class App extends PureComponent {
   } */
 
   showPersonsHandler = () => {
-    this.setState({
-      showPersons: !this.state.showPersons
-    })
+    this.setState(prevState => ({
+      showPersons: !prevState.showPersons,
+      clickCounter: prevState.clickCounter + 1
+    }))
   }
 
   changeNameHandler = (id, e) => {
@@ -124,7 +126,8 @@ class App extends PureComponent {
         <button onClick = {() => this.setState({showPersons: true})}>Show persons</button>
         <Cockpit show={ this.state.showPersons }
          click= { this.showPersonsHandler }
-         appTitle={ this.props.title } />
+         appTitle={ this.props.title }
+         counter = { this.state.clickCounter } />
       { persons }
       </Aux>
     )
