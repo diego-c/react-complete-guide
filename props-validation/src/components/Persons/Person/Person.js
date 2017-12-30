@@ -16,6 +16,7 @@ class Person extends Component {
     
       componentDidMount() {
         console.log('[Person.js] Inside componentDidMount');
+        if (Number(this.props.id) === 2) this.inputName.focus();
     }
 
     componentWillUnmount() {
@@ -30,7 +31,8 @@ class Person extends Component {
                 type="text" 
                 placeholder={ this.props.currentName }
                 defaultValue = { this.props.currentName }
-                onChange={ this.props.changed } />
+                onChange={ this.props.changed }
+                ref={inp => this.inputName = inp } />
                 <p className = { classes.Person__btn } onClick={ this.props.clicked }>X</p>
                 <h1 className = { classes.Person__title }>Hello! I'm <span className={ classes.Person__name }>{ this.props.name }</span> and I'm { this.props.age } years old.</h1>
             </Aux>

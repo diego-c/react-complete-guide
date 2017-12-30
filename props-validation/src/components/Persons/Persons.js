@@ -48,6 +48,7 @@ class Persons extends PureComponent {
                         clicked = { () => this.props.clicked(person.id) }
                         changed = { (e) => this.props.changed(person.id, e) }
                         currentName = { person.name }
+                        id = { person.id }
                         />
                     </div>
                 ))}
