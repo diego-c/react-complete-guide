@@ -18,7 +18,14 @@ export default class BurgerBuilder extends Component {
             'salad': 0,
             'bacon': 0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        purchasable: false
+    }
+
+    updatePurchaseState() {
+        Object.values(this.state.ingredients).some(val => val) ?
+        this.setState({ purchasable: true }) :
+        this.setState({ purchasable: false });
     }
 
     addIngredientHandler = type => {
@@ -47,13 +54,15 @@ export default class BurgerBuilder extends Component {
 
     render() {
         const disabledInfo = { ...this.state.ingredients };
+        let isDisabled = false;
         for (let ing in disabledInfo) {
             if (disabledInfo[ing] <= 0) {
-                disabledInfo[ing] = true
+                disabledInfo[ing] = true;
             } else {
-                disabledInfo[ing] = false;
+                disabledInfo[ing] = false;                
             }
         }
+        if (!Object.values(disabledInfo).includes(false)) isDisabled = true;
         return (
             <Aux>
                 <Burger ingredients = { this.state.ingredients } />
@@ -61,6 +70,7 @@ export default class BurgerBuilder extends Component {
                 ingredientAdded = { this.addIngredientHandler } 
                 ingredientRemoved = { this.removeIngredientHandler }
                 disabledInfo = { disabledInfo }
+                isDisabled = { isDisabled }
                 price = { this.state.totalPrice } />
             </Aux>
         )
