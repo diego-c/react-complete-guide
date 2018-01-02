@@ -25,7 +25,7 @@ export default class BurgerBuilder extends Component {
         this.setState(prevState => {
             const currentIngredients = { ...prevState.ingredients };
             currentIngredients[type]++;
-            const newPrice = parseFloat((prevState.totalPrice + INGREDIENT_PRICES[type]).toFixed(2));
+            const newPrice = prevState.totalPrice + INGREDIENT_PRICES[type];
             return { ingredients: currentIngredients, totalPrice: newPrice };
         });
     };
@@ -41,7 +41,7 @@ export default class BurgerBuilder extends Component {
                 newPrice -= INGREDIENT_PRICES[type];
             }
             
-            return { ingredients: currentIngredients, totalPrice: parseFloat(newPrice.toFixed(2)) };
+            return { ingredients: currentIngredients, totalPrice: newPrice };
         });
     };
 
@@ -60,7 +60,8 @@ export default class BurgerBuilder extends Component {
                 <BuildControls 
                 ingredientAdded = { this.addIngredientHandler } 
                 ingredientRemoved = { this.removeIngredientHandler }
-                disabledInfo = { disabledInfo } />
+                disabledInfo = { disabledInfo }
+                price = { this.state.totalPrice } />
             </Aux>
         )
     }
