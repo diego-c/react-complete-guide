@@ -25,7 +25,8 @@ export default class BurgerBuilder extends Component {
         this.setState(prevState => {
             const currentIngredients = { ...prevState.ingredients };
             currentIngredients[type]++;
-            return { ingredients: currentIngredients, totalPrice: parseFloat((prevState.totalPrice + INGREDIENT_PRICES[type]).toFixed(2)) };
+            const newPrice = parseFloat((prevState.totalPrice + INGREDIENT_PRICES[type]).toFixed(2));
+            return { ingredients: currentIngredients, totalPrice: newPrice };
         });
     };
 
@@ -36,18 +37,30 @@ export default class BurgerBuilder extends Component {
             if (currentIngredients[type] > 0) {
                 currentIngredients[type]--;
             }
-            if (prevState.totalPrice - INGREDIENT_PRICES[type] >= 4) {
+            if (newPrice - INGREDIENT_PRICES[type] >= 4.00) {
                 newPrice -= INGREDIENT_PRICES[type];
             }
-            return { ingredients: currentIngredients, totalPrice: parseFloat((newPrice).toFixed(2)) };
+            
+            return { ingredients: currentIngredients, totalPrice: parseFloat(newPrice.toFixed(2)) };
         });
     };
 
     render() {
+        const disabledInfo = { ...this.state.ingredients };
+        for (let ing in disabledInfo) {
+            if (disabledInfo[ing] <= 0) {
+                disabledInfo[ing] = true
+            } else {
+                disabledInfo[ing] = false;
+            }
+        }
         return (
             <Aux>
                 <Burger ingredients = { this.state.ingredients } />
-                <BuildControls ingredientAdded = { this.addIngredientHandler } />
+                <BuildControls 
+                ingredientAdded = { this.addIngredientHandler } 
+                ingredientRemoved = { this.removeIngredientHandler }
+                disabledInfo = { disabledInfo } />
             </Aux>
         )
     }
