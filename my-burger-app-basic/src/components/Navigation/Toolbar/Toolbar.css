@@ -5,15 +5,23 @@
     top: 0;
     left: 0;
     background-color: #703B09;
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
     z-index: 90;
 }
 
+.Logo {
+    height: 90%;
+}
 
 .Toolbar nav {
-    height: 100%;
-    
+    height: 100%;    
+}
+
+@media (min-width: 500px) {
+    .Toolbar {
+        display: flex;
+    }
 }
