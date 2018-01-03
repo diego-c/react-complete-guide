@@ -2,12 +2,21 @@ import React from 'react';
 import Logo from '../../Logo/Logo';
 import classes from './SideDrawer.css';
 import NavigationItems from '../NavigationItems/NavigationItems';
+import Backdrop from '../../UI/Backdrop/Backdrop';
+import Aux from '../../../hoc/Aux';
 
 const sideDrawer = props => {
-    
+    const addClasses = [classes.SideDrawer];
+    props.open ?
+    addClasses.push(classes.Open) :
+    addClasses.push(classes.Close);
 
     return (
-        <div className = { classes.SideDrawer }>
+        <Aux>
+        <Backdrop
+         opened = { props.open }
+         clicked = { props.closed } />
+        <div className = { addClasses.join(' ') }>
             <div className = { classes.Logo }>
                 <Logo />
             </div>
@@ -15,6 +24,7 @@ const sideDrawer = props => {
                 <NavigationItems />
             </nav>
         </div>
+        </Aux>
     );
 }
 
