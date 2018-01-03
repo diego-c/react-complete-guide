@@ -22,6 +22,7 @@ const orderSummary = props => {
             <ul>
                 { ingredients }
             </ul>
+            <p><strong>Total Price: { props.price.toFixed(2) } </strong></p>
             <p>Continue to checkout?</p>
             <Button
             btnType = "Danger"
