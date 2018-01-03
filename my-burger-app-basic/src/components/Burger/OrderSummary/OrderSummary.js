@@ -25,10 +25,13 @@ const orderSummary = props => {
             <p>Continue to checkout?</p>
             <Button
             btnType = "Danger"
-            >
+            clicked = { props.cancel }>
                 CANCEL
             </Button>
-            <Button btnType = "Success">
+
+            <Button
+            btnType = "Success"
+            clicked = { props.continue }>
                 CONTINUE
             </Button>
         </Aux>

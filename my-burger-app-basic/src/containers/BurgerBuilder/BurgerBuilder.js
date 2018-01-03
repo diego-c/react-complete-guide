@@ -12,18 +12,20 @@ const INGREDIENT_PRICES = {
     'bacon': 0.7
 }
 
+const initState = {
+    ingredients: {
+        'meat': 0,
+        'cheese': 0,
+        'salad': 0,
+        'bacon': 0
+    },
+    totalPrice: 4,
+    purchasing: false,
+    purchasable: false
+}
+
 export default class BurgerBuilder extends Component {
-    state = {
-        ingredients: {
-            'meat': 0,
-            'cheese': 0,
-            'salad': 0,
-            'bacon': 0
-        },
-        totalPrice: 4,
-        purchasing: false,
-        purchasable: false
-    }
+    state = { ...initState }    
     
     purchaseHandler = () => {
         this.setState({ purchasing: true })
@@ -63,6 +65,11 @@ export default class BurgerBuilder extends Component {
         this.setState({ purchasing: false });
     }
 
+    purchaseContinueHandler = () => {
+        alert('Thanks for your purchase!');
+        this.setState(initState);
+    }
+
     render() {
         const disabledInfo = { ...this.state.ingredients };
         let isDisabled = false;
@@ -81,6 +88,8 @@ export default class BurgerBuilder extends Component {
                 modalClosed = { this.purchaseCancelHandler }>
                     <OrderSummary
                      ingredients = { this.state.ingredients }
+                     cancel = { this.purchaseCancelHandler }
+                     continue = { this.purchaseContinueHandler }
                     />
                 </Modal>
                 <Burger ingredients = { this.state.ingredients } />
