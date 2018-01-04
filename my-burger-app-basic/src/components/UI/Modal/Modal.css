@@ -8,15 +8,9 @@
     .5rem .5rem 2rem rgba(0, 0, 0, 0.3),
     -.5rem -.5rem 2rem rgba(0, 0, 0, 0.3) ;
     padding: 3rem;
-    left: 15%;
-    top: 30%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     box-sizing: border-box;
     transition: all 0.3s ease-out;
-}
-
-@media (min-width: 600px) {
-    .Modal {
-        width: 50.0rem;
-        left: calc(50% - 25.0rem);
-    }
 }
