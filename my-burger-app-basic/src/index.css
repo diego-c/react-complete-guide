@@ -20,3 +20,9 @@ body {
   color: #2E343B;
   background-color: #b9db20;
 }
+
+@media (max-width: 500px) {
+  html {
+    font-size: 31.25%;
+  }
+}

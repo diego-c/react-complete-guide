@@ -1,8 +1,8 @@
 .BuildControl {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin: .5rem 0;
+    align-items: center;    
+    margin: 1.5rem auto;
 }
 
 .BuildControl button {
@@ -33,11 +33,13 @@
     padding: 1rem;
     font-weight: bold;
     width: 8.0rem;
+    margin-right: 6rem;
 }
 
 .BuildControl .Less {  
     background-color: #D39952;
     color: white;
+    margin-right: 2rem;
 }
 
 .BuildControl .More {
