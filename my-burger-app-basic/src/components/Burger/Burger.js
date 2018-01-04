@@ -10,7 +10,7 @@ const burger = props => {
         }
     });
     if (transformedIngredients.length === 0) {
-        transformedIngredients = <p style = {{ fontSize: 'inherit', margin: '3rem auto' }}>Please start adding ingredients</p>;
+        transformedIngredients = <p style = {{ fontSize: '2rem', margin: '3rem auto' }}>Please start adding ingredients</p>;
     }
     //transformedIngredients.reduce((acc, arr) => [...acc, ...arr], []);
     return (
