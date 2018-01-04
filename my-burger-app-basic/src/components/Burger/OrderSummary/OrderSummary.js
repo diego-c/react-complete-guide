@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Aux from '../../../hoc/Aux';
 import Button from '../../UI/Button/Button';
 import classes from './OrderSummary.css';
@@ -41,4 +42,15 @@ const orderSummary = props => {
     );
 };
 
+orderSummary.propTypes = {
+    ingredients: PropTypes.shape({
+        'meat': PropTypes.number,
+        'cheese': PropTypes.number,
+        'salad': PropTypes.number,
+        'bacon': PropTypes.number
+    }).isRequired,
+    price: PropTypes.number.isRequired,
+    cancel: PropTypes.func.isRequired,
+    continue: PropTypes.func.isRequired
+}
 export default orderSummary;

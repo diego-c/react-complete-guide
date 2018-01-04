@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classes from './MenuButton.css';
 
 const menuButton = ({ open, click }) => {
@@ -29,4 +30,8 @@ const menuButton = ({ open, click }) => {
     );
 };
 
+menuButton.propTypes = {
+    open: PropTypes.bool.isRequired,
+    click: PropTypes.func.isRequired
+}
 export default menuButton;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classes from './BuildControl.css';
 
 const buildControl = props => (
@@ -15,4 +16,10 @@ const buildControl = props => (
     </div>
 );
 
+buildControl.propTypes = {
+    label: PropTypes.oneOf(['Salad', 'Bacon', 'Meat', 'Cheese']).isRequired,
+    ingredientAdded: PropTypes.func.isRequired,
+    ingredientRemoved: PropTypes.func.isRequired,
+    disabledInfo: PropTypes.bool.isRequired
+}
 export default buildControl;

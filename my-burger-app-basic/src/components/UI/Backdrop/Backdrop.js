@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classes from "./Backdrop.css";
 
 const backdrop = props => (
@@ -8,4 +9,8 @@ const backdrop = props => (
     onClick = { props.clicked }></div> :
     null
 );
+
+backdrop.propTypes = {
+    opened: PropTypes.bool.isRequired
+}
 export default backdrop;
