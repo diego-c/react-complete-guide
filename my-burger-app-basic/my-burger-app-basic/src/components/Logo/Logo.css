@@ -1,0 +1,14 @@
+.Logo {
+    background-color: white;
+    padding: .8rem;
+    height: 100%;
+}
+.Logo img {
+    height: 100%;
+}
+
+@media (min-width: 500px) {
+    .Logo {
+        background-color: #703B09;
+    }
+}
