@@ -17,7 +17,7 @@ class Blog extends Component {
         this.setState({ posts: posts.data });
     }
     render () {
-        const posts = this.state.posts.map(post => <Post title = { post.title } author = "Diego" key = { post.id } />).slice(0, 5);
+        const posts = this.state.posts.map(post => <Post author="Diego" key = { post.id } title = { post.title } />).slice(0, 5);
 
         return (
             <div>
