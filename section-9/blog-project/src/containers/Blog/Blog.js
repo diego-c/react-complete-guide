@@ -7,18 +7,22 @@ import './Blog.css';
 import axios from 'axios';
 
 class Blog extends Component {
+    state = {
+        posts: []
+    }
 
     async componentDidMount() {        
         const posts = await axios.get('https://jsonplaceholder.typicode.com/posts');
-        console.log('[Blog.js] Got posts:', posts.data);
+
+        this.setState({ posts: posts.data });
     }
     render () {
+        const posts = this.state.posts.map(post => <Post title = { post.title } author = "Diego" key = { post.id } />).slice(0, 5);
+
         return (
             <div>
                 <section className="Posts">
-                    <Post />
-                    <Post />
-                    <Post />
+                    { posts }
                 </section>
                 <section>
                     <FullPost />

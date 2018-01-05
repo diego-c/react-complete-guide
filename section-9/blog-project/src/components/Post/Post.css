@@ -1,10 +1,14 @@
 .Post {
-    width: 100px;
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    height: 20rem;
+    padding: 1.6rem;
     text-align: center;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
-    margin: 10px;
+    border: .1rem solid #eee;
+    box-shadow: 0 .2rem .3rem #ccc;
+    margin: 1.0rem;
     box-sizing: border-box;
     cursor: pointer;
 }
@@ -15,6 +19,6 @@
 }
 
 .Author {
-    margin: 16px 0;
+    margin: 1.6rem 0;
     color: #ccc;
 }
