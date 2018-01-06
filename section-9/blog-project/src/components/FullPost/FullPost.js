@@ -5,7 +5,10 @@ import './FullPost.css';
 
 class FullPost extends Component {
     state = {
-        currentPost: {}
+        currentPost: {
+            title: 'first post',
+            body: 'bla bla'
+        }
     }
 
     async componentWillReceiveProps(nextProps) {
