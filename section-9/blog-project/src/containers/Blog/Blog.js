@@ -8,7 +8,12 @@ import axios from 'axios';
 
 class Blog extends Component {
     state = {
-        posts: []
+        posts: [],
+        selectedPostId: null
+    }
+
+    postSelectedHandler = (id) => {
+        this.setState({ selectedPostId: id });
     }
 
     async componentDidMount() {        
@@ -17,7 +22,13 @@ class Blog extends Component {
         this.setState({ posts: posts.data });
     }
     render () {
-        const posts = this.state.posts.map(post => <Post author="Diego" key = { post.id } title = { post.title } />).slice(0, 5);
+        const posts = this.state.posts.map(post => (
+        <Post
+        author="Diego"
+        key = { post.id }
+        title = { post.title }
+        clicked = { this.postSelectedHandler.bind(this, post.id) }
+        />)).slice(0, 4);
 
         return (
             <div>
@@ -25,7 +36,7 @@ class Blog extends Component {
                     { posts }
                 </section>
                 <section>
-                    <FullPost />
+                    <FullPost id = { this.state.selectedPostId } />
                 </section>
                 <section>
                     <NewPost />
