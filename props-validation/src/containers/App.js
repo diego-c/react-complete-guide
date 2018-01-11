@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import classes from './App.css';
-import Aux from '../components/hoc/Aux';
+import Aux from '../components/hoc/Auxiliary/Auxiliary';
 import WithClass from '../components/hoc/withClass';
 
 class App extends PureComponent {
