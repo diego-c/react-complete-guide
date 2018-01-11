@@ -13,7 +13,7 @@ class FullPost extends Component {
 
     async componentWillReceiveProps(nextProps) {
         if (this.props.id !== nextProps.id) {
-            const post = await axios.get(`https://jsonplaceholder.typicode.com/posts/${nextProps.id}`);
+            const post = await axios.get(`/posts/${nextProps.id}`);
 
             this.setState({ currentPost: post.data });
         }
@@ -39,7 +39,7 @@ class FullPost extends Component {
 
     deleteHandler = () => {
         if (this.props.id) {
-            axios.delete(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+            axios.delete(`/posts/${this.props.id}`)
             .then(console.log,
                  err => console.log(`Oops, something went wrong! ${err}`))
         }

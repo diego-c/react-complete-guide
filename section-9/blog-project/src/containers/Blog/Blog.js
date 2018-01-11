@@ -20,7 +20,7 @@ class Blog extends Component {
     async componentDidMount() {        
         let posts;
         try {
-            posts = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            posts = await axios.get('/posts');
             this.setState({ posts: posts.data });
         } catch(err) {
             this.setState({ error: err.message })
