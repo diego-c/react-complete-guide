@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import instance from '../../axios';
 
 import './NewPost.css';
 
@@ -11,7 +11,7 @@ class NewPost extends Component {
     }
 
     postHandler = () => {
-        axios.post(`/posts`, {
+        instance.post(`/posts`, {
             title: this.state.title,
             body: this.state.content,
             author: this.state.author
