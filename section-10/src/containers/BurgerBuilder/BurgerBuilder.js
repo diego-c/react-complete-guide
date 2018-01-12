@@ -6,6 +6,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INGREDIENT_PRICES = {
     'meat': 1.3,
@@ -27,7 +28,7 @@ const initState = {
     showSpinner: false
 }
 
-export default class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
     state = { ...initState }    
     
     purchaseHandler = () => {
@@ -64,10 +65,6 @@ export default class BurgerBuilder extends Component {
         });
     };
 
-    componentDidUpdate(prevProps, prevState) {
-        
-    }
-
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false });
     }
@@ -85,11 +82,11 @@ export default class BurgerBuilder extends Component {
             })
             .then(() => {
                 this.setState(initState);  
-                alert('Thank you for your purchase!')
+                console.log('Thank you for your purchase!')
             })
             .catch(err => {
                 this.setState(initState);  
-                alert(`Oops, something went wrong! ${err}`);
+                console.log(`Oops, something went wrong! ${err}`);
             });             
     }
 
@@ -139,3 +136,5 @@ export default class BurgerBuilder extends Component {
         )
     }
 }
+
+export default withErrorHandler(BurgerBuilder, axios);
