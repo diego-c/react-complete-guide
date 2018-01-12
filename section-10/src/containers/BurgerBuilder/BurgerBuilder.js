@@ -14,23 +14,27 @@ const INGREDIENT_PRICES = {
     'cheese': 0.3,
     'bacon': 0.7
 }
-
 const initState = {
-    ingredients: {
-        'meat': 0,
-        'cheese': 0,
-        'salad': 0,
-        'bacon': 0
-    },
     totalPrice: 4,
     purchasing: false,
     purchasable: false,
-    showSpinner: false
+    showSpinner: false,
+    error: null
 }
 
 class BurgerBuilder extends Component {
     state = { ...initState }    
     
+    async componentDidMount() {
+        let ingredients = null;
+        try {
+        ingredients = (await axios.get(`/ingredients.json`)).data;
+        } catch(error) {
+            this.setState({ error });
+        }
+        this.setState({ ingredients });
+        console.log(this.state.ingredients);
+    }
     purchaseHandler = () => {
         this.setState({ purchasing: true })
     }
@@ -104,7 +108,7 @@ class BurgerBuilder extends Component {
 
         let summaryOrSpinner;
 
-        if (!this.state.showSpinner) {
+        if (!this.state.showSpinner && this.state.ingredients) {
             summaryOrSpinner = (
                 <OrderSummary                     
                      ingredients = { this.state.ingredients }
@@ -113,9 +117,27 @@ class BurgerBuilder extends Component {
                      price = { this.state.totalPrice }
                 />
             )
-        } else {
+        }
+        else {
             summaryOrSpinner = <Spinner />;
         }
+
+        let burgerOrSpinner;
+
+        this.state.ingredients ?
+        burgerOrSpinner = (
+            <Aux>
+                <Burger ingredients = { this.state.ingredients } />
+                    <BuildControls 
+                    ingredientAdded = { this.addIngredientHandler } 
+                    ingredientRemoved = { this.removeIngredientHandler }
+                    disabledInfo = { disabledInfo }
+                    isDisabled = { isDisabled }
+                    price = { this.state.totalPrice }
+                    purchase = { this.purchaseHandler } />
+            </Aux>
+        ) :
+        this.state.error ? burgerOrSpinner = <p style={{textAlign: 'center'}}>Sorry, couldn't fetch the ingredients :(</p> : burgerOrSpinner = <Spinner />
         return (
             <Aux>
                 <Modal 
@@ -124,14 +146,7 @@ class BurgerBuilder extends Component {
                 loading = { this.state.showSpinner }>
                     { summaryOrSpinner }
                 </Modal>
-                <Burger ingredients = { this.state.ingredients } />
-                <BuildControls 
-                ingredientAdded = { this.addIngredientHandler } 
-                ingredientRemoved = { this.removeIngredientHandler }
-                disabledInfo = { disabledInfo }
-                isDisabled = { isDisabled }
-                price = { this.state.totalPrice }
-                purchase = { this.purchaseHandler } />
+                { burgerOrSpinner }
             </Aux>
         )
     }

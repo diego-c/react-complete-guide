@@ -3,7 +3,9 @@ import classes from './Spinner.css';
 
 const spinner = props => {
     return (
-        <div className= { classes.loader }>Loading...</div>
+        <div
+         className= { classes.loader }
+         >Loading...</div>
     )
 };
 

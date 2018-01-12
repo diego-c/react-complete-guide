@@ -34,7 +34,7 @@ class Modal extends Component {
 }
 
 Modal.propTypes = {
-    show: PropTypes.bool,
+    show: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     modalClosed: PropTypes.func
 }
 export default Modal;
