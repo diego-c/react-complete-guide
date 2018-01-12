@@ -62,12 +62,28 @@ export default class BurgerBuilder extends Component {
         });
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.purchasing) {
+            console.log('Loading your purchase...');
+        }
+    }
+
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false });
     }
 
     purchaseContinueHandler = () => {
-        alert('Thanks for your purchase!');
+        axios
+        .post('/orders.json', {
+            ingredients: { ...this.state.ingredients },
+            price: this.state.totalPrice,
+            customer: {
+                id: 1,
+                name: 'Diego C'
+            }
+        })
+        .then(() => alert('Thanks for your purchase!'))
+        .catch(err => alert(`Sorry, could not complete your purchase! ${err}`));
         this.setState(initState);
     }
 
