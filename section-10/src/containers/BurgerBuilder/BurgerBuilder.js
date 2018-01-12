@@ -33,7 +33,6 @@ class BurgerBuilder extends Component {
             this.setState({ error });
         }
         this.setState({ ingredients });
-        console.log(this.state.ingredients);
     }
     purchaseHandler = () => {
         this.setState({ purchasing: true })
