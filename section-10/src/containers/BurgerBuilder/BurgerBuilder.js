@@ -5,6 +5,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-order';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICES = {
     'meat': 1.3,
@@ -22,7 +23,8 @@ const initState = {
     },
     totalPrice: 4,
     purchasing: false,
-    purchasable: false
+    purchasable: false,
+    showSpinner: false
 }
 
 export default class BurgerBuilder extends Component {
@@ -63,28 +65,32 @@ export default class BurgerBuilder extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.purchasing) {
-            console.log('Loading your purchase...');
-        }
+        
     }
 
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false });
     }
 
-    purchaseContinueHandler = () => {
-        axios
-        .post('/orders.json', {
-            ingredients: { ...this.state.ingredients },
-            price: this.state.totalPrice,
-            customer: {
-                id: 1,
-                name: 'Diego C'
-            }
-        })
-        .then(() => alert('Thanks for your purchase!'))
-        .catch(err => alert(`Sorry, could not complete your purchase! ${err}`));
-        this.setState(initState);
+    purchaseContinueHandler = () => {     
+        this.setState({ showSpinner: true })
+            axios
+            .post('/orders.json', {
+                ingredients: { ...this.state.ingredients },
+                price: this.state.totalPrice,
+                customer: {
+                    id: 1,
+                    name: 'Diego C'
+                }
+            })
+            .then(() => {
+                this.setState(initState);  
+                alert('Thank you for your purchase!')
+            })
+            .catch(err => {
+                this.setState(initState);  
+                alert(`Oops, something went wrong! ${err}`);
+            });             
     }
 
     render() {
@@ -98,17 +104,28 @@ export default class BurgerBuilder extends Component {
             }
         }
         if (!Object.values(disabledInfo).includes(false)) isDisabled = true;
-        return (
-            <Aux>
-                <Modal 
-                show = { this.state.purchasing }
-                modalClosed = { this.purchaseCancelHandler }>
-                    <OrderSummary                     
+
+        let summaryOrSpinner;
+
+        if (!this.state.showSpinner) {
+            summaryOrSpinner = (
+                <OrderSummary                     
                      ingredients = { this.state.ingredients }
                      cancel = { this.purchaseCancelHandler }
                      continue = { this.purchaseContinueHandler }
                      price = { this.state.totalPrice }
-                    />
+                />
+            )
+        } else {
+            summaryOrSpinner = <Spinner />;
+        }
+        return (
+            <Aux>
+                <Modal 
+                show = { this.state.purchasing }
+                modalClosed = { this.purchaseCancelHandler }
+                loading = { this.state.showSpinner }>
+                    { summaryOrSpinner }
                 </Modal>
                 <Burger ingredients = { this.state.ingredients } />
                 <BuildControls 
