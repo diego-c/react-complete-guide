@@ -22,3 +22,9 @@
     margin: 1.6rem 0;
     color: #999999;
 }
+
+@media (min-width: 200px) and (max-width: 600px) {
+    .Post {
+        width: 100%;
+    }
+}
