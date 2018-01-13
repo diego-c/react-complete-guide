@@ -4,11 +4,16 @@
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
     text-align: center;
+    padding: 6rem;
+}
+
+.NewPost h1 {
+    margin-bottom: 6rem;
 }
 
 .NewPost label {
     display: block;
-    margin: 10px auto;
+    margin: 2rem auto;
     text-align: center;
     font-weight: bold;
 }
@@ -39,4 +44,28 @@
 .NewPost button:active {
     color: white;
     background-color: #fa923f;
+}
+
+.NewPost textarea {
+    width: 50%;
+    padding: 1rem;
+}
+
+.NewPost input,
+.NewPost select {
+    width: 10%;
+    padding: .5rem;
+}
+
+.NewPost input {
+    width: 30%;
+}
+
+.NewPost select {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.Post-Section:not(:last-child) {
+    margin-bottom: 5rem;
 }
