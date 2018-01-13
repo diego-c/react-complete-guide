@@ -12,8 +12,8 @@ class Blog extends Component {
                 <header>
                     <nav>                        
                         <ul className="Nav">
-                            <li className="Nav-Item"><a href="/">Home</a></li>
-                            <li className="Nav-Item"><a href="/new-post">New Post</a></li>
+                            <li className="Nav-Item"><Link to="/">Home</Link></li>
+                            <li className="Nav-Item"><Link to="/new-post">New Post</Link></li>
                         </ul>                    
                     </nav>
                 </header>
