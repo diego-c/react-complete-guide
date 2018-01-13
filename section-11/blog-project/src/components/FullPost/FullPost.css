@@ -1,13 +1,23 @@
 .FullPost {
-    width: 80%;
+    width: 60%;
     margin: 20px auto;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
     text-align: center;
+    padding: 4rem 12rem;
+}
+
+.FullPost-Title {
+    margin: 3rem auto;
+}
+
+.FullPost-Body {
+    margin: 2rem auto;
+    line-height: 1.8;
 }
 
 .Edit {
-
+    margin-top: 4rem;
 }
 
 .Edit label {

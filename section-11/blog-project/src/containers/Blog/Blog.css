@@ -6,3 +6,28 @@
     width: 90%;
     margin: auto;
 }
+
+.Nav {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding: 1rem;
+    background-color: #c2cec2;
+}
+
+.Nav-Item:not(:last-child) {
+    margin-right: 5%;
+}
+
+.Nav-Item > * {
+    text-decoration: none;
+    font-size: 2.5rem;
+    transition: all .3s;
+    padding: 1rem;
+}
+
+.Nav-Item > *:hover {
+    background-color: #3da311;
+    color: white;
+}
