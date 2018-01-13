@@ -5,17 +5,28 @@ import './FullPost.css';
 
 class FullPost extends Component {
     state = {
-        currentPost: {
-            title: 'first post',
-            body: 'bla bla'
-        }
+        currentPost: null,
+        loading: false,
+        cache: []
     }
 
     async componentWillReceiveProps(nextProps) {
         if (this.props.id !== nextProps.id) {
-            const post = await axios.get(`/posts/${nextProps.id}`);
+            this.setState({ loading: true });
 
-            this.setState({ currentPost: post.data });
+            const postFound = this.state.cache.find(p => p.id === nextProps.id);
+
+            if (!postFound) {
+                const post = (await axios.get(`/posts/${nextProps.id}`)).data;
+                
+                this.setState(prevState => {
+                    const newCache = [...prevState.cache];
+                    newCache.push(post);
+                    return { cache: newCache, currentPost: post, loading: false };
+                })                
+            } else {
+                this.setState({ currentPost: postFound, loading: false} )
+            }
         }
     }
 
@@ -49,7 +60,10 @@ class FullPost extends Component {
         let post = null;
         if (!this.props.id) {
             post = <p style = {{ textAlign: 'center' }}>Please select a Post!</p>;
-        } else {
+        } else if (this.state.loading || !this.state.currentPost) {
+            post = <p style = {{ textAlign: 'center' }}>Loading...</p>;
+        } 
+        else {
             post = (
                 <div className="FullPost">
                     <h1>{ this.state.currentPost.title }</h1>
