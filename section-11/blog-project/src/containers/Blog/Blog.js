@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Posts from '../../components/Posts/Posts';
 import './Blog.css';
 import NewPost from '../../components/NewPost/NewPost';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, withRouter } from 'react-router-dom';
 
 class Blog extends Component {      
     
@@ -13,7 +13,9 @@ class Blog extends Component {
                     <nav>                        
                         <ul className="Nav">
                             <li className="Nav-Item"><Link to="/">Home</Link></li>
-                            <li className="Nav-Item"><Link to="/new-post">New Post</Link></li>
+                            <li className="Nav-Item"><Link to={{
+                                pathname: '/new-post'
+                            }}>New Post</Link></li>
                         </ul>                    
                     </nav>
                 </header>
@@ -24,4 +26,4 @@ class Blog extends Component {
     }
 }
 
-export default Blog;
+export default withRouter(Blog);
