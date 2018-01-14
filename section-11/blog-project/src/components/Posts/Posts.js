@@ -3,6 +3,7 @@ import Post from '../Post/Post';
 import './Posts.css';
 import Spinner from '../Spinner/Spinner';
 import axios from '../../axios';
+import { Link } from 'react-router-dom';
 
 export default class Posts extends Component {
     state = {
@@ -16,7 +17,8 @@ export default class Posts extends Component {
         this.setState({ selectedPostId: id });
     }
     
-    async componentDidMount() {     
+    async componentDidMount() {  
+        console.log(this.props);   
         this.setState({ loading: true });   
         let posts;
         try {
@@ -34,14 +36,14 @@ export default class Posts extends Component {
         } else if (this.state.loading) {
             posts = <Spinner />
         } else {
-            posts = this.state.posts.map(post => (                
-                    <Post
-                    author="Diego" 
-                    key = { post.id }                   
-                    title = { post.title }
-                    clicked = { this.postSelectedHandler.bind(this, post.id) }
-                    />
-                )).slice(0, 4);
+            posts = this.state.posts.map(post => (   
+                    <Link to={ `/posts/${post.id}` } key = { post.id }> 
+                        <Post
+                        author="Diego"                   
+                        title = { post.title }
+                        clicked = { this.postSelectedHandler.bind(this, post.id) }
+                        />
+                    </Link>)).slice(0, 4);
         }
 
         return (
