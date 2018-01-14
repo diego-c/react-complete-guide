@@ -37,6 +37,11 @@ export default class Posts extends Component {
             posts = <Spinner />
         } else {
             posts = this.state.posts.map(post => (   
+
+                /* This needs to be a PostLink instead of a Post nested inside a Link component
+                
+                When any Post is clicked, it should route to its FullPost counterpart */
+
                     <Link to={ `/posts/${post.id}` } key = { post.id }> 
                         <Post
                         author="Diego"                   
