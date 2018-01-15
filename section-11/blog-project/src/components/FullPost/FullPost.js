@@ -11,13 +11,13 @@ class FullPost extends Component {
     }
 
     async componentWillReceiveProps(nextProps) {
-        if (this.props.id !== nextProps.id) {
+        if (this.props.match.params.postId !== nextProps.match.params.postId) {
             this.setState({ loading: true });
 
-            const postFound = this.state.cache.find(p => p.id === nextProps.id);
+            const postFound = this.state.cache.find(p => p.id === nextProps.match.params.postId);
 
             if (!postFound) {
-                const post = (await axios.get(`/posts/${nextProps.id}`)).data;
+                const post = (await axios.get(`/posts/${nextProps.match.params.postId}`)).data;
 
                 this.setState(prevState => {
                     const newCache = [...prevState.cache];
@@ -58,7 +58,7 @@ class FullPost extends Component {
 
     render () {
         let post = null;
-        if (!this.props.id) {
+        if (!this.props.match.params.postId) {
             post = <p className = "FullPost">Please select a Post!</p>;
         } else if (this.state.loading || !this.state.currentPost) {
             post = <p className = "FullPost">Loading...</p>;
