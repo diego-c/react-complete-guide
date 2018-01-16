@@ -20,7 +20,15 @@ class NewPost extends Component {
                 title: this.state.title,
                 body: this.state.content,
                 author: this.state.author
-            }).then(console.log)
+            }).then(res => {
+                console.log(res);
+                // Alternative: push a URL to the history stack instead of redirecting. The difference is that pushing a URL allows the user to go back to the previous page, while redirect actually replaces it
+
+                // Using <Replace to="/" /> is the same as this.props.history.replace('/')
+
+                /* this.setState({ loading: false })
+                this.props.history.push('/'); */
+            })
         })
         this.setState({ loading: false, submitted: true });
     }
@@ -32,7 +40,7 @@ class NewPost extends Component {
         } else if (this.state.submitted) {
             newPost = <Redirect to="/" />
         }
-         
+
         else {
             newPost = (
                 <div className="NewPost">
