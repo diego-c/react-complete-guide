@@ -17,8 +17,7 @@ export default class Posts extends Component {
         this.setState({ selectedPostId: id });
     }
     
-    async componentDidMount() {  
-        console.log(this.props);   
+    async componentDidMount() {    
         this.setState({ loading: true });   
         let posts;
         try {
@@ -42,7 +41,7 @@ export default class Posts extends Component {
                 
                 When any Post is clicked, it should route to its FullPost counterpart */
 
-                    <Link to={ `/${post.id}` } key = { post.id }> 
+                    <Link to={ `/posts/${post.id}` } key = { post.id }> 
                         <Post
                         author="Diego"                   
                         title = { post.title }

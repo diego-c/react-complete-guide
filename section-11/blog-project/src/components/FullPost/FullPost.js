@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import './FullPost.css';
+import Spinner from '../Spinner/Spinner';
 
 class FullPost extends Component {
     state = {
@@ -10,24 +12,23 @@ class FullPost extends Component {
         cache: []
     }
 
-    async componentWillReceiveProps(nextProps) {
-        if (this.props.match.params.postId !== nextProps.match.params.postId) {
-            this.setState({ loading: true });
+    async componentDidMount() {
+        this.setState({ loading: true });
 
-            const postFound = this.state.cache.find(p => p.id === nextProps.match.params.postId);
+        const postFound = this.state.cache.find(post => Number(post.id) === Number(this.props.match.params.postId));
 
-            if (!postFound) {
-                const post = (await axios.get(`/posts/${nextProps.match.params.postId}`)).data;
+        if (!postFound) {
+            const post = (await axios.get(`/posts/${this.props.match.params.postId}`)).data;
 
-                this.setState(prevState => {
-                    const newCache = [...prevState.cache];
-                    newCache.push(post);
-                    return { cache: newCache, currentPost: post, loading: false };
-                })                
-            } else {
-                this.setState({ currentPost: postFound, loading: false} )
-            }
+            this.setState(prevState => {
+                const newCache = [...prevState.cache];
+                newCache.push(post);
+                return { cache: newCache, currentPost: post, loading: false };
+            })                
+        } else {
+            this.setState({ currentPost: postFound, loading: false} )
         }
+
     }
 
     /*
@@ -61,7 +62,7 @@ class FullPost extends Component {
         if (!this.props.match.params.postId) {
             post = <p className = "FullPost">Please select a Post!</p>;
         } else if (this.state.loading || !this.state.currentPost) {
-            post = <p className = "FullPost">Loading...</p>;
+            post = <Spinner />;
         } 
         else {
             post = (
@@ -83,4 +84,4 @@ class FullPost extends Component {
     }
 }
 
-export default FullPost;
+export default withRouter(FullPost);

@@ -8,7 +8,6 @@ import { NavLink, Route, withRouter } from 'react-router-dom';
 class Blog extends Component {      
     
     render () {
-        console.log(this.props.match);
         return (
             <div>
                 <header>
@@ -23,7 +22,7 @@ class Blog extends Component {
                 </header>
                 <Route path="/" exact component = { Posts } />           
                 <Route path="/new-post" component = { NewPost } />
-                <Route path={ `/:postId` } exact component = { FullPost } />
+                <Route path={ `/posts/:postId` } exact component = { FullPost } />
             </div>
         );
     }
