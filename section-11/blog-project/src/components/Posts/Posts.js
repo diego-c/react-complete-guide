@@ -3,12 +3,11 @@ import Post from '../Post/Post';
 import './Posts.css';
 import Spinner from '../Spinner/Spinner';
 import axios from '../../axios';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Posts extends Component {
     state = {
         posts: [],
-        selectedPostId: null,
         error: null,
         loading: false
     }

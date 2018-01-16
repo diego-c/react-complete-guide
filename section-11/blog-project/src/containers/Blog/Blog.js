@@ -3,11 +3,12 @@ import Posts from '../../components/Posts/Posts';
 import './Blog.css';
 import NewPost from '../../components/NewPost/NewPost';
 import FullPost from '../../components/FullPost/FullPost';
-import { NavLink, Route, withRouter } from 'react-router-dom';
+import { NavLink, Route, withRouter, Redirect, Switch } from 'react-router-dom';
 
 class Blog extends Component {      
     
     render () {
+        console.log(this.props.match.url);
         return (
             <div>
                 <header>
@@ -20,9 +21,14 @@ class Blog extends Component {
                         </ul>                    
                     </nav>
                 </header>
-                <Route path="/" exact component = { Posts } />           
-                <Route path="/new-post" component = { NewPost } />
-                <Route path={ `/posts/:postId` } exact component = { FullPost } />
+
+                <Switch>
+                    {/* <Route path="/" exact component = { Posts } />            */}
+                    <Route path="/new-post" component = { NewPost } />
+                    <Route path={ `/posts/:postId` } exact component = { FullPost } />
+                    <Route path="/posts" exact component = { Posts } />
+                    <Redirect from="/" to="/posts" />
+                </Switch>
             </div>
         );
     }
