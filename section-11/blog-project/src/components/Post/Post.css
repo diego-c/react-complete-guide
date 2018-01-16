@@ -1,6 +1,7 @@
 .Post {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
     width: 40%;
     height: 20rem;
@@ -12,7 +13,9 @@
     box-sizing: border-box;
     cursor: pointer;
 }
-
+.Info {
+    align-self: center;
+}
 .Post:hover,
 .Post:active {
     background-color: #C0DDF5;
@@ -23,7 +26,7 @@
     color: #999999;
 }
 
-@media (min-width: 200px) and (max-width: 600px) {
+@media (min-width: 200px) and (max-width: 768px) {
     .Post {
         width: 100%;
     }

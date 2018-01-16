@@ -3,9 +3,9 @@ import Post from '../Post/Post';
 import './Posts.css';
 import Spinner from '../Spinner/Spinner';
 import axios from '../../axios';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
-export default class Posts extends Component {
+class Posts extends Component {
     state = {
         posts: [],
         selectedPostId: null,
@@ -14,7 +14,7 @@ export default class Posts extends Component {
     }
 
     postSelectedHandler = (id) => {
-        this.setState({ selectedPostId: id });
+        this.props.history.push(`/posts/${ id }`);
     }
     
     async componentDidMount() {    
@@ -41,13 +41,13 @@ export default class Posts extends Component {
                 
                 When any Post is clicked, it should route to its FullPost counterpart */
 
-                    <Link to={ `/posts/${post.id}` } key = { post.id }> 
-                        <Post
-                        author="Diego"                   
+                    <Post
+                        author="Diego"   
+                        key = { post.id }                
                         title = { post.title }
                         clicked = { this.postSelectedHandler.bind(this, post.id) }
-                        />
-                    </Link>)).slice(0, 4);
+                    />
+                    )).slice(0, 4)
         }
 
         return (
@@ -57,3 +57,5 @@ export default class Posts extends Component {
         )
     }
 }
+
+export default withRouter(Posts);
