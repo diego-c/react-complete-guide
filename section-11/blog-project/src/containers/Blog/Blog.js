@@ -6,7 +6,10 @@ import FullPost from '../../components/FullPost/FullPost';
 import { NavLink, Route, withRouter, Redirect, Switch } from 'react-router-dom';
 
 class Blog extends Component {      
-    
+    state = {
+        auth: true
+    }
+
     render () {
         console.log(this.props.match.url);
         return (
@@ -24,7 +27,7 @@ class Blog extends Component {
 
                 <Switch>
                     {/* <Route path="/" exact component = { Posts } />            */}
-                    <Route path="/new-post" component = { NewPost } />
+                    { this.state.auth ? <Route path="/new-post" component = { NewPost } /> : null }
                     <Route path={ `/posts/:postId` } exact component = { FullPost } />
                     <Route path="/posts" exact component = { Posts } />
                     <Redirect from="/" to="/posts" />
