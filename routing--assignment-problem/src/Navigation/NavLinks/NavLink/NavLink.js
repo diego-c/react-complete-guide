@@ -6,7 +6,10 @@ const navLink = props => {
     return (
         <NavLink 
         to={ `/${props.path}` }
-        className = "NavLink">{ props.link }</NavLink>
+        className = "NavLink"
+        activeStyle = {{
+            backgroundColor: '#44ce81'
+        }}>{ props.link }</NavLink>
     )
 }
 

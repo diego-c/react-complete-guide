@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import Course from '../Course/Course';
 import './Courses.css';
 
@@ -19,7 +19,7 @@ class Courses extends Component {
                 <section className="Courses">
                     {
                         this.state.courses.map( course => {
-                            return <Link
+                            return <NavLink
                              className="Course"
                              key={course.id}
                              to={{
@@ -27,9 +27,12 @@ class Courses extends Component {
                                 search: `?title=${course.title}`,
                                 state: { courses: this.state.courses }  
                              }}
+                             activeStyle = {{
+                                backgroundColor: '#68ede8'
+                             }}
                              >
                              {course.title}
-                             </Link>;
+                             </NavLink>;
                         } )
                     }
                 </section>
