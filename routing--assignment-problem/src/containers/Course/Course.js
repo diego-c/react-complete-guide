@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Course extends Component {    
     render () {
-        const title = decodeURIComponent(this.props.location.search).split('?title=')[1];
+        const title = decodeURIComponent(this.props.location.search).split('?title=')[1] || 'Sorry, course not found.';
         const { id } = this.props.match.params;
         return (
             <div>
