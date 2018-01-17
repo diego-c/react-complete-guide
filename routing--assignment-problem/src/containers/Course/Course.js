@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Course extends Component {    
-    render () {      
-        const { courses } = this.props.location.state || { courses: null };
-        const { id } = this.props.match.params;
+const course = props => {         
+        const { courses } = props.location.state || { courses: null };
+        const { id } = props.match.params;
 
         let title = 
         (
@@ -24,8 +23,7 @@ class Course extends Component {
                 <h1>{ title }</h1>
                 <p>You selected the Course with ID: { id }</p>
             </div>
-        );
-    }
+        );    
 }
 
-export default Course;
+export default course;
