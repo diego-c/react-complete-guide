@@ -1,16 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Course extends Component {    
-    render () {
-        const title = decodeURIComponent(this.props.location.search).split('?title=')[1] || 'Sorry, course not found.';
-        const { id } = this.props.match.params;
+const course = props => {         
+        const { courses } = props.location.state || { courses: null };
+        const { id } = props.match.params;
+
+        let title = 
+        (
+            courses
+            && 
+            courses.find(course => course.id === Number(id))
+        )
+        ? 
+        (courses.find(course => course.id === Number(id))).title
+        : 'Sorry, course not found.';
+
+        if (!courses) {
+            title = `Sorry, the query param doesn't match the course id.`;
+        }
+
         return (
             <div>
                 <h1>{ title }</h1>
                 <p>You selected the Course with ID: { id }</p>
             </div>
-        );
-    }
+        );    
 }
 
-export default Course;
+export default course;

@@ -24,7 +24,8 @@ class Courses extends Component {
                              key={course.id}
                              to={{
                                 pathname: `/courses/${course.id}`,
-                                search: `?title=${course.title}`
+                                search: `?title=${course.title}`,
+                                state: { courses: this.state.courses }  
                              }}
                              >
                              {course.title}
