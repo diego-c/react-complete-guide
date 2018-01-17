@@ -1,0 +1,14 @@
+.NavLink {
+    font-size: 2rem;
+    text-decoration: none;
+    color: #444;
+    padding: 2rem;
+    transition: all .2s;
+}
+.NavLink:hover {
+    background-color: #18757f;
+    color: white;
+}
+.NavLink:not(:last-child) {
+    margin-right: 4rem;
+}
