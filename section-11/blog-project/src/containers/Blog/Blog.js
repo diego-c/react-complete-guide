@@ -30,7 +30,8 @@ class Blog extends Component {
                     { this.state.auth ? <Route path="/new-post" component = { NewPost } /> : null }
                     <Route path={ `/posts/:postId` } exact component = { FullPost } />
                     <Route path="/posts" exact component = { Posts } />
-                    <Redirect from="/" to="/posts" />
+                    <Redirect from="/" to="/posts" exact />
+                    <Route render = { () => <h1>Sorry, route not found</h1> } />
                 </Switch>
             </div>
         );
