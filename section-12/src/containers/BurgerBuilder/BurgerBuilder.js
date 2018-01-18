@@ -7,6 +7,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import Checkout from '../../components/Checkout/Checkout';
 
 const INGREDIENT_PRICES = {
     'meat': 1.3,
@@ -19,6 +20,7 @@ const initState = {
     purchasing: false,
     purchasable: false,
     showSpinner: false,
+    checkout: false,
     error: null
 }
 
@@ -72,9 +74,9 @@ class BurgerBuilder extends Component {
         this.setState({ purchasing: false });
     }
 
-    purchaseContinueHandler = () => {     
-        this.setState({ showSpinner: true })
-            axios
+    purchaseContinueHandler = () => {    
+        this.setState({ checkout: true, purchasing: false, showSpinner: false }); 
+           /*  axios
             .post('/orders.json', {
                 ingredients: { ...this.state.ingredients },
                 price: this.state.totalPrice,
@@ -83,14 +85,14 @@ class BurgerBuilder extends Component {
                     name: 'Diego C'
                 }
             })
+
             .then(() => {
                 this.setState(initState);  
-                console.log('Thank you for your purchase!')
             })
             .catch(err => {
                 this.setState(initState);  
                 console.log(`Oops, something went wrong! ${err}`);
-            });             
+            });  */            
     }
 
     render() {
@@ -146,6 +148,7 @@ class BurgerBuilder extends Component {
                     { summaryOrSpinner }
                 </Modal>
                 { burgerOrSpinner }
+                { this.state.checkout ? <Checkout ingredients = { this.state.ingredients || {} } price = { this.state.totalPrice } /> : null }
             </Aux>
         )
     }
