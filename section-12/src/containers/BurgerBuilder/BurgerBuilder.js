@@ -73,8 +73,10 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => { 
-            this.setState({ showSpinner: true })   
-            axios
+        this.setState({ showSpinner: true }, () => {
+            this.props.history.push('/checkout')
+        })   
+           /*  axios
             .post('/orders.json', {
                 ingredients: { ...this.state.ingredients },
                 price: this.state.totalPrice,
@@ -89,7 +91,7 @@ class BurgerBuilder extends Component {
             .catch(err => {
                 this.setState(initState);  
                 console.log(`Oops, something went wrong! ${err}`);
-            });             
+            });   */        
     }
 
     render() {
