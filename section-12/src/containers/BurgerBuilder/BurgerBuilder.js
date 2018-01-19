@@ -91,7 +91,15 @@ class BurgerBuilder extends Component {
                 this.setState(initState);  
                 console.log(`Oops, something went wrong! ${err}`);
             }); */    
-            this.props.history.push(`/checkout`);         
+            const queryParams = [];
+            for (let i in this.state.ingredients) {
+                queryParams.push(`${encodeURIComponent(i)}=${this.state.ingredients[i]}`);
+            }
+            const queryStr = queryParams.join('&');
+            this.props.history.push({
+                pathname: '/checkout',
+                search: `?${queryStr}`
+            });         
     }
 
     render() {

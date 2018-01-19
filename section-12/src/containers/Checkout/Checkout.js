@@ -12,7 +12,22 @@ export default class Checkout extends Component {
     }
 
     checkoutCancelHandler = () => {
-        this.props.history.push('/');
+        this.props.history.goBack();
+    }
+
+    checkoutContinueHandler = () => {
+        this.props.history.replace('/checkout/contact-data');
+    }
+
+    componentDidMount() {
+        const paramsIterator = new URLSearchParams(this.props.location.search).entries();
+
+        const ingredients = {};  
+        for (let pair of paramsIterator) {
+            ingredients[pair[0]] = Number(pair[1]);
+        }
+              
+        this.setState({ ingredients });
     }
 
     render() {
@@ -20,6 +35,7 @@ export default class Checkout extends Component {
             <div>
                 <CheckoutSummary 
                 ingredients = { this.state.ingredients }
+                continue = { this.checkoutContinueHandler }
                 cancel = { this.checkoutCancelHandler } />
             </div>
         )
