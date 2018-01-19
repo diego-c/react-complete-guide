@@ -70,10 +70,11 @@ class BurgerBuilder extends Component {
 
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false });
+        this.props.history.push('/');
     }
 
     purchaseContinueHandler = () => { 
-            this.setState({ showSpinner: true })   
+            /* this.setState({ showSpinner: true })   
             axios
             .post('/orders.json', {
                 ingredients: { ...this.state.ingredients },
@@ -89,7 +90,8 @@ class BurgerBuilder extends Component {
             .catch(err => {
                 this.setState(initState);  
                 console.log(`Oops, something went wrong! ${err}`);
-            });             
+            }); */    
+            this.props.history.push(`/checkout`);         
     }
 
     render() {

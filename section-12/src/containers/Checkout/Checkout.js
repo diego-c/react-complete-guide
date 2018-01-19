@@ -10,10 +10,17 @@ export default class Checkout extends Component {
             salad: 1
         }
     }
+
+    checkoutCancelHandler = () => {
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <div>
-                <CheckoutSummary ingredients = { this.state.ingredients } />
+                <CheckoutSummary 
+                ingredients = { this.state.ingredients }
+                cancel = { this.checkoutCancelHandler } />
             </div>
         )
     }
