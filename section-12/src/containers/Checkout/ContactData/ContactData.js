@@ -3,6 +3,7 @@ import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-order';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 class ContactData extends Component {
     state = {
@@ -57,10 +58,6 @@ class ContactData extends Component {
             left: 0,
             behavior: 'smooth'
         })
-    }
-
-    componentDidUpdate() {
-        console.log(this.state);
     }
 
     handleInput = e => {
@@ -125,7 +122,7 @@ class ContactData extends Component {
         formOrSpinner = <Spinner /> :
 
         this.state.sent ? 
-        formOrSpinner = <h4 style = {{textAlign: 'center', padding: '4rem' }}>Thank you for your order, have a good day!</h4>
+        formOrSpinner = <h4 style = {{textAlign: 'center', padding: '4rem' }}>Thank you for your order, you will be redirected soon...Have a good day!</h4>
         :
         formOrSpinner = (
             <div className = { classes.ContactData }>
@@ -187,4 +184,4 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+export default withErrorHandler(ContactData, axios);
