@@ -40,7 +40,7 @@ export default class Checkout extends Component {
                 continue = { this.checkoutContinueHandler }
                 cancel = { this.checkoutCancelHandler } />
 
-                <Route path={ this.props.match.url + "/contact-data" } component = { ContactData } />
+                <Route path={ this.props.match.url + "/contact-data" } render = { () => <ContactData ingredients = { this.state.ingredients } /> } />
             </div>
         )
     }

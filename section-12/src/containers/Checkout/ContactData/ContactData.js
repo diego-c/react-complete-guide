@@ -14,6 +14,11 @@ class ContactData extends Component {
         }
     }
 
+    orderHandler = e => {
+        e.preventDefault();
+        console.log(this.props.ingredients);
+    }
+
     componentDidMount() {
         window.scroll({
             top: document.body.scrollHeight,
@@ -44,7 +49,7 @@ class ContactData extends Component {
                     </label>
                     <Button
                     btnType = "Success"
-                    >ORDER</Button>
+                    clicked = { this.orderHandler }>ORDER</Button>
                 </form>
             </div>
         )
