@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../UI/Button/Button';
 import classes from './OrderSummary.css';
-import Link from 'react-router-dom/Link';
 
 // class component only for debugging purposes
 
@@ -37,19 +36,14 @@ class OrderSummary extends Component {
                 <p>Continue to checkout?</p>
                 <Button
                 btnType = "Danger"
-                cancel = { this.props.cancel }>                
+                clicked = { this.props.cancel }>
                     CANCEL
                 </Button>
     
                 <Button
                 btnType = "Success"
-                >
-                <Link to={{
-                    pathname:'/checkout',
-                    search: `?meat=${this.props.ingredients.meat}&cheese=${this.props.ingredients.cheese}&salad=${this.props.ingredients.salad}&bacon=${this.props.ingredients.bacon}`
-                }}>
+                clicked = { this.props.continue }>
                     CONTINUE
-                </Link>
                 </Button>
             </Aux>
         );
@@ -64,8 +58,8 @@ OrderSummary.propTypes = {
         'bacon': PropTypes.number
     }).isRequired,
     price: PropTypes.number.isRequired,
-    cancel: PropTypes.func,
-    continue: PropTypes.func
+    cancel: PropTypes.func.isRequired,
+    continue: PropTypes.func.isRequired
 }
 
 export default OrderSummary;

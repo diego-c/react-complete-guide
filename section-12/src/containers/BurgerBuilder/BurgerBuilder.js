@@ -70,13 +70,12 @@ class BurgerBuilder extends Component {
 
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false });
+        this.props.history.push('/');
     }
 
     purchaseContinueHandler = () => { 
-        this.setState({ showSpinner: true }, () => {
-            this.props.history.push('/checkout')
-        })   
-           /*  axios
+            /* this.setState({ showSpinner: true })   
+            axios
             .post('/orders.json', {
                 ingredients: { ...this.state.ingredients },
                 price: this.state.totalPrice,
@@ -91,7 +90,16 @@ class BurgerBuilder extends Component {
             .catch(err => {
                 this.setState(initState);  
                 console.log(`Oops, something went wrong! ${err}`);
-            });   */        
+            }); */    
+            const queryParams = [];
+            for (let i in this.state.ingredients) {
+                queryParams.push(`${encodeURIComponent(i)}=${this.state.ingredients[i]}`);
+            }
+            const queryStr = queryParams.join('&');
+            this.props.history.push({
+                pathname: '/checkout',
+                search: `?${queryStr}`
+            });         
     }
 
     render() {
