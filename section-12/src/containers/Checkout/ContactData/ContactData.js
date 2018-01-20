@@ -25,7 +25,6 @@ class ContactData extends Component {
         e.preventDefault();
         // Here we have access to ingredients and the total price easily via props!
         //console.log(this.props);
-        console.log('To be sent: ', this.state);
 
         // Send order
         this.setState({ loading: true });
@@ -36,13 +35,11 @@ class ContactData extends Component {
             fastDelivery: this.state.fastDelivery
         })
         .then(res => {
-            console.log(res);
-            this.setState({ loading: false, sent: true });
-        })
-        .then(() => {
-            setTimeout(() => {
-                this.props.history.replace('/');
-            }, 3000);
+            this.setState({ loading: false, sent: true }, () => {
+                setTimeout(() => {
+                    this.props.history.replace('/');
+                }, 3000);
+            });
         })
         .catch(err => {
             console.log(err);
@@ -62,7 +59,6 @@ class ContactData extends Component {
 
     handleInput = e => {
         let updatedValue = e.target.value;
-        console.log(`Updated value: ${updatedValue}`);
 
         switch(e.target.id) {
 
