@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.css';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import axios from '../../../axios-order';
 
 class ContactData extends Component {
     state = {
+        sent: false,
+        loading: false,
         price: 0,
+        fastDelivery: false,
         fields: {
             name: '',
             address: { 
@@ -20,6 +25,28 @@ class ContactData extends Component {
         // Here we have access to ingredients and the total price easily via props!
         //console.log(this.props);
         console.log('To be sent: ', this.state);
+
+        // Send order
+        this.setState({ loading: true });
+        axios.post('/orders.json', {
+            ingredients: this.props.ingredients,
+            customer: this.state.fields,
+            price: this.state.fastDelivery ? this.state.price + 5 : this.state.price,
+            fastDelivery: this.state.fastDelivery
+        })
+        .then(res => {
+            console.log(res);
+            this.setState({ loading: false, sent: true });
+        })
+        .then(() => {
+            setTimeout(() => {
+                this.props.history.replace('/');
+            }, 3000);
+        })
+        .catch(err => {
+            console.log(err);
+            this.setState({ loading: false });
+        })
     }
 
     componentDidMount() {
@@ -30,6 +57,10 @@ class ContactData extends Component {
             left: 0,
             behavior: 'smooth'
         })
+    }
+
+    componentDidUpdate() {
+        console.log(this.state);
     }
 
     handleInput = e => {
@@ -73,6 +104,14 @@ class ContactData extends Component {
                     return { fields: updatedFields }
                 })
                 break;
+            
+            case 'fastDelivery':
+                this.setState(prevState => {
+                    const updatedState = { ...prevState };
+                    updatedState.fastDelivery = !prevState.fastDelivery;
+                    return updatedState;
+                })
+                break;
 
             default:
                 console.log('Oops, could not update field!');        
@@ -80,7 +119,15 @@ class ContactData extends Component {
     }
 
     render() {
-        return (
+        let formOrSpinner = null;
+
+        this.state.loading ?
+        formOrSpinner = <Spinner /> :
+
+        this.state.sent ? 
+        formOrSpinner = <h4 style = {{textAlign: 'center', padding: '4rem' }}>Thank you for your order, have a good day!</h4>
+        :
+        formOrSpinner = (
             <div className = { classes.ContactData }>
                 <h4>Enter your contact data below</h4>
                 <form action="">
@@ -121,12 +168,22 @@ class ContactData extends Component {
                             onChange = { this.handleInput } />
                         </label>
                     </label>
+                    <label htmlFor="fastDelivery">
+                        Fast delivery? (Additional $5 tax)
+                        <input
+                        id="fastDelivery" 
+                        type="checkbox"
+                        onChange = { this.handleInput }
+                        checked = { this.state.fastDelivery } />
+                    </label>
                     <Button
                     btnType = "Success"
                     clicked = { this.orderHandler }>ORDER</Button>
                 </form>
             </div>
         )
+
+        return formOrSpinner;
     }
 }
 
