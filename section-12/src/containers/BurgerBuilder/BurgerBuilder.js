@@ -91,14 +91,17 @@ class BurgerBuilder extends Component {
                 this.setState(initState);  
                 console.log(`Oops, something went wrong! ${err}`);
             }); */    
-            const queryParams = [];
+           /*  const queryParams = [];
             for (let i in this.state.ingredients) {
                 queryParams.push(`${encodeURIComponent(i)}=${this.state.ingredients[i]}`);
             }
-            const queryStr = queryParams.join('&');
+            const queryStr = queryParams.join('&'); */
+
+            // Alternative: using state instead of query params
+
             this.props.history.push({
                 pathname: '/checkout',
-                search: `?${queryStr}`
+                state: { ingredients: this.state.ingredients, price: this.state.totalPrice }
             });         
     }
 

@@ -16,7 +16,8 @@ class ContactData extends Component {
 
     orderHandler = e => {
         e.preventDefault();
-        console.log(this.props.ingredients);
+        // Here we have access to ingredients and the total price easily via props!
+        console.log(this.props);
     }
 
     componentDidMount() {
