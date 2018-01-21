@@ -3,34 +3,38 @@ import classes from './Orders.css';
 import Order from '../../components/Order/Order';
 import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import withError from '../../hoc/withErrorHandler/withErrorHandler';
 
-export default class Orders extends Component {
+class Orders extends Component {
     state = {
         orders: null
     }
 
     // my own implementation of fetching orders from firebase
     async componentDidMount() {
-        const orders = (await axios.get('/orders.json')).data;
+        let orders;
+        try {
+            orders = (await axios.get('/orders.json')).data;
+        } catch(err) {
+            console.log(err);
+        }
         this.setState({ orders });
     }
 
     render() {
-        if (this.state.orders) console.log(Object.entries(this.state.orders).map(arr => arr[1]));
-
         let ordersOrSpinner =
 
             this.state.orders ?
             (
                 <div className = { classes.Orders }>
-                    { Object.entries(this.state.orders).map(arr => arr[1]).map((order, index) => (
+                    { Object.entries(this.state.orders).map(arr => ({ order: arr[1], key: arr[0] })).map(fullOrder => (
                         <Order
-                        key = { index }
-                        ingredients = { order.ingredients }
-                        price = { order.price }
-                        delivery = { order.fastDelivery ? 'fast' : 'normal' }
-                        address = { order.customer.address }
-                        customer = { order.customer.name } />
+                        key = { fullOrder['key'] }
+                        ingredients = { fullOrder['order'].ingredients }
+                        price = { fullOrder['order'].price }
+                        delivery = { fullOrder['order'].fastDelivery ? 'fast' : 'normal' }
+                        address = { fullOrder['order'].customer.address }
+                        customer = { fullOrder['order'].customer.name } />
                     )) }
                 </div>
             ) : <Spinner />
@@ -39,3 +43,5 @@ export default class Orders extends Component {
         return ordersOrSpinner;
     }
 }
+
+export default withError(Orders, axios);
