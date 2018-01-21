@@ -1,14 +1,15 @@
 import React from 'react';
 import classes from './NavigationItem.css'
+import { Route, Link } from 'react-router-dom';
+import Aux from '../../../../hoc/Auxiliary/Auxiliary';
 
-const navigationItem = ({ link, active, children }) => (
+const navigationItem = ({ link, label }) => (
     <li className = { classes.NavigationItem }>
-        <a
-         className = { active ? classes.active : null }   
-         href={ link }
-         target="_blank">
-         { children }
-        </a>
+        <Route path = { link } children = { ({ match }) => (
+            <Aux className = { match ? 'active' : ''}>
+                <Link to = { link }>{ label }</Link>
+            </Aux>
+        )} />
     </li>
 );
 
