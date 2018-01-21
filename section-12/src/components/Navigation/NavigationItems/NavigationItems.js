@@ -3,7 +3,7 @@ import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.css'
 
 const navigationItems = props => (
-    <ul className = { classes.NavigationItems }>        
+    <ul className = { classes.NavigationItems }>      
         <NavigationItem 
         link="/"
         label = "Burger Builder"
