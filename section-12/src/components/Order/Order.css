@@ -12,5 +12,17 @@
 }
 
 .Order p {
+    margin: 3rem auto;    
+}
+
+.Order p:nth-child(2) {
+    text-decoration: underline;
+}
+
+.Order ul {
+    list-style: none;
+}
+
+.Order ul > li {
     margin: 1rem auto;
 }
