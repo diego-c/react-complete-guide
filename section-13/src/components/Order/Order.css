@@ -1,0 +1,28 @@
+.Order {
+    width: 100%;
+    border: .1rem solid #eee;
+    box-shadow: 0 .2rem .3rem #c2c2c2;
+    padding: 4rem;    
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.Order:not(:first-child) {
+    margin-top: 2rem;
+}
+
+.Order p {
+    margin: 3rem auto;    
+}
+
+.Order p:nth-child(2) {
+    text-decoration: underline;
+}
+
+.Order ul {
+    list-style: none;
+}
+
+.Order ul > li {
+    margin: 1rem auto;
+}
