@@ -1,8 +1,16 @@
 .Order {
     width: 100%;
     border: .1rem solid #eee;
-    box-shadow: 0 .2rem .3rem #ccc;
-    padding: 1rem;
-    margin: 1rem auto;
+    box-shadow: 0 .2rem .3rem #c2c2c2;
+    padding: 4rem;    
     box-sizing: border-box;
+    text-align: center;
+}
+
+.Order:not(:first-child) {
+    margin-top: 2rem;
+}
+
+.Order p {
+    margin: 1rem auto;
 }
