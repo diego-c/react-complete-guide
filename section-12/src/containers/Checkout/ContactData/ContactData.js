@@ -34,7 +34,7 @@ class ContactData extends Component {
             price: this.state.fastDelivery ? this.state.price + 5 : this.state.price,
             fastDelivery: this.state.fastDelivery
         })
-        .then(res => {
+        .then(res => {            
             this.setState({ loading: false, sent: true }, () => {
                 setTimeout(() => {
                     this.props.history.replace('/');
