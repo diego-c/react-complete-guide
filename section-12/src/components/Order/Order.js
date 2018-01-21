@@ -7,11 +7,13 @@ const order = props => {
         <p>To: <strong>{ props.customer }</strong></p>
         <p>Ingredients:</p>
         <ul>
-            { Object.keys(props.ingredients).map((ing, key) => (
+            { Object
+            .keys(props.ingredients)
+            .map((ing, key) => (
                 props.ingredients[ing] ? (
                 <li 
                 key= { key }>
-                { ing[0].toUpperCase().concat(ing.slice(1)) } {`(${ props.ingredients[ing] })`}
+                <span style = {{ textTransform: 'capitalize' }}>{ ing }</span> {`(${ props.ingredients[ing] })`}
                 </li>
                 ) : null 
             )) }

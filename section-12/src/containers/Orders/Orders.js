@@ -27,7 +27,10 @@ class Orders extends Component {
             this.state.orders ?
             (
                 <div className = { classes.Orders }>
-                    { Object.entries(this.state.orders).map(arr => ({ order: arr[1], key: arr[0] })).map(fullOrder => (
+                    { Object
+                    .entries(this.state.orders)
+                    .map(arr => ({ order: arr[1], key: arr[0] }))
+                    .map(fullOrder => (
                         <Order
                         key = { fullOrder['key'] }
                         ingredients = { fullOrder['order'].ingredients }
