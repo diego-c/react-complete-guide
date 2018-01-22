@@ -1,0 +1,10 @@
+@media (min-width: 250px) and (max-width: 500px) {
+    input[type="checkbox"].Checkbox {
+        transform: scale(1.5);
+    }
+}
+@media (min-width: 500px) {
+    input[type="checkbox"].Checkbox {
+        transform: scale(2.5);
+    }
+}

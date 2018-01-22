@@ -4,6 +4,7 @@ import classes from './ContactData.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-order';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
     state = {
@@ -47,7 +48,7 @@ class ContactData extends Component {
         })
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({ price: this.props.price });
         
         window.scroll({
@@ -55,6 +56,10 @@ class ContactData extends Component {
             left: 0,
             behavior: 'smooth'
         })
+
+        setTimeout(() => {
+            document.querySelector('input[name="name"]').focus()
+        }, 1000);        
     }
 
     handleInput = e => {
@@ -124,56 +129,50 @@ class ContactData extends Component {
             <div className = { classes.ContactData }>
                 <h4>Enter your contact data below</h4>
                 <form action="">
-                    <label htmlFor="name">
-                        Name: 
-                        <input 
-                        id="name"
-                        name="name"
-                        type="text"
-                        placeholder="Your name..."
-                        value = { this.state.fields.name }
-                        onChange = { this.handleInput } />
-                    </label>
-                    <label htmlFor="email">
-                        E-mail: 
-                        <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="Your e-mail..."
-                        value = { this.state.fields.email }
-                        onChange = { this.handleInput } />
-                    </label>
+                    <Input
+                    id="name"
+                    name="name"
+                    inputtype = "input"
+                    label = "Name"
+                    placeholder="Your name..."
+                    value = { this.state.fields.name }
+                    onChange = { this.handleInput } />
+                    <Input
+                    id="email"
+                    name="email"
+                    inputtype = "input"
+                    label = "Email"
+                    type = "text"
+                    placeholder="Your e-mail..."
+                    value = { this.state.fields.email }
+                    onChange = { this.handleInput } />
                     <label htmlFor="address">
                         Address: 
-                        <label htmlFor="street">
-                            Street: 
-                            <input
-                            id = "street"
-                            name="street"
-                            type="text"
-                            placeholder="St..."
-                            onChange = { this.handleInput } />
-                        </label>
-                        <label htmlFor="postalCode">
-                            Postal Code: 
-                            <input
-                            id = "postalCode"
-                            name="postalCode"
-                            type="number"
-                            placeholder="ZIP..."
-                            onChange = { this.handleInput } />
-                        </label>
+                        <Input 
+                        id = "street"
+                        name="street"
+                        type="text"
+                        inputtype = "input"
+                        label = "Street"
+                        placeholder="St..."
+                        onChange = { this.handleInput } />
+                        <Input 
+                        id = "postalCode"
+                        name="postalCode"
+                        type="number"
+                        inputtype = "input"
+                        label = "Postal Code"
+                        placeholder="ZIP..."
+                        onChange = { this.handleInput } />
                     </label>
-                    <label htmlFor="fastDelivery">
-                        Fast delivery? (Additional $5 tax)
-                        <input
-                        id="fastDelivery" 
-                        name="fastDelivery"
-                        type="checkbox"
-                        onChange = { this.handleInput }
-                        checked = { this.state.fastDelivery } />
-                    </label>
+                    <Input
+                    id="fastDelivery" 
+                    name="fastDelivery"
+                    inputtype = "input"
+                    label = "Fast delivery? (Additional $5 tax)"
+                    type="checkbox"
+                    onChange = { this.handleInput }
+                    checked = { this.state.fastDelivery } />
                     <Button
                     btnType = "Success"
                     clicked = { this.orderHandler }>ORDER</Button>
