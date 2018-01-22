@@ -25,8 +25,14 @@ export default class Checkout extends Component {
     componentDidMount() {
         // Alternative: using state instead of query params
         
-        const { ingredients } = this.props.location.state,
-        { price } = this.props.location.state
+        let ingredients, price;
+
+        if(this.props.location.state) {
+            ingredients = this.props.location.state.ingredients;
+            price = this.props.location.state.price
+        } else {
+            this.props.history.replace('/');
+        }
 
         /* const paramsIterator = new URLSearchParams(this.props.location.search).entries();
 

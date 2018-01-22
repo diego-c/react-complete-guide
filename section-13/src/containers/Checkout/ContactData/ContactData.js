@@ -76,7 +76,7 @@ class ContactData extends Component {
             ingredients: this.props.ingredients,
             customer: this.state.fields,
             price: this.state.fields.deliveryMethod.value === 'fast' ? this.state.price + 8 : this.state.price + 4,
-            deliveryMethod: this.state.fields.deliveryMethod.value.toUpperCase()
+            deliveryMethod: this.state.fields.deliveryMethod.value
         })
         .then(res => {            
             this.setState({ loading: false, sent: true }, () => {
@@ -100,9 +100,11 @@ class ContactData extends Component {
             behavior: 'smooth'
         })
 
-        setTimeout(() => {
-            document.querySelector('input[name="name"]').focus()
-        }, 1000);        
+        if (document.querySelector('input[name="name"]')) {
+            setTimeout(() => {
+                document.querySelector('input[name="name"]').focus()
+            }, 1000);
+        }        
     }
 
     handleInput = e => {
