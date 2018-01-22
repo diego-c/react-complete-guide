@@ -40,19 +40,19 @@ class ContactData extends Component {
                 type:  "text",
                 placeholder: "Your e-mail..."   
             }),
-            fastDelivery: this.generateInput('input', {
+            fastDelivery: { ...this.generateInput('input', {
                 id: "fastDelivery", 
                 name: "fastDelivery",                    
                 label: "Fast delivery? (Additional $5 tax)",
-                type: "checkbox",                    
+                type: "checkbox"                
+            }),
                 checked: false
-            })
+            }
         }
     }
 
     generateInput(inputtype, config) {
-        config['value'] = '';
-        return { inputtype, config };
+        return { inputtype, config, value: '' };
     }
 
     orderHandler = e => {
@@ -66,8 +66,8 @@ class ContactData extends Component {
             date: (new Date()).toString(),
             ingredients: this.props.ingredients,
             customer: this.state.fields,
-            price: this.state.fields.fastDelivery.config.checked ? this.state.price + 5 : this.state.price,
-            fastDelivery: this.state.fields.fastDelivery.config.checked
+            price: this.state.fields.fastDelivery.checked ? this.state.price + 5 : this.state.price,
+            fastDelivery: this.state.fields.fastDelivery.checked
         })
         .then(res => {            
             this.setState({ loading: false, sent: true }, () => {
@@ -105,7 +105,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.name.config.value = updatedValue
+                    updatedFields.name.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -114,7 +114,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.email.config.value = updatedValue
+                    updatedFields.email.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -123,7 +123,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.street.config.value = updatedValue
+                    updatedFields.street.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -132,7 +132,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.postalCode.config.value = updatedValue
+                    updatedFields.postalCode.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -141,7 +141,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields };
-                    updatedFields.fastDelivery.config.checked = !prevState.fields.fastDelivery.config.checked;
+                    updatedFields.fastDelivery.checked = !prevState.fields.fastDelivery.checked;
                     return updatedState;
                 })
                 break;
