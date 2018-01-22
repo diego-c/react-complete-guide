@@ -3,7 +3,7 @@ import React from 'react';
 const input = props => {
     let inputElement = null;
 
-    switch (props.inputType) {
+    switch (props.inputtype) {
 
         case 'input':
         inputElement = 
@@ -21,7 +21,7 @@ const input = props => {
 
     return (
         <div>
-            <label htmlFor={ props.label.toLowercase() }>{ props.label }: { inputElement }</label>
+            <label htmlFor={ props.label.toLowerCase() }>{ props.label }: { inputElement }</label>
         </div>
     )
 };
