@@ -60,7 +60,7 @@ class ContactData extends Component {
     handleInput = e => {
         let updatedValue = e.target.value;
 
-        switch(e.target.id) {
+        switch(e.target.getAttribute('name')) {
 
             case 'name':
                 this.setState(prevState => {
@@ -128,6 +128,7 @@ class ContactData extends Component {
                         Name: 
                         <input 
                         id="name"
+                        name="name"
                         type="text"
                         placeholder="Your name..."
                         value = { this.state.fields.name }
@@ -137,6 +138,7 @@ class ContactData extends Component {
                         E-mail: 
                         <input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="Your e-mail..."
                         value = { this.state.fields.email }
@@ -148,6 +150,7 @@ class ContactData extends Component {
                             Street: 
                             <input
                             id = "street"
+                            name="street"
                             type="text"
                             placeholder="St..."
                             onChange = { this.handleInput } />
@@ -156,6 +159,7 @@ class ContactData extends Component {
                             Postal Code: 
                             <input
                             id = "postalCode"
+                            name="postalCode"
                             type="number"
                             placeholder="ZIP..."
                             onChange = { this.handleInput } />
@@ -165,6 +169,7 @@ class ContactData extends Component {
                         Fast delivery? (Additional $5 tax)
                         <input
                         id="fastDelivery" 
+                        name="fastDelivery"
                         type="checkbox"
                         onChange = { this.handleInput }
                         checked = { this.state.fastDelivery } />
