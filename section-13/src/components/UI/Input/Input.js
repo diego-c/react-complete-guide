@@ -26,8 +26,7 @@ const input = props => {
         default:
             inputElement = <p>Oops, input not recognized!</p>;        
     }
-
-    console.log(props);
+    
     return (
         <div>
             <label 

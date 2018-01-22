@@ -19,22 +19,20 @@ class ContactData extends Component {
                 label: "Name",
                 placeholder: "Your name.."
             }),
-            address: { 
-                street: this.generateInput('input', {
-                    id: "street",
-                    name:"street",
-                    type:"text",                 
-                    label: "Street",
-                    placeholder:"St..."
-                  }),
-                postalCode: this.generateInput('input', {
-                    id: "postalCode",
-                    name: "postalCode",
-                    type: "number",                  
-                    label: "Postal Code",
-                    placeholder: "ZIP..."
-                 })
-            },
+            street: this.generateInput('input', {
+                id: "street",
+                name:"street",
+                type:"text",                 
+                label: "Street",
+                placeholder:"St..."
+            }),
+            postalCode: this.generateInput('input', {
+                id: "postalCode",
+                name: "postalCode",
+                type: "number",                  
+                label: "Postal Code",
+                placeholder: "ZIP..."
+            }),
             email: this.generateInput('input', {
                 id: "email",
                 name: "email",                    
@@ -125,7 +123,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.address.street.config.value = updatedValue
+                    updatedFields.street.config.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -134,7 +132,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.address.postalCode.config.value = updatedValue
+                    updatedFields.postalCode.config.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -154,6 +152,8 @@ class ContactData extends Component {
     }
 
     render() {
+        const { fields } = this.state;   
+
         let formOrSpinner = null;
 
         this.state.loading ?
@@ -166,28 +166,13 @@ class ContactData extends Component {
             <div className = { classes.ContactData }>
                 <h4>Enter your contact data below</h4>
                 <form action="">
-                    <Input 
-                    { ...this.state.fields.name }
-                    changed = { this.handleInput } />
-
+                { Object.keys(fields).map(field => (
                     <Input
-                    { ...this.state.fields.email }
-                    changed = { this.handleInput }
-                    />
-
-                    <label htmlFor="address">
-                        Address: 
-                        <Input 
-                        { ...this.state.fields.address.street }
+                        key = { fields[field].config.id }
+                        { ...fields[field] }
                         changed = { this.handleInput }
-                        />
-                        <Input 
-                        { ...this.state.fields.address.postalCode }
-                        changed = { this.handleInput } />
-                    </label>
-                    <Input
-                    changed = { this.handleInput }
-                    { ...this.state.fields.fastDelivery } />
+                        />            
+                )) }
 
                     <Button
                     btnType = "Success"
