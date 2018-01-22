@@ -48,7 +48,7 @@ class ContactData extends Component {
         })
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({ price: this.props.price });
         
         window.scroll({
@@ -56,6 +56,10 @@ class ContactData extends Component {
             left: 0,
             behavior: 'smooth'
         })
+
+        setTimeout(() => {
+            document.querySelector('input[name="name"]').focus()
+        }, 1000);        
     }
 
     handleInput = e => {
