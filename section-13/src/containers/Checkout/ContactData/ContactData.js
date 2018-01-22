@@ -11,15 +11,50 @@ class ContactData extends Component {
         sent: false,
         loading: false,
         price: 0,
-        fastDelivery: false,
         fields: {
-            name: '',
+            name: this.generateInput('input', {
+                id: "name",
+                type: "text",
+                name: "name",                
+                label: "Name",
+                placeholder: "Your name.."
+            }),
             address: { 
-                street: '',
-                postalCode: ''
+                street: this.generateInput('input', {
+                    id: "street",
+                    name:"street",
+                    type:"text",                 
+                    label: "Street",
+                    placeholder:"St..."
+                  }),
+                postalCode: this.generateInput('input', {
+                    id: "postalCode",
+                    name: "postalCode",
+                    type: "number",                  
+                    label: "Postal Code",
+                    placeholder: "ZIP..."
+                 })
             },
-            email: ''
+            email: this.generateInput('input', {
+                id: "email",
+                name: "email",                    
+                label: "Email",
+                type:  "text",
+                placeholder: "Your e-mail..."   
+            }),
+            fastDelivery: this.generateInput('input', {
+                id: "fastDelivery", 
+                name: "fastDelivery",                    
+                label: "Fast delivery? (Additional $5 tax)",
+                type: "checkbox",                    
+                checked: false
+            })
         }
+    }
+
+    generateInput(inputtype, config) {
+        config['value'] = '';
+        return { inputtype, config };
     }
 
     orderHandler = e => {
@@ -30,10 +65,11 @@ class ContactData extends Component {
         // Send order
         this.setState({ loading: true });
         axios.post('/orders.json', {
+            date: (new Date()).toString(),
             ingredients: this.props.ingredients,
             customer: this.state.fields,
-            price: this.state.fastDelivery ? this.state.price + 5 : this.state.price,
-            fastDelivery: this.state.fastDelivery
+            price: this.state.fields.fastDelivery.config.checked ? this.state.price + 5 : this.state.price,
+            fastDelivery: this.state.fields.fastDelivery.config.checked
         })
         .then(res => {            
             this.setState({ loading: false, sent: true }, () => {
@@ -71,7 +107,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.name = updatedValue
+                    updatedFields.name.config.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -80,7 +116,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.email = updatedValue
+                    updatedFields.email.config.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -89,7 +125,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.address.street = updatedValue
+                    updatedFields.address.street.config.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -98,7 +134,7 @@ class ContactData extends Component {
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
                     const updatedFields = { ...updatedState.fields }
-                    updatedFields.address.postalCode = updatedValue
+                    updatedFields.address.postalCode.config.value = updatedValue
                     return { fields: updatedFields }
                 })
                 break;
@@ -106,7 +142,8 @@ class ContactData extends Component {
             case 'fastDelivery':
                 this.setState(prevState => {
                     const updatedState = { ...prevState };
-                    updatedState.fastDelivery = !prevState.fastDelivery;
+                    const updatedFields = { ...updatedState.fields };
+                    updatedFields.fastDelivery.config.checked = !prevState.fields.fastDelivery.config.checked;
                     return updatedState;
                 })
                 break;
@@ -129,50 +166,29 @@ class ContactData extends Component {
             <div className = { classes.ContactData }>
                 <h4>Enter your contact data below</h4>
                 <form action="">
+                    <Input 
+                    { ...this.state.fields.name }
+                    changed = { this.handleInput } />
+
                     <Input
-                    id="name"
-                    name="name"
-                    inputtype = "input"
-                    label = "Name"
-                    placeholder="Your name..."
-                    value = { this.state.fields.name }
-                    onChange = { this.handleInput } />
-                    <Input
-                    id="email"
-                    name="email"
-                    inputtype = "input"
-                    label = "Email"
-                    type = "text"
-                    placeholder="Your e-mail..."
-                    value = { this.state.fields.email }
-                    onChange = { this.handleInput } />
+                    { ...this.state.fields.email }
+                    changed = { this.handleInput }
+                    />
+
                     <label htmlFor="address">
                         Address: 
                         <Input 
-                        id = "street"
-                        name="street"
-                        type="text"
-                        inputtype = "input"
-                        label = "Street"
-                        placeholder="St..."
-                        onChange = { this.handleInput } />
+                        { ...this.state.fields.address.street }
+                        changed = { this.handleInput }
+                        />
                         <Input 
-                        id = "postalCode"
-                        name="postalCode"
-                        type="number"
-                        inputtype = "input"
-                        label = "Postal Code"
-                        placeholder="ZIP..."
-                        onChange = { this.handleInput } />
+                        { ...this.state.fields.address.postalCode }
+                        changed = { this.handleInput } />
                     </label>
                     <Input
-                    id="fastDelivery" 
-                    name="fastDelivery"
-                    inputtype = "input"
-                    label = "Fast delivery? (Additional $5 tax)"
-                    type="checkbox"
-                    onChange = { this.handleInput }
-                    checked = { this.state.fastDelivery } />
+                    changed = { this.handleInput }
+                    { ...this.state.fields.fastDelivery } />
+
                     <Button
                     btnType = "Success"
                     clicked = { this.orderHandler }>ORDER</Button>

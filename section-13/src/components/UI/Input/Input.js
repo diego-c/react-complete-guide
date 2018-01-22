@@ -8,23 +8,31 @@ const input = props => {
 
         case 'input':
             inputElement = 
-            <input { ...props } className = { classes.Checkbox } />
+            <input 
+            { ...props.config }
+            className = { classes.Checkbox }
+            onChange = { props.changed } />
+
             break;
         
         case 'textarea':
             inputElement = 
-            <textarea { ...props } />
+            <textarea 
+            { ...props.config }
+            onChange = { props.changed } />
+
             break;        
 
         default:
             inputElement = <p>Oops, input not recognized!</p>;        
     }
 
+    console.log(props);
     return (
         <div>
             <label 
-            htmlFor={ props.label.toLowerCase() }>
-            { props.label }: { inputElement }
+            htmlFor= { props.config.id }>
+                { props.config.label }: { inputElement }
             </label>
         </div>
     )
