@@ -22,22 +22,21 @@ class Orders extends Component {
     }
 
     render() {
+        const { orders } = this.state;
+
         let ordersOrSpinner =
 
-            this.state.orders ?
+            orders ?
             (
                 <div className = { classes.Orders }>
-                    { Object
-                    .entries(this.state.orders)
-                    .map(arr => ({ order: arr[1], key: arr[0] }))
-                    .map(fullOrder => (
+                    { Object.keys(orders).map(orderId => (
                         <Order
-                        key = { fullOrder['key'] }
-                        ingredients = { fullOrder['order'].ingredients }
-                        price = { fullOrder['order'].price }
-                        delivery = { fullOrder['order'].fastDelivery ? 'fast' : 'normal' }
-                        address = { fullOrder['order'].customer.address }
-                        customer = { fullOrder['order'].customer.name } />
+                        key = { orderId }
+                        customer = { orders[orderId].customer }
+                        price = { orders[orderId].price }
+                        delivery = { orders[orderId].deliveryMethod }
+                        ingredients = { orders[orderId].ingredients }
+                        />
                     )) }
                 </div>
             ) : <Spinner />

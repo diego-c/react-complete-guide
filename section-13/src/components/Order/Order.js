@@ -2,16 +2,31 @@ import React from 'react';
 import classes from './Order.css';
 
 const order = props => {
+    const name = props.customer.name.value,
+    { ingredients } = props,
+    price = props.price.toFixed(2),
+    street = props.customer.street.value,
+    postalCode = props.customer.postalCode.value,
+    { delivery } = props;
+
     return (
     <div className = { classes.Order }>
-        <p>To: <strong>{ props.customer }</strong></p>
+        <p>To: <strong>{ name }</strong></p>
         <p>Ingredients:</p>
         <ul>
-            {  }
+            { Object.keys(ingredients).map(ingredient => (
+                ingredients[ingredient] ? 
+                <li
+                key = { ingredient }>
+                { ingredient } ( { ingredients[ingredient] } )
+                </li>
+                :
+                null
+            )) }
         </ul>
-        <p>Price: <strong>${ props.price.toFixed(2) }</strong></p>
-        <p>Delivery address: <strong>{ props.address.street }, { props.address.postalCode }</strong></p>
-        <p>Delivery method: <u><strong>{ props.delivery }</strong></u></p>
+        <p>Price: <strong>$ { price }</strong></p>
+        <p>Delivery address: <strong>{ street }, { postalCode }</strong></p>
+        <p>Delivery method: <u><strong>{ delivery }</strong></u></p>
     </div>
     )
 };
