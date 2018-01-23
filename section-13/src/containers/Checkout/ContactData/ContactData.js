@@ -72,8 +72,8 @@ class ContactData extends Component {
 
     generateInput(inputtype, config) {
         let value = '';
-        if (inputtype === 'select') value = config.options[0].value
-        return { inputtype, config, value };
+        if (inputtype === 'select') value = config.options[0].value;
+        return { inputtype, config, value, touched: false };
     }
 
     validateInput(value, rules) {
@@ -107,6 +107,7 @@ class ContactData extends Component {
         updatedField.value = updatedValue;
 
         updatedField.valid = this.validateInput(updatedValue, updatedField.validation);
+        if (!updatedField.touched) updatedField.touched = true;
 
         updatedFields[field] = updatedField;
         
@@ -188,7 +189,7 @@ class ContactData extends Component {
                         key = { fields[field].config.id }
                         { ...fields[field] }
                         changed = { e => this.handleInput(e, field) }
-                        shouldValidate = { fields[field].validation }
+                        shouldValidate = { fields[field].validation }                       
                     />            
                 )) }
 

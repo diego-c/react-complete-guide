@@ -5,11 +5,11 @@ const input = props => {
     let inputElement = null;
 
     const classesAdded = [classes.Checkbox];
-    props.shouldValidate && props.valid ? 
+    (props.shouldValidate && props.valid && props.touched) ? 
     classesAdded.push(classes.Valid) :
     classesAdded.push(classes.Invalid);
 
-    if (!props.shouldValidate) {
+    if (!props.shouldValidate || !props.touched) {
         classesAdded.splice(1);
     }
 
