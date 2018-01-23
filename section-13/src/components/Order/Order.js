@@ -2,11 +2,11 @@ import React from 'react';
 import classes from './Order.css';
 
 const order = props => {
-    const name = props.customer.name.value,
+    const { name } = props.customer,
     { ingredients } = props,
     price = props.price.toFixed(2),
-    street = props.customer.street.value,
-    postalCode = props.customer.postalCode.value,
+    { street } = props.customer,
+    { postalCode } = props.customer,
     { delivery } = props;
 
     return (

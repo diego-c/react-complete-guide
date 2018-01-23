@@ -63,9 +63,20 @@ class ContactData extends Component {
         if (inputtype === 'select') value = config.options[0].value
         return { inputtype, config, value };
     }
-
+    
     orderHandler = e => {
-        e.preventDefault();
+        e.preventDefault();  
+
+        const { fields } = this.state,
+        { price } = this.state,
+        { ingredients } = this.props,
+        { history } = this.props,
+        customer = Object.keys(fields).reduce((acc, field) => {
+            if (field !== 'deliveryMethod') {
+                acc[field] = fields[field].value;
+            }
+            return acc;
+        }, {})     
         // Here we have access to ingredients and the total price easily via props!
         //console.log(this.props);
 
@@ -73,15 +84,15 @@ class ContactData extends Component {
         this.setState({ loading: true });
         axios.post('/orders.json', {
             date: (new Date()).toString(),
-            ingredients: this.props.ingredients,
-            customer: this.state.fields,
-            price: this.state.fields.deliveryMethod.value === 'fast' ? this.state.price + 8 : this.state.price + 4,
-            deliveryMethod: this.state.fields.deliveryMethod.value
+            ingredients,
+            customer,
+            price: fields.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
+            deliveryMethod: fields.deliveryMethod.value
         })
         .then(res => {            
             this.setState({ loading: false, sent: true }, () => {
                 setTimeout(() => {
-                    this.props.history.replace('/');
+                    history.replace('/');
                 }, 3000);
             });
         })
@@ -91,7 +102,7 @@ class ContactData extends Component {
         })
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.setState({ price: this.props.price });
         
         window.scroll({
