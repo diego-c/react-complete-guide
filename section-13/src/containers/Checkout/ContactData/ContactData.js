@@ -107,59 +107,15 @@ class ContactData extends Component {
         }        
     }
 
-    handleInput = e => {
-        let updatedValue = e.target.value;
+    handleInput = (e, field) => {
+        const updatedValue = e.target.value;
+        const updatedFields = { ...this.state.fields };
+        const updatedField = { ...this.state.fields[field] };
 
-        switch(e.target.getAttribute('name')) {
-
-            case 'name':
-                this.setState(prevState => {
-                    const updatedState = { ...prevState };
-                    const updatedFields = { ...updatedState.fields }
-                    updatedFields.name.value = updatedValue
-                    return { fields: updatedFields }
-                })
-                break;
-
-            case 'email':
-                this.setState(prevState => {
-                    const updatedState = { ...prevState };
-                    const updatedFields = { ...updatedState.fields }
-                    updatedFields.email.value = updatedValue
-                    return { fields: updatedFields }
-                })
-                break;
-
-            case 'street':
-                this.setState(prevState => {
-                    const updatedState = { ...prevState };
-                    const updatedFields = { ...updatedState.fields }
-                    updatedFields.street.value = updatedValue
-                    return { fields: updatedFields }
-                })
-                break;
-
-            case 'postalCode':
-                this.setState(prevState => {
-                    const updatedState = { ...prevState };
-                    const updatedFields = { ...updatedState.fields }
-                    updatedFields.postalCode.value = updatedValue
-                    return { fields: updatedFields }
-                })
-                break;
-            
-            case 'deliveryMethod':
-                this.setState(prevState => {
-                    const updatedState = { ...prevState };
-                    const updatedFields = { ...updatedState.fields };
-                    updatedFields.deliveryMethod.value = updatedValue;
-                    return { fields: updatedFields };
-                })
-                break;
-
-            default:
-                console.log('Oops, could not update field!');        
-        }
+        updatedField.value = updatedValue;
+        updatedFields[field] = updatedField;
+        
+        this.setState({ fields: updatedFields });        
     }
 
     render() {
@@ -181,8 +137,8 @@ class ContactData extends Component {
                     <Input
                         key = { fields[field].config.id }
                         { ...fields[field] }
-                        changed = { this.handleInput }
-                        />            
+                        changed = { e => this.handleInput(e, field) }
+                    />            
                 )) }
 
                     <Button

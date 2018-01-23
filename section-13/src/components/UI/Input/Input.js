@@ -10,24 +10,27 @@ const input = props => {
             inputElement = 
             <input 
             { ...props.config }
+            onChange = { props.changed }
             className = { classes.Checkbox }
-            onChange = { props.changed } />
+            />
 
             break;
         
         case 'textarea':
             inputElement = 
             <textarea 
+            onChange = { props.changed }
             { ...props.config }
-            onChange = { props.changed } />
+            />
 
             break;     
             
         case 'select':
             inputElement = 
             (
-                <select 
+                <select  
                 onChange = { props.changed }
+                { ...props.config }              
                 value = { props.value ? props.value : props.config.options[0].value }
                 name = { props.config.name }>
                     { props.config.options.map(option => (
