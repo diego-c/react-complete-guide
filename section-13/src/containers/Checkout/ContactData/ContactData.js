@@ -12,13 +12,18 @@ class ContactData extends Component {
         loading: false,
         price: 0,
         fields: {
-            name: this.generateInput('input', {
+            name: { ...this.generateInput('input', {
                 id: "name",
                 type: "text",
                 name: "name",                
                 label: "Name",
                 placeholder: "Your name.."
             }),
+                validation: {
+                    required: true
+                },
+                valid: false
+            },
             street: this.generateInput('input', {
                 id: "street",
                 name:"street",
@@ -26,13 +31,20 @@ class ContactData extends Component {
                 label: "Street",
                 placeholder:"St..."
             }),
-            postalCode: this.generateInput('input', {
+            postalCode: { ...this.generateInput('input', {
                 id: "postalCode",
                 name: "postalCode",
                 type: "number",                  
                 label: "Postal Code",
                 placeholder: "ZIP..."
             }),
+                validation: {
+                    required: true,
+                    minLength: 6,
+                    maxLength: 6
+                },
+                valid: false
+            },
             email: this.generateInput('input', {
                 id: "email",
                 name: "email",                    
@@ -62,6 +74,38 @@ class ContactData extends Component {
         let value = '';
         if (inputtype === 'select') value = config.options[0].value
         return { inputtype, config, value };
+    }
+
+    validateInput(value, rules) {
+        let validationArray = [];
+
+        if (rules.required) {
+            validationArray.push((value.trim() !== ''))
+        }
+
+        if (rules.minLength) {
+            validationArray.push((value.length >= rules.minLength));
+        }
+
+        if (rules.maxLength) {
+            validationArray.push((value.length <= rules.maxLength));
+        }
+
+        return validationArray.every(entry => entry);
+    }
+
+    handleInput = (e, field) => {
+        const updatedValue = e.target.value;
+        const updatedFields = { ...this.state.fields };
+        const updatedField = { ...this.state.fields[field] };
+
+        updatedField.value = updatedValue;
+
+        updatedField.valid = this.validateInput(updatedValue, updatedField.validation);
+
+        updatedFields[field] = updatedField;
+        
+        this.setState({ fields: updatedFields });        
     }
     
     orderHandler = e => {
@@ -118,16 +162,6 @@ class ContactData extends Component {
         }        
     }
 
-    handleInput = (e, field) => {
-        const updatedValue = e.target.value;
-        const updatedFields = { ...this.state.fields };
-        const updatedField = { ...this.state.fields[field] };
-
-        updatedField.value = updatedValue;
-        updatedFields[field] = updatedField;
-        
-        this.setState({ fields: updatedFields });        
-    }
 
     render() {
         const { fields } = this.state;   
