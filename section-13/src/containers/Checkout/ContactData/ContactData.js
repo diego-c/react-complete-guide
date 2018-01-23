@@ -79,16 +79,21 @@ class ContactData extends Component {
     validateInput(value, rules) {
         let validationArray = [];
 
-        if (rules.required) {
-            validationArray.push((value.trim() !== ''))
-        }
+        if (rules) {
 
-        if (rules.minLength) {
-            validationArray.push((value.length >= rules.minLength));
-        }
+            if (rules.required) {
+                validationArray.push((value.trim() !== ''))
+            }
 
-        if (rules.maxLength) {
-            validationArray.push((value.length <= rules.maxLength));
+            if (rules.minLength) {
+                validationArray.push((value.length >= rules.minLength));
+            }
+
+            if (rules.maxLength) {
+                validationArray.push((value.length <= rules.maxLength));
+            }
+        } else {
+            validationArray.push(true);
         }
 
         return validationArray.every(entry => entry);
@@ -154,12 +159,12 @@ class ContactData extends Component {
             left: 0,
             behavior: 'smooth'
         })
-
-        if (document.querySelector('input[name="name"]')) {
-            setTimeout(() => {
+        
+        setTimeout(() => {
+            if (document.querySelector('input[name="name"]')) {
                 document.querySelector('input[name="name"]').focus()
-            }, 1000);
-        }        
+            }
+        }, 1000);                
     }
 
 
@@ -183,6 +188,7 @@ class ContactData extends Component {
                         key = { fields[field].config.id }
                         { ...fields[field] }
                         changed = { e => this.handleInput(e, field) }
+                        shouldValidate = { fields[field].validation }
                     />            
                 )) }
 

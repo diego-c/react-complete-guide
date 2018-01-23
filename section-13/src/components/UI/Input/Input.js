@@ -4,6 +4,15 @@ import classes from './Input.css';
 const input = props => {
     let inputElement = null;
 
+    const classesAdded = [classes.Checkbox];
+    props.shouldValidate && props.valid ? 
+    classesAdded.push(classes.Valid) :
+    classesAdded.push(classes.Invalid);
+
+    if (!props.shouldValidate) {
+        classesAdded.splice(1);
+    }
+
     switch (props.inputtype) {
 
         case 'input':
@@ -11,7 +20,7 @@ const input = props => {
             <input 
             { ...props.config }
             onChange = { props.changed }
-            className = { classes.Checkbox }
+            className = { classesAdded.join(' ') }
             />
 
             break;

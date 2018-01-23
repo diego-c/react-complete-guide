@@ -1,3 +1,15 @@
+.Valid {
+    outline: none;
+    border: none;
+    box-shadow: .2rem .2rem 1rem #16aa67, -.2rem -.2rem 1rem #16aa67;
+}
+
+.Invalid {
+    outline: none;
+    border: none;
+    box-shadow: .2rem .2rem 1rem #dd5f39, -.2rem -.2rem 1rem #dd5f39;
+}
+
 @media (min-width: 250px) and (max-width: 500px) {
     input[type="checkbox"].Checkbox {
         transform: scale(1.5);
