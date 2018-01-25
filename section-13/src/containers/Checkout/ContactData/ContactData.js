@@ -23,6 +23,7 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
+                errorMsg: 'This field is required',
                 valid: false
             },
             street: this.generateInput('input', {
@@ -44,6 +45,7 @@ class ContactData extends Component {
                     minLength: 6,
                     maxLength: 6
                 },
+                errorMsg: 'Six characters are required for this field',
                 valid: false
             },
             email: this.generateInput('input', {
@@ -217,7 +219,8 @@ class ContactData extends Component {
                         key = { fields[field].config.id }
                         { ...fields[field] }
                         changed = { e => this.handleInput(e, field) }
-                        shouldValidate = { fields[field].validation }                       
+                        shouldValidate = { fields[field].validation } 
+                        error = { fields[field].errorMsg ? fields[field].errorMsg : null }                      
                     />            
                 )) }
 

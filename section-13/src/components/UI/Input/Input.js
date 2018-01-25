@@ -3,11 +3,17 @@ import classes from './Input.css';
 
 const input = props => {
     let inputElement = null;
+    let errorMsg = null;
 
     const classesAdded = [classes.Checkbox];
-    (props.shouldValidate && props.valid && props.touched) ? 
-    classesAdded.push(classes.Valid) :
-    classesAdded.push(classes.Invalid);
+    if (props.shouldValidate && props.valid && props.touched) { 
+    classesAdded.push(classes.Valid)
+    } else {
+        classesAdded.push(classes.Invalid);
+        errorMsg = 
+        <p 
+        style={{ color: '#d63333', fontSize: '1.5rem', fontWeight: 'bold', margin: '1.5rem auto 2rem auto' }}>{ props.error }</p>;
+    }    
 
     if (!props.shouldValidate || !props.touched) {
         classesAdded.splice(1);
@@ -63,6 +69,7 @@ const input = props => {
             <label 
             htmlFor= { props.config.id }>
                 { props.config.label }: { inputElement }
+                { errorMsg }
             </label>
         </div>
     )
