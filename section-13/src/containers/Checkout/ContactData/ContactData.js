@@ -9,6 +9,7 @@ import Input from '../../../components/UI/Input/Input';
 class ContactData extends Component {
     state = {
         sent: false,
+        canOrder: false,
         loading: false,
         price: 0,
         fields: {
@@ -107,12 +108,19 @@ class ContactData extends Component {
         updatedField.value = updatedValue;
 
         updatedField.valid = this.validateInput(updatedValue, updatedField.validation);
-        if (!updatedField.touched) updatedField.touched = true;
+        updatedField.touched = true;
 
         updatedFields[field] = updatedField;
+        console.log('Updated fields: ', updatedFields);
+        const canOrder = this.canOrder(updatedFields);
         
-        this.setState({ fields: updatedFields });        
+        this.setState({ fields: updatedFields, canOrder });        
     }
+
+    /* componentDidUpdate(prevProps, prevState) {
+        const canOrder = this.canOrder(prevState);
+        this.setState({ canOrder });
+    } */
     
     orderHandler = e => {
         e.preventDefault();  
@@ -168,6 +176,26 @@ class ContactData extends Component {
         }, 1000);                
     }
 
+    canOrder = (fields) => {
+        const checkValidation = [];
+
+        for (let field in fields) {
+            if (field !== 'deliveryMethod') {            
+                if (fields[field].touched) {
+                    if (Object.keys(fields[field]).includes('valid')) {
+                        checkValidation.push(fields[field].valid);         
+                    } else {
+                        checkValidation.push(true);                        
+                    }
+                } else {
+                    checkValidation.push(false);                    
+                }
+            } else {
+                checkValidation.push(true);
+            }
+        }
+        return checkValidation.every(entry => entry);
+    }
 
     render() {
         const { fields } = this.state;   
@@ -194,8 +222,8 @@ class ContactData extends Component {
                 )) }
 
                     <Button
-                    btnType = "Success"
-                    clicked = { this.orderHandler }>ORDER</Button>
+                    btnType = { this.state.canOrder ? 'Success' : 'Danger' }                    
+                    clicked = { this.state.canOrder ? this.orderHandler : null }>ORDER</Button>
                 </form>
             </div>
         )
