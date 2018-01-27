@@ -1,4 +1,7 @@
-const reducer = (state = { counter: 0 }, action) => {
+import initState from './initState';
+
+const reducer = (state = initState, action) => {
+    
     switch(action.type) {
         case 'inc':
             return { 
