@@ -10,7 +10,8 @@ class Persons extends Component {
         return (
             <div>
                 <AddPerson 
-                personAdded={ () => this.props.actionHandler( actions.ADD_PERSON, Math.random(), 'Max', Math.floor( Math.random() * 40 )) } />
+                actionHandler = { this.props.actionHandler }
+                />
 
                 { this.props.persons.map(person => (
                     <Person 
