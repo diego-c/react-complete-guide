@@ -1,8 +1,8 @@
 import counterReducer from './counterReducer';
 import storeReducer from './storeReducer';
 import deleteReducer from './deleteReducer';
-import initState from './initState';
-import actions from './actions';
+import initState from '../state/initState';
+import actions from '../actions/actions';
 
 export default (state = initState, action) => {
 

@@ -1,4 +1,4 @@
-import initState from './initState';
+import initState from '../state/initState';
 
 export default (state = initState, action) => {
     if (action.type === 'delete') {

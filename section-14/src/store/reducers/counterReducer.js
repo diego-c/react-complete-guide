@@ -1,5 +1,5 @@
-import initState from './initState';
-import actions from './actions';
+import initState from '../state/initState';
+import actions from '../actions/actions';
 
 const reducer = (state = initState, action) => {
     
