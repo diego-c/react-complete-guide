@@ -6,7 +6,7 @@ import classes from './Burger.css';
 const burger = props => {
     let transformedIngredients = [];
     Object.keys(props.ingredients).forEach(ingredient => {
-        for (let i = 0; i < props.ingredients[ingredient]; i++) {
+        for (let i = 0; i < props.ingredients[ingredient].amount; i++) {
             transformedIngredients.push(<BurgerIngredient type = { ingredient } key = { ingredient + i } />);
         }
     });
@@ -25,10 +25,22 @@ const burger = props => {
 
 burger.propTypes = {
     ingredients: PropTypes.shape({
-        'meat': PropTypes.number,
-        'cheese': PropTypes.number,
-        'salad': PropTypes.number,
-        'bacon': PropTypes.number
+        'meat': PropTypes.shape({
+            amount: PropTypes.number,
+            price: PropTypes.number
+        }),
+        'cheese': PropTypes.shape({
+            amount: PropTypes.number,
+            price: PropTypes.number
+        }),
+        'salad': PropTypes.shape({
+            amount: PropTypes.number,
+            price: PropTypes.number
+        }),
+        'bacon': PropTypes.shape({
+            amount: PropTypes.number,
+            price: PropTypes.number
+        })
     }).isRequired
 }
 export default burger;
