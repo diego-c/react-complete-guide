@@ -1,27 +1,29 @@
 import initState from './initState';
+import actions from './actions';
 
 const reducer = (state = initState, action) => {
     
     switch(action.type) {
-        case 'inc':
+
+        case actions.INCREMENT:
             return { 
                 ...state,
                 counter: state.counter + 1
             }
 
-        case 'dec':
+        case actions.DECREMENT:
             return { 
                 ...state,
                 counter: state.counter - 1
             }
 
-        case 'add':
+        case actions.ADD:
             return {
                 ...state,
                 counter: state.counter + action.value
             }
         
-        case 'sub':
+        case actions.SUBTRACT:
             return {
                 ...state,
                 counter: state.counter - action.value

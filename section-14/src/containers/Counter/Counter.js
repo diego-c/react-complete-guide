@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import actions from '../../store/actions';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
@@ -9,15 +10,15 @@ class Counter extends Component {
     render () {
         return (
             <div>
-                <CounterOutput value={this.props.counter} />
-                <CounterControl label="Increment" clicked={this.props.onIncrementCounter} />
-                <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
-                <CounterControl label="Add 10" clicked={() => this.props.onAddCounter(10)}  />
-                <CounterControl label="Subtract 15" clicked={() => this.props.onSubCounter(15)}  />
+                <CounterOutput value={ this.props.counter } />
+                <CounterControl label="Increment" clicked={ () => this.props.actionHandler(actions.INCREMENT) } />
+                <CounterControl label="Decrement" clicked={ () => this.props.actionHandler(actions.DECREMENT) }  />
+                <CounterControl label="Add 10" clicked={ () => this.props.actionHandler(actions.ADD, 10) }  />
+                <CounterControl label="Subtract 15" clicked={ () => this.props.actionHandler(actions.SUBTRACT, 15) }  />
                 <hr />
 
                 <button
-                onClick = { this.props.onStoreResult }>
+                onClick = { () => this.props.actionHandler(actions.STORE) }>
                 Store result
                 </button>
 
@@ -25,7 +26,7 @@ class Counter extends Component {
                     { this.props.results.map((result, index) => (
                         <li 
                         key = { result.id }
-                        onClick = { () => this.props.onDeleteResult(result.id) }>
+                        onClick = { () => this.props.actionHandler(actions.DELETE, null, result.id) }>
                         { result.value }
                         </li>
                     )) }
@@ -45,12 +46,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIncrementCounter: () => dispatch({ type: 'inc' }),
-        onDecrementCounter: () => dispatch({ type: 'dec' }),
-        onAddCounter: (value) => dispatch({ type: 'add', value }),
-        onSubCounter: (value) => dispatch({ type: 'sub', value }),
-        onStoreResult: () => dispatch({ type: 'store' }),
-        onDeleteResult: (id) => dispatch({ type: 'delete', id })
+        actionHandler: (type, value, id) => dispatch({ type, value, id })
     }
 }
 
