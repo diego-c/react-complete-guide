@@ -1,33 +1,20 @@
-import initState from '../state/initState';
 import actions from '../actions/actions';
 
-const reducer = (state = initState, action) => {
+const reducer = (state = 0, action) => {
     
     switch(action.type) {
 
         case actions.INCREMENT:
-            return { 
-                ...state,
-                counter: state.counter + 1
-            }
+            return state + 1;
 
         case actions.DECREMENT:
-            return { 
-                ...state,
-                counter: state.counter - 1
-            }
+            return  state - 1;
 
         case actions.ADD:
-            return {
-                ...state,
-                counter: state.counter + action.value
-            }
+            return state + action.value;
         
         case actions.SUBTRACT:
-            return {
-                ...state,
-                counter: state.counter - action.value
-            }
+            return state - action.value
 
         default:
             return state;

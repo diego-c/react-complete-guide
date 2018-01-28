@@ -8,6 +8,7 @@ import CounterOutput from '../../components/CounterOutput/CounterOutput';
 class Counter extends Component {   
 
     render () {
+        console.log(this.props.results);
         return (
             <div>
                 <CounterOutput value={ this.props.counter } />
@@ -18,7 +19,7 @@ class Counter extends Component {
                 <hr />
 
                 <button
-                onClick = { () => this.props.actionHandler(actions.STORE) }>
+                onClick = { () => this.props.actionHandler(actions.STORE, this.props.counter) }>
                 Store result
                 </button>
 
