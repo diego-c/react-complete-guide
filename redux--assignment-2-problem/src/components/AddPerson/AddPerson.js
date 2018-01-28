@@ -18,6 +18,13 @@ class AddPerson extends Component {
         this.setState({ age });
     }
 
+    manageAction = () => {
+        Promise.resolve(this.props.actionHandler(actions.ADD_PERSON, Math.random(), this.state.name, this.state.age))
+        .then(() => {
+            this.setState({ name: '', age: '' });
+        })
+    }
+
     render() {
         return (
         <div className="AddPerson">
@@ -33,7 +40,7 @@ class AddPerson extends Component {
             onChange = { e => this.ageChangedHandler(e) }
             value = { this.state.age } />
 
-            <button onClick={ () => this.props.actionHandler(actions.ADD_PERSON, Math.random(), this.state.name, this.state.age) }>Add Person</button>
+            <button onClick={ this.manageAction }>Add Person</button>
         </div>
         )
     }
