@@ -10,15 +10,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import { addIngredient, removeIngredient } from '../../store/actions/actions';
 
-const INGREDIENT_PRICES = {
-    'meat': 1.3,
-    'salad': 0.5,
-    'cheese': 0.3,
-    'bacon': 0.7
-}
 const initState = {
     ingredients: null,
-    totalPrice: 4,
     purchasing: false,
     purchasable: false,
     showSpinner: false,
@@ -26,18 +19,7 @@ const initState = {
 }
 
 class BurgerBuilder extends Component {
-    state = { ...initState }    
-    
-    /* async componentDidMount() {
-        let data = null;
-        try {
-            data = await axios.get(`/ingredients.json`);
-            this.props.fetchIngredients(actions.FETCH_INGREDIENTS, data);        
-        } catch(error) {
-            this.props.fetchIngredients(actions.FETCH_INGREDIENTS_FAILURE, error);
-        }
-        this.props.fetchIngredients(actions.FETCH_INGREDIENTS_SUCCESS, data);
-    } */
+    state = { ...initState }
 
     purchaseHandler = () => {
         this.setState({ purchasing: true })
@@ -48,30 +30,6 @@ class BurgerBuilder extends Component {
         this.setState({ purchasable: true }) :
         this.setState({ purchasable: false });
     }
-
-    addIngredientHandler = type => {
-        this.setState(prevState => {
-            const currentIngredients = { ...prevState.ingredients };
-            currentIngredients[type]++;
-            const newPrice = prevState.totalPrice + INGREDIENT_PRICES[type];
-            return { ingredients: currentIngredients, totalPrice: newPrice };
-        });
-    };
-
-    removeIngredientHandler = type => {
-        this.setState(prevState => {
-            const currentIngredients = { ...prevState.ingredients };
-            let newPrice = prevState.totalPrice;
-            if (currentIngredients[type] > 0) {
-                currentIngredients[type]--;
-            }
-            if (newPrice - INGREDIENT_PRICES[type] >= 4.00) {
-                newPrice -= INGREDIENT_PRICES[type];
-            }
-            
-            return { ingredients: currentIngredients, totalPrice: newPrice };
-        });
-    };
 
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false });
