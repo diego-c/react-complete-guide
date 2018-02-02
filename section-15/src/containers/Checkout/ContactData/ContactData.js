@@ -5,6 +5,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-order';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import Input from '../../../components/UI/Input/Input';
+import { connect } from 'react-redux';
 
 class ContactData extends Component {
     state = {
@@ -104,8 +105,9 @@ class ContactData extends Component {
 
     handleInput = (e, field) => {
         const updatedValue = e.target.value;
-        const updatedFields = { ...this.state.fields };
-        const updatedField = { ...this.state.fields[field] };
+        const updatedState = { ...this.state };
+        const updatedFields = { ...updatedState.fields };
+        const updatedField = { ...updatedFields[field] };
 
         updatedField.value = updatedValue;
 
@@ -113,7 +115,6 @@ class ContactData extends Component {
         updatedField.touched = true;
 
         updatedFields[field] = updatedField;
-        console.log('Updated fields: ', updatedFields);
         const canOrder = this.canOrder(updatedFields);
         
         this.setState({ fields: updatedFields, canOrder });        
@@ -128,7 +129,7 @@ class ContactData extends Component {
         e.preventDefault();  
 
         const { fields } = this.state,
-        { price } = this.state,
+        { price } = this.props,
         { ingredients } = this.props,
         { history } = this.props,
         customer = Object.keys(fields).reduce((acc, field) => {
@@ -200,6 +201,8 @@ class ContactData extends Component {
     }
 
     render() {
+        console.log('[ContactData] Price state:', this.state.price);
+
         const { fields } = this.state;   
 
         let formOrSpinner = null;
@@ -235,4 +238,9 @@ class ContactData extends Component {
     }
 }
 
-export default withErrorHandler(ContactData, axios);
+const mapStateToProps = state => ({
+    ingredients: state.info.ingredients,
+    price: state.info.price
+})
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));

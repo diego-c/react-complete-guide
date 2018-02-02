@@ -25,10 +25,22 @@ const checkoutSummary = props => (
 checkoutSummary.propTypes = {
     clicked: PropTypes.func,
     ingredients: PropTypes.shape({
-        meat: PropTypes.number,
-        cheese: PropTypes.number,
-        salad: PropTypes.number,
-        bacon: PropTypes.number
+        meat: PropTypes.shape({
+          amount: PropTypes.number.isRequired,
+          price: PropTypes.number.isRequired  
+        }),
+        cheese: PropTypes.shape({
+          amount: PropTypes.number.isRequired,
+          price: PropTypes.number.isRequired  
+        }),
+        salad: PropTypes.shape({
+          amount: PropTypes.number.isRequired,
+          price: PropTypes.number.isRequired  
+        }),
+        bacon: PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired
+        })
     }).isRequired
 }
 

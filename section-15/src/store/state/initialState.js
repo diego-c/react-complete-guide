@@ -1,5 +1,6 @@
 export default { 
-    info: { ingredients: {
+    info: { 
+        ingredients: {
         bacon: {
             amount: 0,
             price: 0.7
@@ -16,7 +17,9 @@ export default {
             amount: 0,
             price: 0.5
         }
-    }, price: 4},
+    }, 
+    price: 4
+    },
     status: { 
         data: {},
         isFetching: false,
