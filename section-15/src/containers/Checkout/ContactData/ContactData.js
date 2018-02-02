@@ -119,11 +119,6 @@ class ContactData extends Component {
         
         this.setState({ fields: updatedFields, canOrder });        
     }
-
-    /* componentDidUpdate(prevProps, prevState) {
-        const canOrder = this.canOrder(prevState);
-        this.setState({ canOrder });
-    } */
     
     orderHandler = e => {
         e.preventDefault();  
@@ -201,7 +196,6 @@ class ContactData extends Component {
     }
 
     render() {
-        console.log('[ContactData] Price state:', this.state.price);
 
         const { fields } = this.state;   
 

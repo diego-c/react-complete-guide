@@ -7,9 +7,7 @@ import classes from './OrderSummary.css';
 // class component only for debugging purposes
 
 class OrderSummary extends Component {
-    componentWillUpdate() {
-        console.log('[OrderSummary] Updating Order Summary!');
-    }
+    
     render() {
 
         const ingredients = 
