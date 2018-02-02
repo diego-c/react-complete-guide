@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BuildControl from './BuildControl/BuildControl';
 import classes from './BuildControls.css';
-import actions from '../../../store/actions/actions';
 
 const controls = [
     { label: 'Salad', type: 'salad' },
@@ -18,8 +17,8 @@ const buildControls = props => (
             <BuildControl 
             key = { label }
             label = { label }
-            ingredientAdded = { () => props.ingredientAdded(actions.ADD_INGREDIENT, type) }
-            ingredientRemoved = { () => props.ingredientRemoved(actions.REMOVE_INGREDIENT, type) }
+            ingredientAdded = { () => props.ingredientAdded(type) }
+            ingredientRemoved = { () => props.ingredientRemoved(type) }
             disabledInfo = { props.disabledInfo[type] } />            
         )) }
         <button 

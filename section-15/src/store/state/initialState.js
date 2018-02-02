@@ -1,15 +1,26 @@
-import axios from '../../axios-order';
-
-const fetchIngredients = async () => {
-    let ingredients; 
-    
-    try {
-        ingredients = await axios.get('/ingredients.json')
-        return ingredients;
-
-    } catch(error) {
-        console.error(`Oops, could not fetch ingredients! ${error}`);
+export default { 
+    info: { ingredients: {
+        bacon: {
+            amount: 0,
+            price: 0.7
+        },
+        cheese: {
+            amount: 0,
+            price: 0.3
+        },
+        meat: {
+            amount: 0,
+            price: 1.3
+        },
+        salad: {
+            amount: 0,
+            price: 0.5
+        }
+    }, price: 4},
+    status: { 
+        data: {},
+        isFetching: false,
+        error: false,
+        errorMsg: ''
     }
 }
-
-export default fetchIngredients;

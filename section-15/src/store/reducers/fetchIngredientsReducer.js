@@ -1,38 +1,35 @@
-import actions from '../actions/actions';
+import { actions } from '../actions/actions';
 
-export default (state = { fetchIngredients: { data: {}, isFetching: false, error: false, errorMsg: '' }}, action) => {
+export default (state = { }, action) => {
 
     switch(action.type) {
 
         case actions.FETCH_INGREDIENTS:       
-            return {
-                fetchIngredients: {
+            return {    
+                    ...state,            
                     data: action.data,
                     isFetching: true,
                     error: false,
-                    errorMsg: ''
-                }                
-            }
+                    errorMsg: ''                  
+                }
 
         case actions.FETCH_INGREDIENTS_SUCCESS:
             return {
-                fetchIngredients: {
+                    ...state,                
                     data: action.data,
                     isFetching: false,
                     error: false,
-                    errorMsg: ''
-                }                
-            }
+                    errorMsg: ''                    
+                }
         
         case actions.FETCH_INGREDIENTS_FAILURE:
-            return {
-                fetchIngredients: {
+            return {  
+                    ...state,              
                     data: action.data,
                     isFetching: false,
                     error: true,
-                    errorMsg: action.data.message
-                }                
-            }
+                    errorMsg: action.data.message      
+                }
 
         default:
             return state;

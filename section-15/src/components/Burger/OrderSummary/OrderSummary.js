@@ -15,14 +15,14 @@ class OrderSummary extends Component {
         const ingredients = 
         Object
             .keys(this.props.ingredients)
-            .filter(ing => this.props.ingredients[ing])
+            .filter(ing => this.props.ingredients[ing].amount)
             .map(ing => (
                             <li
                             className = { classes.OrderItem }      
                             key={ ing }>
                             <span style = {{ textTransform: 'capitalize', color: '#952ab2' }}>
                                 { ing }
-                            </span>: <strong>{ this.props.ingredients[ing] }</strong></li>
+                            </span>: <strong>{ this.props.ingredients[ing].amount }</strong></li>
                         ));
 
         return (
@@ -52,10 +52,22 @@ class OrderSummary extends Component {
 
 OrderSummary.propTypes = {
     ingredients: PropTypes.shape({
-        'meat': PropTypes.number,
-        'cheese': PropTypes.number,
-        'salad': PropTypes.number,
-        'bacon': PropTypes.number
+        'meat': PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired
+        }),
+        'cheese': PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired
+        }),
+        'salad': PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired
+        }),
+        'bacon': PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired
+        })
     }).isRequired,
     price: PropTypes.number.isRequired,
     cancel: PropTypes.func.isRequired,

@@ -8,7 +8,7 @@ import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
-import actions from '../../store/actions/actions';
+import { addIngredient, removeIngredient } from '../../store/actions/actions';
 
 const INGREDIENT_PRICES = {
     'meat': 1.3,
@@ -28,7 +28,7 @@ const initState = {
 class BurgerBuilder extends Component {
     state = { ...initState }    
     
-    async componentDidMount() {
+    /* async componentDidMount() {
         let data = null;
         try {
             data = await axios.get(`/ingredients.json`);
@@ -37,7 +37,7 @@ class BurgerBuilder extends Component {
             this.props.fetchIngredients(actions.FETCH_INGREDIENTS_FAILURE, error);
         }
         this.props.fetchIngredients(actions.FETCH_INGREDIENTS_SUCCESS, data);
-    }
+    } */
 
     purchaseHandler = () => {
         this.setState({ purchasing: true })
@@ -88,7 +88,7 @@ class BurgerBuilder extends Component {
     }
 
     render() {
-        console.log(this.props.fetched);
+
         const disabledInfo = { ...this.props.ingredients };
 
         let isDisabled = false;
@@ -124,8 +124,8 @@ class BurgerBuilder extends Component {
             <Aux>
                 <Burger ingredients = { this.props.ingredients } />
                     <BuildControls 
-                    ingredientAdded = { this.props.addRemoveIngredients } 
-                    ingredientRemoved = { this.props.addRemoveIngredients }
+                    ingredientAdded = { this.props.addIngredient } 
+                    ingredientRemoved = { this.props.removeIngredient }
                     disabledInfo = { disabledInfo }
                     isDisabled = { isDisabled }
                     price = { this.props.price }
@@ -149,16 +149,15 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        fetched: state.fetchIngredients,
-        ingredients: state.ingredients,
-        price: state.price
+        ingredients: state.info.ingredients,
+        price: state.info.price
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        addRemoveIngredients: (type, ingredient) => dispatch({ type, ingredient }),
-        fetchIngredients: (type, data) => dispatch({ type, data })
+        addIngredient: ingredient => dispatch(addIngredient(ingredient)),
+        removeIngredient: ingredient => dispatch(removeIngredient(ingredient))
     }
 }
 
