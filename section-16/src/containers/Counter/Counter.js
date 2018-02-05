@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from '../../store/actions/actions';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+import { addAction, subtractAction, decrementAction, incrementAction, storeAction, deleteAction } from '../../store/actions/actions';
 
 class Counter extends Component {   
 
@@ -12,14 +13,14 @@ class Counter extends Component {
         return (
             <div>
                 <CounterOutput value={ this.props.counter } />
-                <CounterControl label="Increment" clicked={ () => this.props.actionHandler(actions.INCREMENT) } />
-                <CounterControl label="Decrement" clicked={ () => this.props.actionHandler(actions.DECREMENT) }  />
-                <CounterControl label="Add 10" clicked={ () => this.props.actionHandler(actions.ADD, 10) }  />
-                <CounterControl label="Subtract 15" clicked={ () => this.props.actionHandler(actions.SUBTRACT, 15) }  />
+                <CounterControl label="Increment" clicked={ this.props.incrementHandler } />
+                <CounterControl label="Decrement" clicked={ this.props.decrementHandler }  />
+                <CounterControl label="Add 10" clicked={ () => this.props.addHandler(10) }  />
+                <CounterControl label="Subtract 15" clicked={ () => this.props.subtractHandler(15) }  />
                 <hr />
 
                 <button
-                onClick = { () => this.props.actionHandler(actions.STORE, this.props.counter) }>
+                onClick = { () => this.props.storeHandler(this.props.counter) }>
                 Store result
                 </button>
 
@@ -27,7 +28,7 @@ class Counter extends Component {
                     { this.props.results.map((result, index) => (
                         <li 
                         key = { result.id }
-                        onClick = { () => this.props.actionHandler(actions.DELETE, null, result.id) }>
+                        onClick = { () => this.props.deleteHandler(result.id) }>
                         { result.value }
                         </li>
                     )) }
@@ -47,7 +48,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        actionHandler: (type, value, id) => dispatch({ type, value, id })
+        addHandler: value => dispatch(addAction(value)),
+        subtractHandler: value => dispatch(subtractAction(value)),
+        incrementHandler: () => dispatch(incrementAction()),
+        decrementHandler: () => dispatch(decrementAction()),
+        storeHandler: value => dispatch(storeAction(value)),
+        deleteHandler: id => dispatch(deleteAction(id))
     }
 }
 

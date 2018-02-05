@@ -1,4 +1,4 @@
-import actions from '../actions/actions';
+import {actions} from '../actions/actions';
 
 export default (state = [], action) => {
     if (action.type === actions.DELETE) {
