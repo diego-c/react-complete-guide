@@ -33,10 +33,18 @@ export function subtractAction(value = 0) {
     }
 }
 
-export function storeAction(value) {
+function storeActionSync(value) {
     return {
         type: actions.STORE,
         value
+    }
+}
+
+export function storeAction(value) {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(storeActionSync(value))
+        }, 2000);
     }
 }
 
