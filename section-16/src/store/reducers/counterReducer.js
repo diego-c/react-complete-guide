@@ -1,4 +1,4 @@
-import {actions} from '../actions/actions';
+import actions from '../actions/actions';
 
 const reducer = (state = 0, action) => {
     
