@@ -8,8 +8,10 @@ function storeActionSync(value) {
 }
 
 export function storeAction(value) {
-    return dispatch => {
+    return (dispatch, getState) => {
         setTimeout(() => {
+            const oldState = getState().results;
+            console.log('Results:', oldState);
             dispatch(storeActionSync(value))
         }, 2000);
     }
