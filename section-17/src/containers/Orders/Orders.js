@@ -7,6 +7,7 @@ import withError from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Orders extends Component {
     state = {
+        loading: true,
         orders: null
     }
 
@@ -18,14 +19,17 @@ class Orders extends Component {
         } catch(err) {
             console.log(err);
         }
-        this.setState({ orders });
+        this.setState({ orders, loading: false });
     }
 
     render() {
+        const { loading } = this.state;
         const { orders } = this.state;
 
         let ordersOrSpinner =
 
+            loading ?
+            <Spinner /> :
             orders ?
             (
                 <div className = { classes.Orders }>
@@ -39,7 +43,7 @@ class Orders extends Component {
                         />
                     )) }
                 </div>
-            ) : <Spinner />
+            ) : <h1 style={{textAlign: 'center'}}>No orders to show at the moment.</h1>
         
 
         return ordersOrSpinner;
