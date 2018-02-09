@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Order.css';
 
 const order = props => {
+    console.log(props);
     const { name } = props.customer,
     { ingredients } = props,
     price = props.price.toFixed(2),
@@ -15,10 +16,10 @@ const order = props => {
         <p>Ingredients:</p>
         <ul>
             { Object.keys(ingredients).map(ingredient => (
-                ingredients[ingredient] ? 
+                ingredients[ingredient].amount ? 
                 <li
                 key = { ingredient }>
-                { ingredient } ( { ingredients[ingredient] } )
+                { ingredient } ( { ingredients[ingredient].amount } )
                 </li>
                 :
                 null
