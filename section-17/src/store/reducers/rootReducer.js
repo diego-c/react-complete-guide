@@ -1,6 +1,6 @@
 import fetchIngredientsReducer from './fetchIngredientsReducer';
 import initialState from '../state/initialState';
-import addRemoveIngredientsReducer from './addRemoveIngredientsReducer';
+import addRemoveIngredientsReducer from './burgerBuilder';
 
 export default function(state = initialState, action) {
     
