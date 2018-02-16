@@ -3,17 +3,9 @@ import { Route } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 
 class Checkout extends Component {
-    /* state = {
-        price: 0,
-        ingredients: {
-            meat: 1,
-            cheese: 1,
-            bacon: 1,
-            salad: 1
-        }
-    } */
 
     checkoutCancelHandler = () => {
         this.props.history.goBack();
@@ -47,14 +39,16 @@ class Checkout extends Component {
 
     render() {
         return (
-            <div>
-                <CheckoutSummary 
-                ingredients = { this.props.ingredients }
-                continue = { this.checkoutContinueHandler }
-                cancel = { this.checkoutCancelHandler } />
+            this.props.ingredients ? (
+                <div>
+                    <CheckoutSummary 
+                    ingredients = { this.props.ingredients }
+                    continue = { this.checkoutContinueHandler }
+                    cancel = { this.checkoutCancelHandler } />
 
-                <Route path={ this.props.match.url + "/contact-data" } component = { ContactData } />
-            </div>
+                    <Route path={ this.props.match.url + "/contact-data" } component = { ContactData } />
+                </div>
+            ) : <Redirect to = "/" />
         )
     }
 }
