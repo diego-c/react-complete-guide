@@ -35,7 +35,7 @@ export function fetchIngredientsAsync() {
         dispatch(fetchIngredientsSync())
 
         axios
-        .get('/ingredientss.json')
+        .get('/ingredients.json')
         .then(ingredients => {
             if (ingredients.data) {
             dispatch(fetchIngredientsSuccess(ingredients.data));

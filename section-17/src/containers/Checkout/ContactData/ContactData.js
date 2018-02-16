@@ -5,6 +5,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-order';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import Input from '../../../components/UI/Input/Input';
+import { sendOrderAsync } from '../../../store/actions/index'
 import { connect } from 'react-redux';
 
 class ContactData extends Component {
@@ -132,13 +133,30 @@ class ContactData extends Component {
                 acc[field] = fields[field].value;
             }
             return acc;
-        }, {})     
-        // Here we have access to ingredients and the total price easily via props!
-        //console.log(this.props);
+        }, {});     
+
+        const orderInfo = {
+            date: (new Date()).toString(),
+            ingredients,
+            customer,
+            price: fields.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
+            deliveryMethod: fields.deliveryMethod.value
+        }
+
+        this.setState({ loading: true });
+        this.props.sendOrder(orderInfo);
+
+        if (!this.props.order.orderStatus.error && !this.props.order.orderStatus.isSending) {
+            this.setState({ loading: false, sent: true }, () => {
+                setTimeout(() => {
+                    history.replace('/');
+                }, 3000);
+            });
+        }
 
         // Send order
-        this.setState({ loading: true });
-        axios.post('/orders.json', {
+        
+        /* axios.post('/orders.json', {
             date: (new Date()).toString(),
             ingredients,
             customer,
@@ -155,7 +173,7 @@ class ContactData extends Component {
         .catch(err => {
             console.log(err);
             this.setState({ loading: false });
-        })
+        }) */
     }
 
     componentDidMount() {
@@ -234,7 +252,12 @@ class ContactData extends Component {
 
 const mapStateToProps = state => ({
     ingredients: state.info.ingredients,
-    price: state.info.price
+    price: state.info.price,
+    order: state.order
+});
+
+const mapDispatchToProps = dispatch => ({
+    sendOrder: orderInfo => dispatch(sendOrderAsync(orderInfo))
 })
 
-export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

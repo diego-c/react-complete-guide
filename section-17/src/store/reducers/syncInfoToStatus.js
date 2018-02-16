@@ -12,6 +12,9 @@ export default (state = { }, action) => {
             newIngredients = { ...newStatus.ingredients };
         }
         return {
+            order: {
+                ...state.order
+            },
             info: {
                 ...state.info,
                 ingredients: newIngredients,
