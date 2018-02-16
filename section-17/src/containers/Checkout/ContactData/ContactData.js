@@ -10,9 +10,7 @@ import { connect } from 'react-redux';
 
 class ContactData extends Component {
     state = {
-        sent: false,
         canOrder: false,
-        loading: false,
         price: 0,
         fields: {
             name: { ...this.generateInput('input', {
@@ -127,7 +125,7 @@ class ContactData extends Component {
         const { fields } = this.state,
         { price } = this.props,
         { ingredients } = this.props,
-        { history } = this.props,
+        //{ history } = this.props,
         customer = Object.keys(fields).reduce((acc, field) => {
             if (field !== 'deliveryMethod') {
                 acc[field] = fields[field].value;
@@ -142,17 +140,7 @@ class ContactData extends Component {
             price: fields.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
             deliveryMethod: fields.deliveryMethod.value
         }
-
-        this.setState({ loading: true });
-        this.props.sendOrder(orderInfo);
-
-        if (!this.props.order.orderStatus.error && !this.props.order.orderStatus.isSending) {
-            this.setState({ loading: false, sent: true }, () => {
-                setTimeout(() => {
-                    history.replace('/');
-                }, 3000);
-            });
-        }
+        this.props.sendOrder(orderInfo);     
 
         // Send order
         
@@ -174,6 +162,18 @@ class ContactData extends Component {
             console.log(err);
             this.setState({ loading: false });
         }) */
+    }
+
+    redirect = () => {
+        console.log(this.props.order.orderStatus);
+        if (this.props.order.orderStatus.sent) {
+
+            const { history } = this.props;
+
+            setTimeout(() => {
+                history.replace('/');
+            }, 3000);
+        }
     }
 
     componentDidMount() {
@@ -214,7 +214,6 @@ class ContactData extends Component {
     }
 
     render() {
-
         const { fields } = this.state;   
 
         let formOrSpinner = null;
@@ -222,7 +221,7 @@ class ContactData extends Component {
         this.props.order.orderStatus.isSending ?
         formOrSpinner = <Spinner /> :
 
-        this.state.sent ? 
+        this.props.order.orderStatus.sent ? 
         formOrSpinner = <h4 style = {{textAlign: 'center', padding: '4rem' }}>Thank you for your order, you will be redirected soon...Have a good day!</h4>
         :
         formOrSpinner = (

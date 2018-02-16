@@ -2,6 +2,7 @@ export default {
     order: {
         orderStatus: {
             isSending: false,
+            sent: false,
             error: false,
             errorMsg: ''
         },

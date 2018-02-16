@@ -19,7 +19,8 @@ export default (state = { }, action) => {
                 orderInfo: action.orderInfo,
                 orderStatus: {
                     ...state.orderStatus,
-                    isSending: false
+                    isSending: false,
+                    sent: true
                 }
             }
 
