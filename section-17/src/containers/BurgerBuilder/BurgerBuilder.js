@@ -8,7 +8,7 @@ import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
-import { addIngredient, removeIngredient } from '../../store/actions/burgerBuilder';
+import { addIngredient, removeIngredient } from '../../store/actions/index';
 
 const initState = {
     ingredients: null,
