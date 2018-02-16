@@ -2,36 +2,43 @@ import actions from './actionTypes';
 import axios from '../../axios-order';
 
 // sync actions
-export function fetchIngredientsSync() {
+function fetchIngredientsSync() {
     return {
         type: actions.FETCH_INGREDIENTS
     }
 }
 
-export function fetchIngredientsSuccess(ingredients) {
+function fetchIngredientsSuccess(ingredients) {
     return {
         type: actions.FETCH_INGREDIENTS_SUCCESS,
         ingredients
     }    
 }
 
-export function fetchIngredientsFailure(error) {
+function fetchIngredientsFailure(error) {
     return {
         type: actions.FETCH_INGREDIENTS_FAILURE,
         error
     }    
 }
 
+function syncInfoToStatus() {
+    return {
+        type: actions.SYNC_INFO_TO_STATUS
+    }
+}
+
 // async actions
 export function fetchIngredientsAsync() {
     return dispatch => {
 
-        dispatch(fetchIngredientsSync)
+        dispatch(fetchIngredientsSync())
 
         axios
         .get('/ingredients.json')
         .then(ingredients => {
-            dispatch(fetchIngredientsSuccess(ingredients.data))
+            dispatch(fetchIngredientsSuccess(ingredients.data));
+            dispatch(syncInfoToStatus());
         })
         .catch(error => {
             dispatch(fetchIngredientsFailure(error))

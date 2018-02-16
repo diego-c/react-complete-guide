@@ -7,7 +7,7 @@ export default (state = { }, action) => {
         case actions.FETCH_INGREDIENTS:       
             return {    
                     ...state,            
-                    ingredients: {},
+                    ingredients: null,
                     isFetching: true,
                     error: false,
                     errorMsg: ''                  
@@ -25,7 +25,7 @@ export default (state = { }, action) => {
         case actions.FETCH_INGREDIENTS_FAILURE:
             return {  
                     ...state,              
-                    ingredients: {},
+                    ingredients: null,
                     isFetching: false,
                     error: true,
                     errorMsg: action.error.message      

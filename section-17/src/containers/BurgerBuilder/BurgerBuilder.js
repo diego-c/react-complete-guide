@@ -8,8 +8,10 @@ import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
-import { addIngredient, removeIngredient } from '../../store/actions/index';
-import { fetchIngredientsAsync } from '../../store/actions/orders';
+import { 
+        addIngredient,
+        removeIngredient,
+        fetchIngredientsAsync } from '../../store/actions/index';
 import store from '../../store/store';
 
 const initState = {
@@ -88,20 +90,27 @@ class BurgerBuilder extends Component {
 
         let burgerOrSpinner;
 
-        this.props.ingredients ?
-        burgerOrSpinner = (
-            <Aux>
-                <Burger ingredients = { this.props.ingredients } />
-                    <BuildControls 
-                    ingredientAdded = { this.props.addIngredient } 
-                    ingredientRemoved = { this.props.removeIngredient }
-                    disabledInfo = { disabledInfo }
-                    isDisabled = { isDisabled }
-                    price = { this.props.price }
-                    purchase = { this.purchaseHandler } />
-            </Aux>
-        ) :
-        this.state.error ? burgerOrSpinner = <p style={{textAlign: 'center'}}>Sorry, couldn't fetch the ingredients :(</p> : burgerOrSpinner = <Spinner />
+        if (this.props.ingredients) {
+            burgerOrSpinner = (
+                <Aux>
+                    <Burger ingredients = { this.props.ingredients } />
+                        <BuildControls 
+                        ingredientAdded = { this.props.addIngredient } 
+                        ingredientRemoved = { this.props.removeIngredient }
+                        disabledInfo = { disabledInfo }
+                        isDisabled = { isDisabled }
+                        price = { this.props.price }
+                        purchase = { this.purchaseHandler } />
+                </Aux>
+            )
+        } else {
+            if (this.state.error) {
+                burgerOrSpinner = <p style={{textAlign: 'center'}}>Sorry, couldn't fetch the ingredients :(</p>
+            } else {
+                burgerOrSpinner = <Spinner />;
+            }
+        }
+        
         return (
             <Aux>
                 <Modal 
@@ -118,7 +127,7 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.status.ingredients,
+        ingredients: state.info.ingredients,
         price: state.info.price
     }
 }
