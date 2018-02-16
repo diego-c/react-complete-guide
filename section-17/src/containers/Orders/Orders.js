@@ -4,50 +4,56 @@ import Order from '../../components/Order/Order';
 import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withError from '../../hoc/withErrorHandler/withErrorHandler';
+import { connect } from 'react-redux';
+import { fetchOrdersAsync } from '../../store/actions/index';
+import store from '../../store/store';
 
 class Orders extends Component {
-    state = {
-        loading: true,
-        orders: null
-    }
 
-    // my own implementation of fetching orders from firebase
-    async componentDidMount() {
-        let orders;
-        try {
-            orders = (await axios.get('/orders.json')).data;
-        } catch(err) {
-            console.log(err);
-        }
-        this.setState({ orders, loading: false });
+    componentDidMount() {
+       this.props.fetchOrders();
+       console.log('Store state: ', store.getState());
     }
 
     render() {
-        const { loading } = this.state;
-        const { orders } = this.state;
+        const { isFetching } = this.props.orders.ordersStatus;
+        const { ordersInfo } = this.props.orders;
+
+        /* console.log('Fetching: ', isFetching);
+        console.log('Orders info: ', ordersInfo); */
 
         let ordersOrSpinner =
 
-            loading ?
+            isFetching ?
             <Spinner /> :
-            orders ?
+            ordersInfo ?
             (
                 <div className = { classes.Orders }>
-                    { Object.keys(orders).map(orderId => (
+                    { Object.keys(ordersInfo).map(orderId => (
                         <Order
                         key = { orderId }
-                        customer = { orders[orderId].customer }
-                        price = { orders[orderId].price }
-                        delivery = { orders[orderId].deliveryMethod }
-                        ingredients = { orders[orderId].ingredients }
+                        customer = { ordersInfo[orderId].customer }
+                        price = { ordersInfo[orderId].price }
+                        delivery = { ordersInfo[orderId].deliveryMethod }
+                        ingredients = { ordersInfo[orderId].ingredients }
                         />
                     )) }
                 </div>
-            ) : <h1 style={{textAlign: 'center'}}>No orders to show at the moment.</h1>
+            ) : <h1 style={{textAlign: 'center'}}>{ this.props.orders.ordersStatus.errorMsg }</h1>
         
 
         return ordersOrSpinner;
     }
 }
 
-export default withError(Orders, axios);
+const mapStateToProps = state => ({
+    orders: state.orders
+});
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchOrders: () => dispatch(fetchOrdersAsync())
+    }    
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withError(Orders, axios));

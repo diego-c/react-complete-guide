@@ -1,35 +1,43 @@
-import actions from './actionTypes';
+import actionTypes from './actionTypes';
 import axios from '../../axios-order';
 
 // sync actions
-function sendOrderSync() {
+function fetchOrdersSync() {
     return {
-        type: actions.SEND_ORDER
-    }    
-};
+        type: actionTypes.FETCH_ORDERS
+    }
+}
 
-function sendOrderSuccess(orderInfo) {
+function fetchOrdersSuccess(orders) {
     return {
-        type: actions.SEND_ORDER_SUCCESS,
-        orderInfo
-    }    
-};
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        orders
+    }
+}
 
-function sendOrderFailure(error) {
+function fetchOrdersFailure(error) {
     return {
-        type: actions.SEND_ORDER_FAILURE,
+        type: actionTypes.FETCH_INGREDIENTS_FAILURE,
         error
-    }    
-};
+    }
+}
 
 // async actions
-export function sendOrderAsync(orderInfo) {
+export function fetchOrdersAsync() {
     return dispatch => {
-        dispatch(sendOrderSync());
+        dispatch(fetchOrdersSync());
 
         axios
-        .post('/orders.json', { ...orderInfo })
-        .then(() => dispatch(sendOrderSuccess(orderInfo)))
-        .catch(err => dispatch(sendOrderFailure(err)))
+        .get('/orders.json')
+        .then(orders => {
+            if (orders.data) {
+                dispatch(fetchOrdersSuccess(orders.data));
+            } else {
+                throw new Error('Oops, could not fetch orders!');
+            }
+        })
+        .catch(err => {
+            dispatch(fetchOrdersFailure(err));
+        })
     }
-} 
+}

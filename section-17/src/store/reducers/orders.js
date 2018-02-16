@@ -1,35 +1,32 @@
-import actionTypes from "../actions/actionTypes";
+import actionTypes from '../actions/actionTypes';
 
 export default (state = { }, action) => {
-
     switch(action.type) {
-
-        case actionTypes.SEND_ORDER:
+        case (actionTypes.FETCH_ORDERS):
             return {
                 ...state,
-                orderStatus: {
-                    ...state.orderStatus,
-                    isSending: true
+                ordersStatus: {
+                    ...state.ordersStatus,
+                    isFetching: true
                 }
             }
 
-        case actionTypes.SEND_ORDER_SUCCESS:
+        case (actionTypes.FETCH_ORDERS_SUCCESS):
             return {
                 ...state,
-                orderInfo: action.orderInfo,
-                orderStatus: {
-                    ...state.orderStatus,
-                    isSending: false,
-                    sent: true
-                }
+                ordersStatus: {
+                    ...state.ordersStatus,
+                    isFetching: false
+                },
+                ordersInfo: action.orders
             }
 
-        case actionTypes.SEND_ORDER_FAILURE:
+        case (actionTypes.FETCH_ORDERS_FAILURE):
             return {
                 ...state,
-                orderStatus: {
-                    ...state.orderStatus,
-                    isSending: false,
+                ordersStatus: {
+                    ...state.ordersStatus,
+                    isFetching: false,
                     error: true,
                     errorMsg: action.error.message
                 }

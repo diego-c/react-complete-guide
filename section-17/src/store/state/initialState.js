@@ -1,4 +1,12 @@
 export default {
+    orders: {
+        ordersStatus: {
+            isFetching: false,
+            error: false,
+            errorMsg: ''
+        },
+        ordersInfo: null   
+    },
     order: {
         orderStatus: {
             isSending: false,

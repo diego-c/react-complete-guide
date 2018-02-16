@@ -7,5 +7,8 @@ export default {
     SYNC_INFO_TO_STATUS: 'sync info to status',
     SEND_ORDER: 'send order',
     SEND_ORDER_SUCCESS: 'send order success',
-    SEND_ORDER_FAILURE: 'send order failure'
+    SEND_ORDER_FAILURE: 'send order failure',
+    FETCH_ORDERS: 'fetch orders',
+    FETCH_ORDERS_SUCCESS: 'fetch orders success',
+    FETCH_ORDERS_FAILURE: 'fetch orders failure'
 }
