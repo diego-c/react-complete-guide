@@ -9,6 +9,8 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import { addIngredient, removeIngredient } from '../../store/actions/index';
+import { fetchIngredientsAsync } from '../../store/actions/orders';
+import store from '../../store/store';
 
 const initState = {
     ingredients: null,
@@ -34,6 +36,15 @@ class BurgerBuilder extends Component {
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false });
         this.props.history.push('/');
+    }
+
+    componentDidUpdate() {
+        console.log('Store state: ', store.getState());
+        console.log('Ingredients status: ', this.props.ingredients);
+    }
+
+    componentDidMount() {
+        this.props.fetchIngredients();
     }
 
     purchaseContinueHandler = () => { 
@@ -107,7 +118,7 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.info.ingredients,
+        ingredients: state.status.ingredients,
         price: state.info.price
     }
 }
@@ -115,7 +126,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addIngredient: ingredient => dispatch(addIngredient(ingredient)),
-        removeIngredient: ingredient => dispatch(removeIngredient(ingredient))
+        removeIngredient: ingredient => dispatch(removeIngredient(ingredient)),
+        fetchIngredients: () => dispatch(fetchIngredientsAsync())
     }
 }
 
