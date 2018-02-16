@@ -15,11 +15,9 @@ import {
 import store from '../../store/store';
 
 const initState = {
-    ingredients: null,
     purchasing: false,
     purchasable: false,
-    showSpinner: false,
-    error: null
+    showSpinner: false
 }
 
 class BurgerBuilder extends Component {
@@ -30,7 +28,7 @@ class BurgerBuilder extends Component {
     }
 
     updatePurchaseState() {
-        Object.values(this.state.ingredients).some(val => val) ?
+        Object.values(this.props.ingredients).some(val => val) ?
         this.setState({ purchasable: true }) :
         this.setState({ purchasable: false });
     }
@@ -40,13 +38,9 @@ class BurgerBuilder extends Component {
         this.props.history.push('/');
     }
 
-    componentDidUpdate() {
-        console.log('Store state: ', store.getState());
-        console.log('Ingredients status: ', this.props.ingredients);
-    }
-
     componentDidMount() {
         this.props.fetchIngredients();
+        console.log(store.getState())
     }
 
     purchaseContinueHandler = () => { 
@@ -104,8 +98,8 @@ class BurgerBuilder extends Component {
                 </Aux>
             )
         } else {
-            if (this.state.error) {
-                burgerOrSpinner = <p style={{textAlign: 'center'}}>Sorry, couldn't fetch the ingredients :(</p>
+            if (this.props.error) {
+                burgerOrSpinner = <p style={{textAlign: 'center'}}>{ this.props.error }</p>
             } else {
                 burgerOrSpinner = <Spinner />;
             }
@@ -128,7 +122,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.info.ingredients,
-        price: state.info.price
+        price: state.info.price,
+        error: state.status.error && state.status.errorMsg
     }
 }
 

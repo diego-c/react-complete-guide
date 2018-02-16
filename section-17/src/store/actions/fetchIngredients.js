@@ -35,10 +35,14 @@ export function fetchIngredientsAsync() {
         dispatch(fetchIngredientsSync())
 
         axios
-        .get('/ingredients.json')
+        .get('/ingredientss.json')
         .then(ingredients => {
+            if (ingredients.data) {
             dispatch(fetchIngredientsSuccess(ingredients.data));
             dispatch(syncInfoToStatus());
+            } else {
+                throw new Error('Network Error: could not fetch ingredients.');
+            }
         })
         .catch(error => {
             dispatch(fetchIngredientsFailure(error))
