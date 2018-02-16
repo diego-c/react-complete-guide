@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BuildControl from './BuildControl/BuildControl';
 import classes from './BuildControls.css';
+import Spinner from '../../UI/Spinner/Spinner';
 
 const controls = [
     { label: 'Salad', type: 'salad' },
@@ -10,23 +11,28 @@ const controls = [
     { label: 'Meat', type: 'meat' }    
 ];
 
-const buildControls = props => (
-    <div className = { classes.BuildControls }>
-        <p className = { classes.CurrentPrice }>Current Price: <strong>{ props.price.toFixed(2) }</strong></p>
-        { controls.map(({ label, type }) => (                           
-            <BuildControl 
-            key = { label }
-            label = { label }
-            ingredientAdded = { () => props.ingredientAdded(type) }
-            ingredientRemoved = { () => props.ingredientRemoved(type) }
-            disabledInfo = { props.disabledInfo[type] } />            
-        )) }
-        <button 
-        disabled = { props.isDisabled }
-        className = { classes.OrderButton }
-        onClick = { props.purchase }>ORDER NOW!</button>
-    </div>
-);
+const buildControls = props => {
+
+    const controlsOrSpinner = props.disabledInfo ? (
+        <div className = { classes.BuildControls }>
+            <p className = { classes.CurrentPrice }>Current Price: <strong>{ props.price.toFixed(2) }</strong></p>
+            { controls.map(({ label, type }) => (                           
+                <BuildControl 
+                key = { label }
+                label = { label }
+                ingredientAdded = { () => props.ingredientAdded(type) }
+                ingredientRemoved = { () => props.ingredientRemoved(type) }
+                disabledInfo = { props.disabledInfo[type] } />            
+            )) }
+            <button 
+            disabled = { props.isDisabled }
+            className = { classes.OrderButton }
+            onClick = { props.purchase }>ORDER NOW!</button>
+        </div>
+    ) : <Spinner />
+
+    return controlsOrSpinner
+};
 
 buildControls.propTypes = {
     price: PropTypes.number.isRequired,
@@ -37,7 +43,7 @@ buildControls.propTypes = {
         'salad': PropTypes.bool,
         'bacon': PropTypes.bool,
         'cheese': PropTypes.bool
-    }).isRequired,
+    }),
     isDisabled: PropTypes.bool.isRequired,
     purchase: PropTypes.func.isRequired
 }

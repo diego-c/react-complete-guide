@@ -20,6 +20,6 @@ buildControl.propTypes = {
     label: PropTypes.oneOf(['Salad', 'Bacon', 'Meat', 'Cheese']).isRequired,
     ingredientAdded: PropTypes.func.isRequired,
     ingredientRemoved: PropTypes.func.isRequired,
-    disabledInfo: PropTypes.bool.isRequired
+    disabledInfo: PropTypes.bool
 }
 export default buildControl;
