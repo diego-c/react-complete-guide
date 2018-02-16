@@ -120,7 +120,7 @@ class ContactData extends Component {
         
         this.setState({ fields: updatedFields, canOrder });        
     }
-    
+
     orderHandler = e => {
         e.preventDefault();  
 
@@ -219,7 +219,7 @@ class ContactData extends Component {
 
         let formOrSpinner = null;
 
-        this.state.loading ?
+        this.props.order.orderStatus.isSending ?
         formOrSpinner = <Spinner /> :
 
         this.state.sent ? 
