@@ -12,7 +12,6 @@ import {
         addIngredient,
         removeIngredient,
         fetchIngredientsAsync } from '../../store/actions/index';
-import store from '../../store/store';
 
 const initState = {
     purchasing: false,
@@ -40,7 +39,6 @@ class BurgerBuilder extends Component {
 
     componentDidMount() {
         this.props.fetchIngredients();
-        console.log(store.getState())
     }
 
     purchaseContinueHandler = () => { 

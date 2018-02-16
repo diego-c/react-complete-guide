@@ -165,7 +165,6 @@ class ContactData extends Component {
     }
 
     redirect = () => {
-        console.log(this.props.order.orderStatus);
         if (this.props.order.orderStatus.sent) {
 
             const { history } = this.props;
