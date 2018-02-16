@@ -244,7 +244,7 @@ class ContactData extends Component {
                 </form>
             </div>
         )
-
+        this.redirect();
         return formOrSpinner;
     }
 }

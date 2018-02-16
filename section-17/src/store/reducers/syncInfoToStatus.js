@@ -13,7 +13,7 @@ export default (state = { }, action) => {
         }
         return {
             order: {
-                ...state.order
+                ...initialState.order
             },
             info: {
                 ...state.info,
