@@ -10,5 +10,8 @@ export default {
     SEND_ORDER_FAILURE: 'send order failure',
     FETCH_ORDERS: 'fetch orders',
     FETCH_ORDERS_SUCCESS: 'fetch orders success',
-    FETCH_ORDERS_FAILURE: 'fetch orders failure'
+    FETCH_ORDERS_FAILURE: 'fetch orders failure',
+    DELETE_ORDER: 'delete order',
+    DELETE_ORDER_SUCCESS: 'delete order success',
+    DELETE_ORDER_FAILURE: 'delete order failure'
 }

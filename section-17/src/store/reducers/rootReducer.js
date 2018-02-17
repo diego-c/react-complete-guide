@@ -2,7 +2,7 @@ import fetchIngredientsReducer from './fetchIngredientsReducer';
 import initialState from '../state/initialState';
 import addRemoveIngredientsReducer from './burgerBuilder';
 import orderReducer from './order';
-import fetchOrdersReducer from './orders';
+import ordersReducer from './orders';
 import syncInfoToStatus from './syncInfoToStatus';
 import actionTypes from '../actions/actionTypes';
 
@@ -16,7 +16,7 @@ export default function(state = initialState, action) {
     
     else {
         return {
-            orders: fetchOrdersReducer(state.orders, action),
+            orders: ordersReducer(state.orders, action),
             order: orderReducer(state.order, action),
             info: addRemoveIngredientsReducer(state.info, action),
             status: fetchIngredientsReducer(state.status, action)

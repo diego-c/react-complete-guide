@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './Order.css';
+import Button from '../UI/Button/Button';
 
 const order = props => {
     const { name } = props.customer,
@@ -27,6 +28,11 @@ const order = props => {
         <p>Price: <strong>$ { price }</strong></p>
         <p>Delivery address: <strong>{ street }, { postalCode }</strong></p>
         <p>Delivery method: <u><strong>{ delivery }</strong></u></p>
+        <Button
+        btnType="Danger"
+        clicked = { props.delete }>
+        Delete Order
+        </Button>
     </div>
     )
 };

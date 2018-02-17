@@ -5,7 +5,13 @@ export default {
             error: false,
             errorMsg: ''
         },
-        ordersInfo: null   
+        ordersInfo: null,
+        ordersDeleteStatus: {
+            orderId: null,
+            isDeleting: false,
+            error: false,
+            errorMsg: ''
+        }   
     },
     order: {
         orderStatus: {

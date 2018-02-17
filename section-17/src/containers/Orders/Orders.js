@@ -5,22 +5,22 @@ import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withError from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
-import { fetchOrdersAsync } from '../../store/actions/index';
-import store from '../../store/store';
+import { fetchOrdersAsync, deleteOrderAsync } from '../../store/actions/index';
 
 class Orders extends Component {
 
     componentDidMount() {
        this.props.fetchOrders();
-       console.log('Store state: ', store.getState());
+    }
+
+    deleteOrder = id => {
+        console.log('About to delete the order with id: ', id);
+        this.props.deleteOrder(id);
     }
 
     render() {
         const { isFetching } = this.props.orders.ordersStatus;
         const { ordersInfo } = this.props.orders;
-
-        /* console.log('Fetching: ', isFetching);
-        console.log('Orders info: ', ordersInfo); */
 
         let ordersOrSpinner =
 
@@ -29,13 +29,14 @@ class Orders extends Component {
             ordersInfo ?
             (
                 <div className = { classes.Orders }>
-                    { Object.keys(ordersInfo).map(orderId => (
+                    { Object.keys(ordersInfo).map(orderId => (                
                         <Order
                         key = { orderId }
                         customer = { ordersInfo[orderId].customer }
                         price = { ordersInfo[orderId].price }
                         delivery = { ordersInfo[orderId].deliveryMethod }
                         ingredients = { ordersInfo[orderId].ingredients }
+                        delete = { () => this.deleteOrder(orderId) }
                         />
                     )) }
                 </div>
@@ -52,7 +53,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrders: () => dispatch(fetchOrdersAsync())
+        fetchOrders: () => dispatch(fetchOrdersAsync()),
+        deleteOrder: orderId => dispatch(deleteOrderAsync(orderId))
     }    
 };
 

@@ -32,6 +32,41 @@ export default (state = { }, action) => {
                 }
             }
 
+        case (actionTypes.DELETE_ORDER):
+            return {
+                ...state,
+                ordersDeleteStatus: {
+                    ...state.ordersDeleteStatus,
+                    orderId: action.orderId,
+                    isDeleting: true
+                }
+            }
+
+        case (actionTypes.DELETE_ORDER_SUCCESS):
+            const newState = { ...state };
+            const newOrders = { ...newState.ordersInfo };
+            delete newOrders[action.orderId];
+
+            return {
+                ...state,
+                ordersInfo: newOrders,
+                ordersDeleteStatus: {
+                    ...state.ordersDeleteStatus,
+                    isDeleting: false
+                }
+            }
+
+        case (actionTypes.DELETE_ORDER_FAILURE):
+            return {
+                ...state,
+                ordersDeleteStatus: {
+                    ...state.ordersDeleteStatus,
+                    isDeleting: false,
+                    error: true,
+                    errorMsg: action.error.message
+                }
+            }
+
         default:
             return state;
     }
