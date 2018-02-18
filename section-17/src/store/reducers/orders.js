@@ -1,42 +1,45 @@
 import actionTypes from '../actions/actionTypes';
 import updateObject from './utils/utils';
 
-export default (state = { }, action) => {
-    switch(action.type) {
-        case (actionTypes.FETCH_ORDERS):
-            return updateObject(state, {
-                ordersStatus: updateObject(state.ordersStatus, {
-                    isFetching: true
-                })
-            })
 
-        case (actionTypes.FETCH_ORDERS_SUCCESS):
-            return updateObject(state, {
-                ordersStatus: updateObject(state.ordersStatus, {
-                    isFetching: false
-                }),
-                ordersInfo: action.orders
-            })
+const fetchOrders = (state, action) => {
+    return updateObject(state, {
+        ordersStatus: updateObject(state.ordersStatus, {
+            isFetching: true
+        })
+    })
+}
 
-        case (actionTypes.FETCH_ORDERS_FAILURE):
-            return updateObject(state, {
-                ordersStatus: updateObject(state.ordersStatus, {
-                    isFetching: false,
-                    error: true,
-                    errorMsg: action.error.messsage
-                })
-            })
+const fetchOrdersSuccess = (state, action) => {
+    return updateObject(state, {
+        ordersStatus: updateObject(state.ordersStatus, {
+            isFetching: false
+        }),
+        ordersInfo: action.orders
+    })
+}
 
-        case (actionTypes.DELETE_ORDER):
-            return updateObject(state, {
-                ordersDeleteStatus: updateObject(state.ordersDeleteStatus, {
-                    orderId: action.orderId,
-                    isDeleting: true
-                })
-            })
+const fetchOrdersFailure = (state, action) => {
+    return updateObject(state, {
+        ordersStatus: updateObject(state.ordersStatus, {
+            isFetching: false,
+            error: true,
+            errorMsg: action.error.messsage
+        })
+    })
+}
 
-        case (actionTypes.DELETE_ORDER_SUCCESS):
-            const newState = { ...state };
+const deleteOrder = (state, action) => {
+    return updateObject(state, {
+        ordersDeleteStatus: updateObject(state.ordersDeleteStatus, {
+            orderId: action.orderId,
+            isDeleting: true
+        })
+    })
+}
+
+const deleteOrderSuccess = (state, action) => {
+    const newState = { ...state };
             const newOrders = { ...newState.ordersInfo };
             delete newOrders[action.orderId];
 
@@ -46,15 +49,37 @@ export default (state = { }, action) => {
                     isDeleting: false
                 })
             })
+}
+
+const deleteOrderFailure = (state, action) => {
+    return updateObject(state, {
+        ordersDeleteStatus: updateObject(state.ordersDeleteStatus, {
+            isDeleting: false,
+            error: true,
+            errorMsg: action.error.message
+        })
+    })
+}
+
+export default (state = { }, action) => {
+    switch(action.type) {
+        case (actionTypes.FETCH_ORDERS):
+           return fetchOrders(state, action);
+
+        case (actionTypes.FETCH_ORDERS_SUCCESS):
+           return fetchOrdersSuccess(state, action);
+
+        case (actionTypes.FETCH_ORDERS_FAILURE):
+           return fetchOrdersFailure(state, action);
+
+        case (actionTypes.DELETE_ORDER):
+           return deleteOrder(state, action);
+
+        case (actionTypes.DELETE_ORDER_SUCCESS):
+           return deleteOrderSuccess(state, action);
 
         case (actionTypes.DELETE_ORDER_FAILURE):
-            return updateObject(state, {
-                ordersDeleteStatus: updateObject(state.ordersDeleteStatus, {
-                    isDeleting: false,
-                    error: true,
-                    errorMsg: action.error.message
-                })
-            })
+           return deleteOrderFailure(state, action);
 
         default:
             return state;

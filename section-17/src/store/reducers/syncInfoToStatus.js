@@ -2,7 +2,8 @@ import actions from '../actions/actionTypes';
 import initialState from '../state/initialState';
 import updateObject from './utils/utils';
 
-export default (state = { }, action) => {
+
+const syncInfoToStatus = (state, action) => {
     if (action.type === actions.SYNC_INFO_TO_STATUS) {
 
         let newIngredients = null;
@@ -29,5 +30,9 @@ export default (state = { }, action) => {
         }
     } else {
         return state;
-    }    
+    }  
+}
+
+export default (state = { }, action) => {
+    return syncInfoToStatus(state, action);
 }
