@@ -6,6 +6,7 @@ import classes from './Auth.css'
 class Auth extends Component {
 
     state = {
+        validForm: false,
         controls: {
             email: { ...this.generateInput('input', {
                     id: "email",
@@ -178,7 +179,10 @@ class Auth extends Component {
 
         updatedControls[field] = updatedControl;
         
-        this.setState({ controls: updatedControls });        
+        this.setState({ 
+            controls: updatedControls,
+            validForm: Object.keys(updatedControls).every(control => updatedControls[control].valid)
+        });        
     }   
 
     generateInput(inputtype, config) {
