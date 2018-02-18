@@ -195,6 +195,11 @@ class Auth extends Component {
                             }) }
                         />
                     )) }
+
+                    <Button 
+                    btnType = "Success">
+                    Login
+                    </Button>
                 </form>
             </div>
         )
