@@ -162,8 +162,6 @@ class Auth extends Component {
 
         updatedControl.value = updatedValue;
 
-        console.log('Validate Input: ', this.validateInput(updatedValue, updatedControl.validation, field))
-
         const { valid, validation } = this.validateInput(updatedValue, updatedControl.validation, field);
 
         updatedControl.valid = valid;
@@ -191,8 +189,7 @@ class Auth extends Component {
 
     render() {        
         const { controls } = this.state;
-
-        console.log('[Auth.js] Validation fields: ', Object.keys(this.state.controls).map(v => this.state.controls[v].validation))
+        
         return (
             <div className = { classes.Auth }>
                 <h4>Enter your login info below</h4>
