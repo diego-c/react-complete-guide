@@ -4,7 +4,9 @@ import updateObject from './utils/utils';
 const authStart = (state, action) => {
     return updateObject(state, {
         authStatus: updateObject(state.authStatus, {
-            isProcessing: true
+            isProcessing: true,
+            error: false,
+            errors: null
         })
     })
 }
@@ -13,7 +15,9 @@ const authSuccess = (state, action) => {
     return updateObject(state, {
         authData: action.authData,
         authStatus: updateObject(state.authStatus, {
-            isProcessing: false
+            isProcessing: false,
+            error: false,
+            errors: null
         })
     })
 }
