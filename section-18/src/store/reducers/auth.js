@@ -1,5 +1,6 @@
 import actionTypes from '../actions/actionTypes';
 import updateObject from './utils/utils';
+import initialState from '../state/initialState';
 
 const authStart = (state, action) => {
     return updateObject(state, {
@@ -32,6 +33,12 @@ const authFailure = (state, action) => {
     })
 }
 
+const authLogout = (state, action) => {
+    return updateObject(state, {
+        ...initialState.auth
+    })
+}
+
 export default (state = { }, action) => {
 
     switch(action.type) {
@@ -43,6 +50,9 @@ export default (state = { }, action) => {
         
         case actionTypes.AUTH_FAILURE:
             return authFailure(state, action);
+
+        case actionTypes.AUTH_LOGOUT:
+            return authLogout(state, action)
         
         default:
             return state;
