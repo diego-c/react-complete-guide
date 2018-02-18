@@ -14,9 +14,12 @@ class Auth extends Component {
                     placeholder: "Your e-mail..." 
                 }),
                 validation: {
-                    required: true
+                    required: {
+                        value: true,
+                        errorMsg: 'This field is required',
+                        ok: false
+                    }
                 },
-                errorMsg: 'This field is required',
                 valid: false
             },
             password: { ...this.generateInput('input', {
@@ -27,36 +30,82 @@ class Auth extends Component {
                     placeholder: "Your password..." 
                 }),
                 validation: {
-                    required: true,
-                    minLength: 6
+                    required: {
+                        value: true,
+                        errorMsg: 'This field is required',
+                        ok: false
+                    },
+                    minLength: {
+                        value: 6,
+                        errorMsg: 'At least 6 characters are required for this field',
+                        ok: false
+                    }
                 },
-                errorMsg: 'At least six characters are required for this field',
                 valid: false
             }
         }
     }
 
-    validateInput(value, rules) {
+    validateInput = (value, rules, field) => {
         let validationArray = [];
+        let requiredValidation = null;
+        let minLengthValidation = null;
+        let maxLengthValidation = null;
 
         if (rules) {
+            if (rules.required) {                
+                value.trim() !== '' ? 
+                requiredValidation = {
+                    required: {
+                        ok: true
+                    }
+                    
+                } :
+                requiredValidation = {
+                    required: {
+                        ok: false
+                    }                    
+                }
 
-            if (rules.required) {
                 validationArray.push((value.trim() !== ''))
             }
 
             if (rules.minLength) {
-                validationArray.push((value.length >= rules.minLength));
+                value.length >= rules.minLength.value ?
+                minLengthValidation = {
+                    minLength: {
+                        ok: true
+                    }
+                } :
+                minLengthValidation = {
+                    minLength: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push((value.length >= rules.minLength.value));
             }
 
             if (rules.maxLength) {
-                validationArray.push((value.length <= rules.maxLength));
+                value.length <= rules.maxLength.value ?
+                maxLengthValidation = {
+                    maxLength: {
+                        ok: true
+                    }
+                } :
+                maxLengthValidation = {
+                    maxLength: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push((value.length <= rules.maxLength.value));
             }
         } else {
             validationArray.push(true);
         }
 
-        return validationArray.every(entry => entry);
+        return { valid: validationArray.every(entry => entry), validation: { ...requiredValidation, ...minLengthValidation, ...maxLengthValidation } }
     }
 
     handleInput = (e, field) => {
@@ -64,11 +113,25 @@ class Auth extends Component {
         const updatedState = { ...this.state };
         const updatedControls = { ...updatedState.controls };
         const updatedControl = { ...updatedControls[field] };
+        let updatedControlValidation = { ...updatedControl.validation }
 
         updatedControl.value = updatedValue;
 
-        updatedControl.valid = this.validateInput(updatedValue, updatedControl.validation);
+        console.log('Validate Input: ', this.validateInput(updatedValue, updatedControl.validation, field))
+
+        const { valid, validation } = this.validateInput(updatedValue, updatedControl.validation, field);
+
+        updatedControl.valid = valid;
         updatedControl.touched = true;
+        updatedControlValidation = Object.keys(updatedControlValidation).reduce((acc, v) => {
+            acc[v] = {
+                value: updatedControlValidation[v].value,
+                errorMsg: updatedControlValidation[v].errorMsg,
+                ok: validation[v].ok
+            }
+            return acc;
+        }, {})
+        updatedControl.validation = updatedControlValidation;
 
         updatedControls[field] = updatedControl;
         
@@ -84,6 +147,7 @@ class Auth extends Component {
     render() {        
         const { controls } = this.state;
 
+        console.log('[Auth.js] Validation fields: ', Object.keys(this.state.controls).map(v => this.state.controls[v].validation))
         return (
             <div>
                 <form action="">
@@ -92,8 +156,18 @@ class Auth extends Component {
                         key = { controls[field].config.id }
                         { ...controls[field] }
                         changed = { e => this.handleInput(e, field) }
-                        shouldValidate = { controls[field].validation } 
-                        error = { controls[field].errorMsg ? controls[field].errorMsg : null } 
+                        shouldValidate = { controls[field].validation }
+
+                        error = { 
+                            Object
+                            .keys(controls[field].validation)
+                            .map((v, i) => {
+                                return {
+                                    key: i,
+                                    errorMsg: controls[field].validation[v].errorMsg,
+                                    ok: controls[field].validation[v].ok
+                                }
+                            }) }
                         />
                     )) }
                 </form>
