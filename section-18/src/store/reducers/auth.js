@@ -6,7 +6,7 @@ const authStart = (state, action) => {
         authStatus: updateObject(state.authStatus, {
             isProcessing: true,
             error: false,
-            errors: null
+            errorInfo: null
         })
     })
 }
@@ -17,7 +17,7 @@ const authSuccess = (state, action) => {
         authStatus: updateObject(state.authStatus, {
             isProcessing: false,
             error: false,
-            errors: null
+            errorInfo: null
         })
     })
 }
@@ -27,7 +27,7 @@ const authFailure = (state, action) => {
         authStatus: {
             isProcessing: false,
             error: true,
-            errors: action.error
+            errorInfo: action.error
         }
     })
 }

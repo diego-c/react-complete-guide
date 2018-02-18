@@ -232,6 +232,14 @@ class Auth extends Component {
         (
             <div className = { classes.Auth }>
                 <h4>{ this.state.isSignup ? 'Sign up below' : 'Enter your login info below' }</h4>
+
+                { this.props.auth.authStatus.error ?
+                (
+                    <h5 style = {{ textAlign: 'center', color: 'red' }}>
+                     Sorry, { this.props.auth.authStatus.errorInfo.message.toLowerCase().split('_').join(' ') }
+                    </h5>
+                ) : null }
+
                 <form action="">
                     { Object.keys(controls).map(field => (
                         <Input

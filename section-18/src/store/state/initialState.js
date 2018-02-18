@@ -4,7 +4,7 @@ export default {
         authStatus: {
             isProcessing: false,
             error: false,
-            errors: null
+            errorInfo: null
         }
     },
     orders: {

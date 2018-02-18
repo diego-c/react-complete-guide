@@ -31,7 +31,7 @@ export const authAsync = (authInfo, method) => {
         })
         .catch(err => {
             console.log(err.response.data.error.errors[0].message);
-            dispatch(authFailure(err));
+            dispatch(authFailure(err.response.data.error));
         })
     }
 }
