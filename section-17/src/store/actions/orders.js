@@ -52,7 +52,6 @@ export function deleteOrderAsync(orderId) {
         .delete(`/orders/${orderId}.json`)
         .then(order => {
             dispatch(deleteOrderSuccess(orderId));
-            console.log('Successfully deleted the order: ', order.data);
             dispatch(fetchOrdersAsync());
         })
         .catch(err => {
