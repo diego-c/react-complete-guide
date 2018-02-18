@@ -10,7 +10,9 @@ import { fetchOrdersAsync, deleteOrderAsync } from '../../store/actions/index';
 class Orders extends Component {
 
     componentDidMount() {
-       this.props.fetchOrders();
+        if (this.props.auth) {
+            this.props.fetchOrders(this.props.auth.idToken);
+        }
     }
 
     deleteOrder = id => {
@@ -42,18 +44,25 @@ class Orders extends Component {
                 </div>
             ) : <h1 style={{textAlign: 'center'}}>{ this.props.orders.ordersStatus.errorMsg }</h1>
         
-
-        return ordersOrSpinner;
+        if (!this.props.auth) {
+            return <h1 style={{ textAlign: 'center' }}>Sorry, you don't seem to be authenticated</h1>
+        } else if (!this.props.orders.ordersInfo) {
+            return <h1 style={{ textAlign: 'center' }}>Sorry, no orders to show at the moment</h1>
+        } 
+        else {
+            return ordersOrSpinner;
+        }
     }
 }
 
 const mapStateToProps = state => ({
-    orders: state.orders
+    orders: state.orders,
+    auth: state.auth.authData
 });
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrders: () => dispatch(fetchOrdersAsync()),
+        fetchOrders: token => dispatch(fetchOrdersAsync(token)),
         deleteOrder: orderId => dispatch(deleteOrderAsync(orderId))
     }    
 };

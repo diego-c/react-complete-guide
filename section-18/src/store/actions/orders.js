@@ -60,12 +60,12 @@ export function deleteOrderAsync(orderId) {
     }
 }
 
-export function fetchOrdersAsync() {
+export function fetchOrdersAsync(token) {
     return dispatch => {
         dispatch(fetchOrdersSync());
 
         axios
-        .get('/orders.json')
+        .get(`/orders.json?auth=${token}`)
         .then(orders => {
             if (orders.data) {
                 dispatch(fetchOrdersSuccess(orders.data));

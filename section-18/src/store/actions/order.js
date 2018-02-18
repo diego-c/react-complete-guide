@@ -23,12 +23,12 @@ function sendOrderFailure(error) {
 };
 
 // async actions
-export function sendOrderAsync(orderInfo) {
+export function sendOrderAsync(token, orderInfo) {
     return dispatch => {
         dispatch(sendOrderSync());
 
         axios
-        .post('/orders.json', { ...orderInfo })
+        .post(`/orders.json?auth=${token}`, { ...orderInfo })
         .then(() => dispatch(sendOrderSuccess(orderInfo)))
         .catch(err => dispatch(sendOrderFailure(err)))
     }

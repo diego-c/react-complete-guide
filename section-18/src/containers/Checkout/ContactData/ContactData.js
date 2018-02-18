@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 class ContactData extends Component {
     state = {
+        isAuth: true,
         canOrder: false,
         price: 0,
         fields: {
@@ -140,28 +141,12 @@ class ContactData extends Component {
             price: fields.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
             deliveryMethod: fields.deliveryMethod.value
         }
-        this.props.sendOrder(orderInfo);     
-
-        // Send order
-        
-        /* axios.post('/orders.json', {
-            date: (new Date()).toString(),
-            ingredients,
-            customer,
-            price: fields.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
-            deliveryMethod: fields.deliveryMethod.value
-        })
-        .then(res => {            
-            this.setState({ loading: false, sent: true }, () => {
-                setTimeout(() => {
-                    history.replace('/');
-                }, 3000);
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            this.setState({ loading: false });
-        }) */
+        if (this.props.auth) {
+            this.setState({ isAuth: true });
+            this.props.sendOrder(this.props.auth.idToken, orderInfo);
+        } else {
+            this.setState({ isAuth: false });
+        }
     }
 
     redirect = () => {
@@ -244,18 +229,23 @@ class ContactData extends Component {
             </div>
         )
         this.redirect();
+        if (this.state.isAuth) {
         return formOrSpinner;
+        } else {
+            return <h1 style={{ textAlign: 'center' }}>Sorry, you need to be authenticated to make orders</h1>
+        }
     }
 }
 
 const mapStateToProps = state => ({
     ingredients: state.info.ingredients,
     price: state.info.price,
-    order: state.order
+    order: state.order,
+    auth: state.auth.authData
 });
 
 const mapDispatchToProps = dispatch => ({
-    sendOrder: orderInfo => dispatch(sendOrderAsync(orderInfo))
+    sendOrder: (token, orderInfo) => dispatch(sendOrderAsync(token, orderInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
