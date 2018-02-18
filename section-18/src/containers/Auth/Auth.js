@@ -9,7 +9,7 @@ class Auth extends Component {
             email: { ...this.generateInput('input', {
                     id: "email",
                     name: "email",                    
-                    label: "Email",
+                    label: "E-mail",
                     type:  "email",
                     placeholder: "Your e-mail..." 
                 }),
@@ -17,6 +17,20 @@ class Auth extends Component {
                     required: true
                 },
                 errorMsg: 'This field is required',
+                valid: false
+            },
+            password: { ...this.generateInput('input', {
+                    id: "password",
+                    name: "password",                    
+                    label: "Password",
+                    type:  "password",
+                    placeholder: "Your password..." 
+                }),
+                validation: {
+                    required: true,
+                    minLength: 6
+                },
+                errorMsg: 'At least six characters are required for this field',
                 valid: false
             }
         }
