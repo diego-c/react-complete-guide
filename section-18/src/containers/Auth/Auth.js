@@ -216,7 +216,7 @@ class Auth extends Component {
         <Spinner /> :
         (
             <div className = { classes.Auth }>
-                <h4>Enter your login info below</h4>
+                <h4>Sign up below</h4>
                 <form action="">
                     { Object.keys(controls).map(field => (
                         <Input
@@ -241,7 +241,7 @@ class Auth extends Component {
                     <Button 
                     btnType = "Success"
                     clicked = { e => this.handleSubmit(e) }>
-                    Login
+                    Sign up
                     </Button>
                 </form>
             </div>

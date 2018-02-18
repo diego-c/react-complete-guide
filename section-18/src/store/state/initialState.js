@@ -1,6 +1,6 @@
 export default {
     auth: {
-        token: null,
+        authData: null,
         authStatus: {
             isProcessing: false,
             error: false,

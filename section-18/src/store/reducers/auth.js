@@ -11,7 +11,7 @@ const authStart = (state, action) => {
 
 const authSuccess = (state, action) => {
     return updateObject(state, {
-        token: action.token,
+        authData: action.authData,
         authStatus: updateObject(state.authStatus, {
             isProcessing: false
         })
