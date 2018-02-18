@@ -40,15 +40,15 @@ const deleteOrder = (state, action) => {
 
 const deleteOrderSuccess = (state, action) => {
     const newState = { ...state };
-            const newOrders = { ...newState.ordersInfo };
-            delete newOrders[action.orderId];
+    const newOrders = { ...newState.ordersInfo };
+    delete newOrders[action.orderId];
 
-            return updateObject(state, {
-                ordersInfo: newOrders,
-                ordersDeleteStatus: updateObject(state.ordersDeleteStatus, {
-                    isDeleting: false
-                })
-            })
+    return updateObject(state, {
+        ordersInfo: newOrders,
+        ordersDeleteStatus: updateObject(state.ordersDeleteStatus, {
+            isDeleting: false
+        })
+    })
 }
 
 const deleteOrderFailure = (state, action) => {

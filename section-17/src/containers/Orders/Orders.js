@@ -14,17 +14,17 @@ class Orders extends Component {
     }
 
     deleteOrder = id => {
-        console.log('About to delete the order with id: ', id);
         this.props.deleteOrder(id);
     }
 
     render() {
         const { isFetching } = this.props.orders.ordersStatus;
         const { ordersInfo } = this.props.orders;
+        const { isDeleting } = this.props.orders.ordersDeleteStatus;
 
         let ordersOrSpinner =
 
-            isFetching ?
+            isFetching || isDeleting ?
             <Spinner /> :
             ordersInfo ?
             (

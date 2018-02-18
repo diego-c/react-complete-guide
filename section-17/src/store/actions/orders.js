@@ -51,12 +51,9 @@ export function deleteOrderAsync(orderId) {
         axios
         .delete(`/orders/${orderId}.json`)
         .then(order => {
-            if (order.data) {
-                dispatch(deleteOrderSuccess(orderId));
-                console.log('Successfully deleted the order: ', order.data);
-            } else {
-                throw new Error('Oops, could not delete the order ', orderId);
-            }
+            dispatch(deleteOrderSuccess(orderId));
+            console.log('Successfully deleted the order: ', order.data);
+            dispatch(fetchOrdersAsync());
         })
         .catch(err => {
             dispatch(deleteOrderFailure(err));
