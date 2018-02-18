@@ -58,6 +58,7 @@ class Auth extends Component {
         let minLengthValidation = null;
         let maxLengthValidation = null;
         let isEmailValidation = null;
+        let isNumericValidation = null;
 
         if (rules) {
             if (rules.required) {                
@@ -127,11 +128,29 @@ class Auth extends Component {
 
                 validationArray.push(isValidEmail);
             }
+
+            if (rules.isNumeric) {
+                const isValidNumber = /^\d+$/.test(value);
+
+                isValidNumber ?
+                isNumericValidation = {
+                    isNumeric: {
+                        ok: true
+                    }
+                } :
+                isNumericValidation = {
+                    isNumeric: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push(isValidNumber);
+            }
         } else {
             validationArray.push(true);
         }
 
-        return { valid: validationArray.every(entry => entry), validation: { ...requiredValidation, ...minLengthValidation, ...maxLengthValidation, ...isEmailValidation } }
+        return { valid: validationArray.every(entry => entry), validation: { ...requiredValidation, ...minLengthValidation, ...maxLengthValidation, ...isEmailValidation, ...isNumericValidation } }
     }
 
     handleInput = (e, field) => {
