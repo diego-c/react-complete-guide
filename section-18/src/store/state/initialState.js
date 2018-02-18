@@ -1,4 +1,12 @@
 export default {
+    auth: {
+        token: null,
+        authStatus: {
+            isProcessing: false,
+            error: false,
+            errorMsg: ''
+        }
+    },
     orders: {
         ordersStatus: {
             isFetching: false,

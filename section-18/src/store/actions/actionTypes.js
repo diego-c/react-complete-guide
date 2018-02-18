@@ -13,5 +13,8 @@ export default {
     FETCH_ORDERS_FAILURE: 'fetch orders failure',
     DELETE_ORDER: 'delete order',
     DELETE_ORDER_SUCCESS: 'delete order success',
-    DELETE_ORDER_FAILURE: 'delete order failure'
+    DELETE_ORDER_FAILURE: 'delete order failure',
+    AUTH_START: 'auth start',
+    AUTH_SUCCESS: 'auth success',
+    AUTH_FAILURE: 'auth failure'
 }

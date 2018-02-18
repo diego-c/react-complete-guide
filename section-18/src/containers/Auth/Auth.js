@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import classes from './Auth.css'
+import Spinner from '../../components/UI/Spinner/Spinner';
+import classes from './Auth.css';
+import { connect } from 'react-redux';
+import { authAsync } from '../../store/actions/index';
 
 class Auth extends Component {
 
@@ -191,10 +194,27 @@ class Auth extends Component {
         return { inputtype, config, value, touched: false };
     }
 
+    handleSubmit = e => {
+        e.preventDefault();
+
+        if (this.state.validForm) {
+            const authInfo = Object.keys(this.state.controls).map(control => ({
+                field: control,
+                value: this.state.controls[control].value
+            }))
+
+            this.props.authUser(authInfo);
+
+        }
+    }
+
     render() {        
         const { controls } = this.state;
-        
-        return (
+
+        const formOrSpinner = 
+        this.props.auth.authStatus.isProcessing ?
+        <Spinner /> :
+        (
             <div className = { classes.Auth }>
                 <h4>Enter your login info below</h4>
                 <form action="">
@@ -219,13 +239,24 @@ class Auth extends Component {
                     )) }
 
                     <Button 
-                    btnType = "Success">
+                    btnType = "Success"
+                    clicked = { e => this.handleSubmit(e) }>
                     Login
                     </Button>
                 </form>
             </div>
         )
+        
+        return formOrSpinner
     }
 }
 
-export default Auth;
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+const mapDispatchToProps = dispatch => ({
+    authUser: authInfo => dispatch(authAsync(authInfo))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

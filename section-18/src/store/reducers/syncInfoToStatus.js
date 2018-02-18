@@ -14,6 +14,9 @@ const syncInfoToStatus = (state, action) => {
             newIngredients = { ...newStatus.ingredients };
         }
         return {
+            auth: {
+                ...state.auth
+            },
             orders: {
                 ...initialState.orders
             },
