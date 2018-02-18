@@ -9,6 +9,7 @@ import { authAsync } from '../../store/actions/index';
 class Auth extends Component {
 
     state = {
+        isSignup: true,
         validForm: false,
         controls: {
             email: { ...this.generateInput('input', {
@@ -203,9 +204,23 @@ class Auth extends Component {
                 value: this.state.controls[control].value
             }))
 
-            this.props.authUser(authInfo);
+            const method = {
+                SIGN_UP: 'sign up',
+                SIGN_IN: 'sign in'
+            }
 
+            this.state.isSignup ? 
+            this.props.authUser(authInfo, method.SIGN_UP) :
+            this.props.authUser(authInfo, method.SIGN_IN);
         }
+    }
+
+    switchAuthMethod = e => {
+        e.preventDefault();
+
+        this.setState(prevState => ({
+            isSignup: !prevState.isSignup
+        }))
     }
 
     render() {        
@@ -216,7 +231,7 @@ class Auth extends Component {
         <Spinner /> :
         (
             <div className = { classes.Auth }>
-                <h4>Sign up below</h4>
+                <h4>{ this.state.isSignup ? 'Sign up below' : 'Enter your login info below' }</h4>
                 <form action="">
                     { Object.keys(controls).map(field => (
                         <Input
@@ -237,12 +252,21 @@ class Auth extends Component {
                             }) }
                         />
                     )) }
-
-                    <Button 
-                    btnType = "Success"
-                    clicked = { e => this.handleSubmit(e) }>
-                    Sign up
-                    </Button>
+                    <div>
+                        <Button 
+                        btnType = "Success"
+                        clicked = { e => this.handleSubmit(e) }>
+                        Submit
+                        </Button>
+                    </div>
+                    
+                    <div>
+                        <Button
+                        btnType = "Danger"
+                        clicked = { e => this.switchAuthMethod(e) }>
+                        Switch to { this.state.isSignup ? 'Sign in' : 'Sign up' }
+                        </Button>
+                    </div>
                 </form>
             </div>
         )
@@ -256,7 +280,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    authUser: authInfo => dispatch(authAsync(authInfo))
+    authUser: (authInfo, method) => dispatch(authAsync(authInfo, method))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

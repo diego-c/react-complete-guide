@@ -17,20 +17,20 @@ const authFailure = error => ({
 })
 
 // async actions
-export const authAsync = authInfo => {
+export const authAsync = (authInfo, method) => {
     return dispatch => {
         dispatch(authStart());
 
         axiosAuth
-        .post(`/signupNewUser?key=AIzaSyCZtiziHrTDVS4XMNqqd4Gpuj1DfNeXP6Q`, {
+        .post(`${ method === 'sign up' ? `/signupNewUser?key=AIzaSyCZtiziHrTDVS4XMNqqd4Gpuj1DfNeXP6Q` : `/verifyPassword?key=AIzaSyCZtiziHrTDVS4XMNqqd4Gpuj1DfNeXP6Q` }`, {
             email: authInfo.find(control => control.field === 'email').value,
             password: authInfo.find(control => control.field === 'password').value
         })
         .then(res => {
-            console.log('Data from sign up: ', res.data);
             dispatch(authSuccess(res.data));
         })
         .catch(err => {
+            console.log(err.response.data.error.errors[0].message);
             dispatch(authFailure(err));
         })
     }

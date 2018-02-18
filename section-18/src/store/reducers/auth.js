@@ -23,7 +23,7 @@ const authFailure = (state, action) => {
         authStatus: {
             isProcessing: false,
             error: true,
-            errorMsg: action.error.message
+            errors: action.error
         }
     })
 }
