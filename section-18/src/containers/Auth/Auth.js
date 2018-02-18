@@ -18,6 +18,11 @@ class Auth extends Component {
                         value: true,
                         errorMsg: 'This field is required',
                         ok: false
+                    },
+                    isEmail: {
+                        value: true,
+                        errorMsg: 'This doesn\'t look like a valid e-mail',
+                        ok: false
                     }
                 },
                 valid: false
@@ -51,6 +56,7 @@ class Auth extends Component {
         let requiredValidation = null;
         let minLengthValidation = null;
         let maxLengthValidation = null;
+        let isEmailValidation = null;
 
         if (rules) {
             if (rules.required) {                
@@ -101,11 +107,30 @@ class Auth extends Component {
 
                 validationArray.push((value.length <= rules.maxLength.value));
             }
+
+            if (rules.isEmail) {
+
+                const isValidEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
+                
+                isValidEmail ?
+                isEmailValidation = {
+                    isEmail: {
+                        ok: true
+                    }
+                } :
+                isEmailValidation = {
+                    isEmail: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push(isValidEmail);
+            }
         } else {
             validationArray.push(true);
         }
 
-        return { valid: validationArray.every(entry => entry), validation: { ...requiredValidation, ...minLengthValidation, ...maxLengthValidation } }
+        return { valid: validationArray.every(entry => entry), validation: { ...requiredValidation, ...minLengthValidation, ...maxLengthValidation, ...isEmailValidation } }
     }
 
     handleInput = (e, field) => {
