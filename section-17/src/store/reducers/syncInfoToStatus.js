@@ -1,5 +1,6 @@
 import actions from '../actions/actionTypes';
 import initialState from '../state/initialState';
+import updateObject from './utils/utils';
 
 export default (state = { }, action) => {
     if (action.type === actions.SYNC_INFO_TO_STATUS) {
@@ -18,11 +19,10 @@ export default (state = { }, action) => {
             order: {
                 ...initialState.order
             },
-            info: {
-                ...state.info,
+            info: updateObject(state.info, {
                 ingredients: newIngredients,
                 price: initialState.info.price
-            },
+            }),
             status: {
                 ...state.status
             }
