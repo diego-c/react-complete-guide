@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import classes from './Auth.css'
 
 class Auth extends Component {
 
@@ -174,7 +175,8 @@ class Auth extends Component {
 
         console.log('[Auth.js] Validation fields: ', Object.keys(this.state.controls).map(v => this.state.controls[v].validation))
         return (
-            <div>
+            <div className = { classes.Auth }>
+                <h4>Enter your login info below</h4>
                 <form action="">
                     { Object.keys(controls).map(field => (
                         <Input

@@ -1,0 +1,25 @@
+.Auth {
+    text-align: center;
+    width: 80%;
+    margin: 2rem auto;
+}
+.Auth h4 {
+    margin-bottom: 4rem;
+}
+
+.Auth label {
+    display: block;
+    margin: 2rem auto;
+}
+
+.Auth label input {
+    display: inline-block;
+    margin-left: 1rem;
+    padding: .5rem;
+}
+
+@media (min-width: 600px) {
+    .Auth {
+        width: 500px;
+    }
+}
