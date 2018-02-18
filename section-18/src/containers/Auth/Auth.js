@@ -46,8 +46,6 @@ class Auth extends Component {
     }
 
     handleInput = (e, field) => {
-        console.log('Triggered handleInput: ', this.state.controls.email);
-
         const updatedValue = e.target.value;
         const updatedState = { ...this.state };
         const updatedControls = { ...updatedState.controls };
@@ -70,18 +68,20 @@ class Auth extends Component {
     }
 
     render() {        
-        //const { controls } = this.state;
+        const { controls } = this.state;
 
         return (
             <div>
                 <form action="">
-                    <Input
-                    changed = { e => this.handleInput(e, 'email') }
-                    shouldValidate = { true }
-                    error = { this.state.controls.email.errorMsg ? this.state.controls.email.errorMsg : null }
-                    config = { this.state.controls.email.config }
-                    inputtype = { this.state.controls.email.inputtype }
-                    />
+                    { Object.keys(controls).map(field => (
+                        <Input
+                        key = { controls[field].config.id }
+                        { ...controls[field] }
+                        changed = { e => this.handleInput(e, field) }
+                        shouldValidate = { controls[field].validation } 
+                        error = { controls[field].errorMsg ? controls[field].errorMsg : null } 
+                        />
+                    )) }
                 </form>
             </div>
         )
