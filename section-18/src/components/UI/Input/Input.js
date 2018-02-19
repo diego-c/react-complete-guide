@@ -10,13 +10,14 @@ const input = props => {
     classesAdded.push(classes.Valid)
     } else {
         classesAdded.push(classes.Invalid);
-        errorMsg = 
+        errorMsg =
+        props.error ? 
         props.error.map(err => {
             return err.ok ? null :            
             <p 
             style={{ color: '#d63333', fontSize: '1.5rem', fontWeight: 'bold', margin: '1.5rem auto 2rem auto' }}
             key = { err.key }>{ err.errorMsg }</p>
-        })        
+        }) : null        
     }
 
     if (!props.shouldValidate || !props.touched) {

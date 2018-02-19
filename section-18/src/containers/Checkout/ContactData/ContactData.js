@@ -13,7 +13,7 @@ class ContactData extends Component {
         isAuth: true,
         canOrder: false,
         price: 0,
-        fields: {
+        controls: {
             name: { ...this.generateInput('input', {
                 id: "name",
                 type: "text",
@@ -22,9 +22,12 @@ class ContactData extends Component {
                 placeholder: "Your name.."
             }),
                 validation: {
-                    required: true
+                    required: {
+                        value: true,
+                        errorMsg: 'This field is required',
+                        ok: false
+                    }
                 },
-                errorMsg: 'This field is required',
                 valid: false
             },
             street: this.generateInput('input', {
@@ -42,20 +45,49 @@ class ContactData extends Component {
                 placeholder: "ZIP..."
             }),
                 validation: {
-                    required: true,
-                    minLength: 6,
-                    maxLength: 6
+                    required: {
+                        value: true,
+                        errorMsg: 'This field is required',
+                        ok: false
+                    },
+                    minLength: {
+                        value: 6,
+                        errorMsg: 'At least 6 characters are required for this field',
+                        ok: false
+                    },
+                    maxLength: {
+                        value: 6,
+                        errorMsg: 'No more than 6 characters are allowed for this field',
+                        ok: true
+                    },
+                    isNumeric: {
+                        value: true,
+                        errorMsg: 'Only numbers are accepted for this field',
+                        ok: true
+                    }
                 },
-                errorMsg: 'Six characters are required for this field',
                 valid: false
             },
-            email: this.generateInput('input', {
+            email: { ...this.generateInput('input', {
                 id: "email",
                 name: "email",                    
                 label: "Email",
                 type:  "text",
                 placeholder: "Your e-mail..."   
             }),
+                validation: {
+                    required: {
+                        value: true,
+                        errorMsg: 'This field is required',
+                        ok: false
+                    },
+                    isEmail: {
+                        value: true,
+                        errorMsg: 'This doesn\'t look like a valid e-mail',
+                        ok: false
+                    }
+                }
+            },
             deliveryMethod: this.generateInput('select', {
                 id: "deliveryMethod", 
                 name: "deliveryMethod",                    
@@ -80,56 +112,146 @@ class ContactData extends Component {
         return { inputtype, config, value, touched: false };
     }
 
-    validateInput(value, rules) {
+    validateInput = (value, rules, field) => {
         let validationArray = [];
+        let requiredValidation = null;
+        let minLengthValidation = null;
+        let maxLengthValidation = null;
+        let isEmailValidation = null;
+        let isNumericValidation = null;
 
         if (rules) {
+            if (rules.required) {                
+                value.trim() !== '' ? 
+                requiredValidation = {
+                    required: {
+                        ok: true
+                    }
+                    
+                } :
+                requiredValidation = {
+                    required: {
+                        ok: false
+                    }                    
+                }
 
-            if (rules.required) {
                 validationArray.push((value.trim() !== ''))
             }
 
             if (rules.minLength) {
-                validationArray.push((value.length >= rules.minLength));
+                value.length >= rules.minLength.value ?
+                minLengthValidation = {
+                    minLength: {
+                        ok: true
+                    }
+                } :
+                minLengthValidation = {
+                    minLength: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push((value.length >= rules.minLength.value));
             }
 
             if (rules.maxLength) {
-                validationArray.push((value.length <= rules.maxLength));
+                value.length <= rules.maxLength.value ?
+                maxLengthValidation = {
+                    maxLength: {
+                        ok: true
+                    }
+                } :
+                maxLengthValidation = {
+                    maxLength: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push((value.length <= rules.maxLength.value));
+            }
+
+            if (rules.isEmail) {
+
+                const isValidEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
+                
+                isValidEmail ?
+                isEmailValidation = {
+                    isEmail: {
+                        ok: true
+                    }
+                } :
+                isEmailValidation = {
+                    isEmail: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push(isValidEmail);
+            }
+
+            if (rules.isNumeric) {
+                const isValidNumber = /^\d+$/.test(value);
+
+                isValidNumber ?
+                isNumericValidation = {
+                    isNumeric: {
+                        ok: true
+                    }
+                } :
+                isNumericValidation = {
+                    isNumeric: {
+                        ok: false
+                    }
+                }
+
+                validationArray.push(isValidNumber);
             }
         } else {
             validationArray.push(true);
         }
 
-        return validationArray.every(entry => entry);
+        return { valid: validationArray.every(entry => entry), validation: { ...requiredValidation, ...minLengthValidation, ...maxLengthValidation, ...isEmailValidation, ...isNumericValidation } }
     }
 
     handleInput = (e, field) => {
         const updatedValue = e.target.value;
         const updatedState = { ...this.state };
-        const updatedFields = { ...updatedState.fields };
-        const updatedField = { ...updatedFields[field] };
+        const updatedControls = { ...updatedState.controls };
+        const updatedControl = { ...updatedControls[field] };
+        let updatedControlValidation = { ...updatedControl.validation }
 
-        updatedField.value = updatedValue;
+        updatedControl.value = updatedValue;
 
-        updatedField.valid = this.validateInput(updatedValue, updatedField.validation);
-        updatedField.touched = true;
+        const { valid, validation } = this.validateInput(updatedValue, updatedControl.validation, field);
 
-        updatedFields[field] = updatedField;
-        const canOrder = this.canOrder(updatedFields);
-        
-        this.setState({ fields: updatedFields, canOrder });        
+        updatedControl.valid = valid;
+        updatedControl.touched = true;
+        updatedControlValidation = Object.keys(updatedControlValidation).reduce((acc, v) => {
+            acc[v] = {
+                value: updatedControlValidation[v].value,
+                errorMsg: updatedControlValidation[v].errorMsg,
+                ok: validation[v].ok
+            }
+            return acc;
+        }, {})
+        updatedControl.validation = updatedControlValidation;
+
+        updatedControls[field] = updatedControl;        
+        const canOrder = this.canOrder(updatedControls)
+
+        this.setState({ controls: updatedControls, canOrder });        
     }
 
     orderHandler = e => {
         e.preventDefault();  
 
-        const { fields } = this.state,
+        const { controls } = this.state,
         { price } = this.props,
         { ingredients } = this.props,
         //{ history } = this.props,
-        customer = Object.keys(fields).reduce((acc, field) => {
+        customer = Object.keys(controls).reduce((acc, field) => {
             if (field !== 'deliveryMethod') {
-                acc[field] = fields[field].value;
+                acc[field] = controls[field].value;
             }
             return acc;
         }, {});     
@@ -138,8 +260,8 @@ class ContactData extends Component {
             date: (new Date()).toString(),
             ingredients,
             customer,
-            price: fields.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
-            deliveryMethod: fields.deliveryMethod.value
+            price: controls.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
+            deliveryMethod: controls.deliveryMethod.value
         }
         if (this.props.auth) {
             this.setState({ isAuth: true });
@@ -176,14 +298,14 @@ class ContactData extends Component {
         }, 1000);                
     }
 
-    canOrder = (fields) => {
+    canOrder = (controls) => {
         const checkValidation = [];
 
-        for (let field in fields) {
+        for (let field in controls) {
             if (field !== 'deliveryMethod') {            
-                if (fields[field].touched) {
-                    if (Object.keys(fields[field]).includes('valid')) {
-                        checkValidation.push(fields[field].valid);         
+                if (controls[field].touched) {
+                    if (Object.keys(controls[field]).includes('valid')) {
+                        checkValidation.push(controls[field].valid);         
                     } else {
                         checkValidation.push(true);                        
                     }
@@ -198,7 +320,7 @@ class ContactData extends Component {
     }
 
     render() {
-        const { fields } = this.state;   
+        const { controls } = this.state;  
 
         let formOrSpinner = null;
 
@@ -212,13 +334,24 @@ class ContactData extends Component {
             <div className = { classes.ContactData }>
                 <h4>Enter your contact data below</h4>
                 <form action="">
-                { Object.keys(fields).map(field => (
+                { Object.keys(controls).map(field => (
                     <Input
-                        key = { fields[field].config.id }
-                        { ...fields[field] }
+                        key = { controls[field].config.id }
+                        { ...controls[field] }
                         changed = { e => this.handleInput(e, field) }
-                        shouldValidate = { fields[field].validation } 
-                        error = { fields[field].errorMsg ? fields[field].errorMsg : null }                      
+                        shouldValidate = { controls[field].validation } 
+
+                        error = { 
+                            controls[field].validation ?
+                            Object
+                            .keys(controls[field].validation)
+                            .map((v, i) => {
+                                return {
+                                    key: i,
+                                    errorMsg: controls[field].validation[v].errorMsg,
+                                    ok: controls[field].validation[v].ok
+                                }
+                            }) : null }                     
                     />            
                 )) }
 
@@ -232,7 +365,7 @@ class ContactData extends Component {
         if (this.state.isAuth) {
         return formOrSpinner;
         } else {
-            return <h1 style={{ textAlign: 'center' }}>Sorry, you need to be authenticated to make orders</h1>
+            return <h1 style={{ textAlign: 'center', padding: '4rem' }}>Sorry, you need to be authenticated to make orders</h1>
         }
     }
 }
