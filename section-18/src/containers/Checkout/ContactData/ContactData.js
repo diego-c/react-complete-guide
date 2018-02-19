@@ -256,6 +256,10 @@ class ContactData extends Component {
             return acc;
         }, {});     
 
+        this.props.auth ? 
+        customer.idToken = this.props.auth.idToken :
+        customer.idToken = null
+        
         const orderInfo = {
             date: (new Date()).toString(),
             ingredients,

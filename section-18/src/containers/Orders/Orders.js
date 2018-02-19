@@ -24,8 +24,6 @@ class Orders extends Component {
         const { ordersInfo } = this.props.orders;
         const { isDeleting } = this.props.orders.ordersDeleteStatus;
 
-        console.log(this.props.auth);
-
         let ordersOrSpinner =
 
             isFetching || isDeleting ?
