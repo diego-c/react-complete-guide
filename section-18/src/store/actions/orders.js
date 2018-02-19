@@ -52,7 +52,7 @@ export function deleteOrderAsync(orderId, token) {
         .delete(`/orders/${orderId}.json?auth=${token}`)
         .then(order => {
             dispatch(deleteOrderSuccess(orderId));
-            dispatch(fetchOrdersAsync());
+            dispatch(fetchOrdersAsync(token));
         })
         .catch(err => {
             dispatch(deleteOrderFailure(err));
