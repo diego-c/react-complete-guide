@@ -44,12 +44,12 @@ function deleteOrderFailure(error) {
 }
 
 // async actions
-export function deleteOrderAsync(orderId) {
+export function deleteOrderAsync(orderId, token) {
     return dispatch => {
         dispatch(deleteOrder(orderId));
 
         axios
-        .delete(`/orders/${orderId}.json`)
+        .delete(`/orders/${orderId}.json?auth=${token}`)
         .then(order => {
             dispatch(deleteOrderSuccess(orderId));
             dispatch(fetchOrdersAsync());

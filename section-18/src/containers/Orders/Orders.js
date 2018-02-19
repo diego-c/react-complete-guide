@@ -15,14 +15,16 @@ class Orders extends Component {
         }
     }
 
-    deleteOrder = id => {
-        this.props.deleteOrder(id);
+    deleteOrderHandler = (id, token) => {
+        this.props.deleteOrder(id, token);
     }
 
     render() {
         const { isFetching } = this.props.orders.ordersStatus;
         const { ordersInfo } = this.props.orders;
         const { isDeleting } = this.props.orders.ordersDeleteStatus;
+
+        console.log(this.props.auth);
 
         let ordersOrSpinner =
 
@@ -38,7 +40,7 @@ class Orders extends Component {
                         price = { ordersInfo[orderId].price }
                         delivery = { ordersInfo[orderId].deliveryMethod }
                         ingredients = { ordersInfo[orderId].ingredients }
-                        delete = { () => this.deleteOrder(orderId) }
+                        delete = { () => this.deleteOrderHandler(orderId, this.props.auth.idToken) }
                         />
                     )) }
                 </div>
@@ -46,9 +48,7 @@ class Orders extends Component {
         
         if (!this.props.auth) {
             return <h1 style={{ textAlign: 'center' }}>Sorry, you don't seem to be authenticated</h1>
-        } else if (!this.props.orders.ordersInfo) {
-            return <h1 style={{ textAlign: 'center' }}>Sorry, no orders to show at the moment</h1>
-        } 
+        }
         else {
             return ordersOrSpinner;
         }
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     return {
         fetchOrders: token => dispatch(fetchOrdersAsync(token)),
-        deleteOrder: orderId => dispatch(deleteOrderAsync(orderId))
+        deleteOrder: (orderId, token) => dispatch(deleteOrderAsync(orderId, token))
     }    
 };
 
