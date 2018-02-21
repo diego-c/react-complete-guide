@@ -27,7 +27,7 @@ const buildControls = props => {
             <button 
             disabled = { props.isDisabled }
             className = { classes.OrderButton }
-            onClick = { props.purchase }>ORDER NOW!</button>
+            onClick = { props.isAuth ? props.purchase : props.authenticate }>{ props.isAuth ? 'ORDER NOW!' : 'SIGN IN TO ORDER' }</button>
         </div>
     ) : <Spinner />
 

@@ -3,8 +3,6 @@ import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.css'
 
 const navigationItems = props => {
-    console.log('NavigationItems props: ', props);
-
     return (
         <ul className = { classes.NavigationItems }>      
             <NavigationItem 
@@ -13,10 +11,12 @@ const navigationItems = props => {
             label = "Burger Builder"
             />
             
-            <NavigationItem 
-            link="/orders"
-            label = "Orders"
-            />
+            { props.isAuth ?
+                <NavigationItem 
+                link="/orders"
+                label = "Orders"
+                /> : null
+            }            
 
             { props.isAuth ? 
                 <NavigationItem

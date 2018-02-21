@@ -92,7 +92,9 @@ class BurgerBuilder extends Component {
                         disabledInfo = { disabledInfo }
                         isDisabled = { isDisabled }
                         price = { this.props.price }
-                        purchase = { this.purchaseHandler } />
+                        purchase = { this.purchaseHandler }
+                        isAuth = { this.props.auth }
+                        authenticate = { () => this.props.history.push('/auth') } />
                 </Aux>
             )
         } else {
@@ -119,6 +121,7 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
+        auth: state.auth.authData,
         ingredients: state.info.ingredients,
         price: state.info.price,
         error: state.status.error && state.status.errorMsg

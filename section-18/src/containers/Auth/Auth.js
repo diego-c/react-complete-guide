@@ -4,6 +4,7 @@ import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Auth.css';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { authAsync } from '../../store/actions/index';
 
 class Auth extends Component {
@@ -279,7 +280,11 @@ class Auth extends Component {
             </div>
         )
         
-        return formOrSpinner
+        if (this.props.auth.authData) {
+            return <Redirect to="/" />;            
+        } else {
+            return formOrSpinner
+        }
     }
 }
 
