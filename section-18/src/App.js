@@ -6,8 +6,15 @@ import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import { Route, Switch } from 'react-router-dom';
 import Orders from './containers/Orders/Orders';
+import { checkAuth } from './store/actions/index';
+import { connect } from 'react-redux';
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.onAutoSignIn();
+  }
+
   render() {
     return (
       <Layout>
@@ -23,4 +30,7 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  onAutoSignIn: () => dispatch(checkAuth())
+})
+export default connect(null, mapDispatchToProps)(App);

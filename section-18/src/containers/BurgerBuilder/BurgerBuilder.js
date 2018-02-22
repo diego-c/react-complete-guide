@@ -11,7 +11,8 @@ import { connect } from 'react-redux';
 import { 
         addIngredient,
         removeIngredient,
-        fetchIngredientsAsync } from '../../store/actions/index';
+        fetchIngredientsAsync,
+        checkAuth } from '../../store/actions/index';
 
 const initState = {
     purchasing: false,
@@ -134,7 +135,8 @@ const mapDispatchToProps = dispatch => {
     return {
         addIngredient: ingredient => dispatch(addIngredient(ingredient)),
         removeIngredient: ingredient => dispatch(removeIngredient(ingredient)),
-        fetchIngredients: () => dispatch(fetchIngredientsAsync())
+        fetchIngredients: () => dispatch(fetchIngredientsAsync()),
+        checkAuth: () => dispatch(checkAuth())
     }
 }
 

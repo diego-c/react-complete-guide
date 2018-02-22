@@ -16,9 +16,13 @@ const authFailure = error => ({
     error
 })
 
-export const authLogout = () => ({
-    type: actionTypes.AUTH_LOGOUT
-})
+export const authLogout = () => {
+    localStorage.removeItem('auth');
+    localStorage.removeItem('expirationDate');
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }    
+}
 
 // async actions
 export const authAsync = (authInfo, method) => {
@@ -32,6 +36,10 @@ export const authAsync = (authInfo, method) => {
             returnSecureToken: true
         })
         .then(res => {
+            const expirationDate = new Date(new Date().getTime() + res.data.expiresIn * 1000);
+            const authData = { ...res.data };
+            localStorage.setItem('auth', JSON.stringify(authData));  
+            localStorage.setItem('expirationDate', expirationDate);          
             dispatch(authSuccess(res.data));
             dispatch(authLogoutAsync(res.data.expiresIn));
         })
@@ -46,5 +54,25 @@ export const authLogoutAsync = expiresIn => {
         setTimeout(() => {
             dispatch(authLogout());
         }, expiresIn * 1000);
+    }
+}
+
+export const checkAuth = () => {
+    return dispatch => {
+        const auth = JSON.parse(localStorage.getItem('auth'));
+        let expirationDate = new Date(localStorage.getItem('expirationDate'))
+
+        if (!auth) {
+            dispatch(authLogout());
+        } else {
+            if (expirationDate > new Date()) {
+                dispatch(authLogout());
+            } else {
+                dispatch(authSuccess(auth));
+                expirationDate = new Date(expirationDate - new Date());
+                localStorage.setItem('expirationDate', expirationDate);
+                dispatch(authLogoutAsync(new Date(expirationDate).getSeconds()))
+            }
+        }
     }
 }
