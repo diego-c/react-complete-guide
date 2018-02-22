@@ -289,7 +289,8 @@ class Auth extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    info: state.info
 })
 
 const mapDispatchToProps = dispatch => ({

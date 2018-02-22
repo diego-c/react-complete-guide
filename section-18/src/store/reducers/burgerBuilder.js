@@ -3,6 +3,7 @@ import updateObject from './utils/utils';
 
 const addIngredient = (state, action) => {
     return {
+        purchasing: true,
         ingredients: updateObject(state.ingredients, {
             [action.ingredient]: updateObject(state.ingredients[action.ingredient], {
                 amount: state.ingredients[action.ingredient].amount + 1
@@ -15,6 +16,9 @@ const addIngredient = (state, action) => {
 const removeIngredient = (state, action) => {   
 
     return {
+        purchasing: Object.keys(state.ingredients).some(ingredient => {
+            return ingredient !== action.ingredient ? state.ingredients[ingredient].amount > 0 : false
+        }),
         ingredients: updateObject(state.ingredients, {
             [action.ingredient]: updateObject(state.ingredients[action.ingredient], {
                 amount: state.ingredients[action.ingredient].amount - 1

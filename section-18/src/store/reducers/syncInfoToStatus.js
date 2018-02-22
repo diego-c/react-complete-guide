@@ -24,6 +24,7 @@ const syncInfoToStatus = (state, action) => {
                 ...initialState.order
             },
             info: updateObject(state.info, {
+                purchasing: initialState.info.purchasing,
                 ingredients: newIngredients,
                 price: initialState.info.price
             }),

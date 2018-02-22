@@ -36,7 +36,8 @@ export default {
             deliveryMethod: null
         }
     }, 
-    info: { 
+    info: {
+        purchasing: false, 
         ingredients: null,
         price: 4
     },
