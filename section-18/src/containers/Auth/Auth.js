@@ -281,7 +281,10 @@ class Auth extends Component {
         )
         
         if (this.props.auth.authData) {
-            return <Redirect to="/" />;            
+            if (this.props.info.purchasing) {
+                return <Redirect to="/checkout" />;
+            }
+            return <Redirect to="/" />;          
         } else {
             return formOrSpinner
         }

@@ -23,7 +23,9 @@ class BurgerBuilder extends Component {
     state = { ...initState }
 
     purchaseHandler = () => {
-        this.setState({ purchasing: true })
+        if (this.props.auth) {
+            this.setState({ purchasing: true })
+        }
     }
 
     updatePurchaseState() {
