@@ -59,19 +59,17 @@ export const authLogoutAsync = expiresIn => {
 
 export const checkAuth = () => {
     return dispatch => {
-        const auth = JSON.parse(localStorage.getItem('auth'));
-        let expirationDate = new Date(localStorage.getItem('expirationDate'))
+        const auth = JSON.parse(localStorage.getItem('auth')) || null;
+        let expirationDate = new Date(localStorage.getItem('expirationDate')) || null
 
         if (!auth) {
             dispatch(authLogout());
         } else {
-            if (expirationDate > new Date()) {
+            if (expirationDate && expirationDate <= new Date()) {
                 dispatch(authLogout());
             } else {
                 dispatch(authSuccess(auth));
-                expirationDate = new Date(expirationDate - new Date());
-                localStorage.setItem('expirationDate', expirationDate);
-                dispatch(authLogoutAsync(new Date(expirationDate).getSeconds()))
+                dispatch(authLogoutAsync(Math.abs(expirationDate.getTime() - new Date().getTime()) / 1000));
             }
         }
     }

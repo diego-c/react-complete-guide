@@ -4,7 +4,7 @@ import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import Orders from './containers/Orders/Orders';
 import { checkAuth } from './store/actions/index';
 import { connect } from 'react-redux';
@@ -33,4 +33,4 @@ class App extends Component {
 const mapDispatchToProps = dispatch => ({
   onAutoSignIn: () => dispatch(checkAuth())
 })
-export default connect(null, mapDispatchToProps)(App);
+export default withRouter(connect(null, mapDispatchToProps)(App));
