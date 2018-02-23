@@ -7,7 +7,7 @@
     height: 100%;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
     .Logo {
         background-color: #703B09;
     }

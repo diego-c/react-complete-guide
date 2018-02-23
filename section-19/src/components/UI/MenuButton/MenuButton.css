@@ -58,7 +58,7 @@
     box-shadow: 0 1px 3px #a0a0a0;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
     .MenuButton {
         display: none;
     }

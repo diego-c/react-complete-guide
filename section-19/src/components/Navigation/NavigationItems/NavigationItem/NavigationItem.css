@@ -25,7 +25,7 @@
     color: white;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
     .NavigationItem {
         display: flex;
         height: 100%;

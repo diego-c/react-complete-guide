@@ -1,15 +1,9 @@
 .CheckoutSummary {
     text-align: center;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
-    padding: 4rem;
 }
 .Buttons {
     position: relative;
     top: -5rem;
-}
-@media (max-width: 600px) {
-    .CheckoutSummary {
-        width: 500px;
-    }
 }

@@ -6,6 +6,7 @@ const navigationItems = props => {
     return (
         <ul className = { classes.NavigationItems }>      
             <NavigationItem 
+            closed = { props.closed }
             link="/"
             exact
             label = "Burger Builder"
@@ -13,6 +14,7 @@ const navigationItems = props => {
             
             { props.isAuth ?
                 <NavigationItem 
+                closed = { props.closed }
                 link="/orders"
                 label = "Orders"
                 /> : null
@@ -20,10 +22,12 @@ const navigationItems = props => {
 
             { props.isAuth ? 
                 <NavigationItem
+                closed = { props.closed }
                 link = "/logout"
                 label = "Logout"
                 /> :
                 <NavigationItem
+                closed = { props.closed }
                 link = "/auth"
                 label = "Authenticate"
                 />
