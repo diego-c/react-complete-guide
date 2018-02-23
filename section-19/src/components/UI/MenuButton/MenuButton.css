@@ -1,0 +1,65 @@
+.MenuButton {  
+    position: fixed;
+    top: 0;
+    left: 100%;
+    transform: translateY(10%) translateX(-120%);
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    background-color: #a1b8dd;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s;
+    box-shadow: 0 3px 6px #a0a0a0;
+    cursor: pointer;
+    z-index: 200;
+}
+
+.Bar {
+    height: 5px;
+    width: 100%;
+    background-color: #e8e9ea;
+    transition: all .3s;
+    border-radius: 10px;
+}
+
+.Bar:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.MenuButtonOpen:hover {
+    background-color: #3e68b7;
+}
+.MenuButtonClose {
+    background-color: #d85454;
+}
+
+.MenuButton:hover {
+    box-shadow: 0 2px 4px #a0a0a0;
+}
+
+.BarMiddleClose {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.BarTopClose {
+    transform: translateY(10px) rotate(45deg);  
+}
+
+.BarBottomClose {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+.MenuButton:active {
+    box-shadow: 0 1px 3px #a0a0a0;
+}
+
+@media (min-width: 500px) {
+    .MenuButton {
+        display: none;
+    }
+}
