@@ -69,7 +69,9 @@ export const checkAuth = () => {
                 dispatch(authLogout());
             } else {
                 dispatch(authSuccess(auth));
-                dispatch(authLogoutAsync(Math.abs(expirationDate.getTime() - new Date().getTime()) / 1000));
+                if (expirationDate) {
+                    dispatch(authLogoutAsync(Math.abs(expirationDate.getTime() - new Date().getTime()) / 1000));
+                }
             }
         }
     }

@@ -72,7 +72,7 @@ class ContactData extends Component {
                 id: "email",
                 name: "email",                    
                 label: "Email",
-                type:  "text",
+                type:  "email",
                 placeholder: "Your e-mail..."   
             }),
                 validation: {
@@ -109,6 +109,10 @@ class ContactData extends Component {
     generateInput(inputtype, config) {
         let value = '';
         if (inputtype === 'select') value = config.options[0].value;
+        if (inputtype === 'input' && config.type === 'email' && this.props.auth) {
+            config.defaultValue = this.props.auth.email;
+            value = this.props.auth.email;
+        } 
         return { inputtype, config, value, touched: false };
     }
 
@@ -214,7 +218,7 @@ class ContactData extends Component {
     }
 
     handleInput = (e, field) => {
-        const updatedValue = e.target.value;
+        const updatedValue = e.target ? e.target.value : e;
         const updatedState = { ...this.state };
         const updatedControls = { ...updatedState.controls };
         const updatedControl = { ...updatedControls[field] };
@@ -287,6 +291,7 @@ class ContactData extends Component {
     }
 
     componentDidMount() {
+        this.handleInput(this.emailInput.props.value, 'email');
         this.setState({ price: this.props.price });
         
         window.scroll({
@@ -338,29 +343,55 @@ class ContactData extends Component {
             <div className = { classes.ContactData }>
                 <h4>Enter your contact data below</h4>
                 <form action="">
-                { Object.keys(controls).map(field => (
-                    <Input
-                        key = { controls[field].config.id }
-                        { ...controls[field] }
-                        changed = { e => this.handleInput(e, field) }
-                        shouldValidate = { controls[field].validation } 
+                { Object.keys(controls).map(field => {
+                    if (field === 'email') {
+                        return (
+                            <Input
+                            key = { controls[field].config.id }
+                            { ...controls[field] }
+                            changed = { e => this.handleInput(e, field) }
+                            shouldValidate = { controls[field].validation } 
+                            ref = { input => { this.emailInput = input }}
+                            error = { 
+                                controls[field].validation ?
+                                Object
+                                .keys(controls[field].validation)
+                                .map((v, i) => {
+                                    return {
+                                        key: i,
+                                        errorMsg: controls[field].validation[v].errorMsg,
+                                        ok: controls[field].validation[v].ok
+                                    }
+                                }) : null }                     
+                                />  
+                        )
+                    } else {
+                        return (
+                            <Input
+                            key = { controls[field].config.id }
+                            { ...controls[field] }
+                            changed = { e => this.handleInput(e, field) }
+                            shouldValidate = { controls[field].validation } 
 
-                        error = { 
-                            controls[field].validation ?
-                            Object
-                            .keys(controls[field].validation)
-                            .map((v, i) => {
-                                return {
-                                    key: i,
-                                    errorMsg: controls[field].validation[v].errorMsg,
-                                    ok: controls[field].validation[v].ok
-                                }
-                            }) : null }                     
-                    />            
-                )) }
+                            error = { 
+                                controls[field].validation ?
+                                Object
+                                .keys(controls[field].validation)
+                                .map((v, i) => {
+                                    return {
+                                        key: i,
+                                        errorMsg: controls[field].validation[v].errorMsg,
+                                        ok: controls[field].validation[v].ok
+                                    }
+                                }) : null }                     
+                                />  
+                        )
+                    }
+                              
+                }) }
 
                     <Button
-                    btnType = { this.state.canOrder ? 'Success' : 'Danger' }                    
+                    btnType = { this.state.canOrder ? 'Success' : 'Danger' }   isDisabled = { !this.state.canOrder }           
                     clicked = { this.state.canOrder ? this.orderHandler : null }>ORDER</Button>
                 </form>
             </div>
