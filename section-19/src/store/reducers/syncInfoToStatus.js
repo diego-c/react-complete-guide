@@ -1,6 +1,6 @@
 import actions from '../actions/actionTypes';
 import initialState from '../state/initialState';
-import updateObject from './utils/utils';
+import updateObject from '../../shared/updateObject';
 
 
 const syncInfoToStatus = (state, action) => {

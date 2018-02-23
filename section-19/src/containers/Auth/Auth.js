@@ -6,13 +6,19 @@ import classes from './Auth.css';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { authAsync } from '../../store/actions/index';
+import generateInput from '../../shared/generateInput';
+import validateInput from '../../shared/validateInput';
 
 class Auth extends Component {
 
-    state = {
-        isSignup: true,
-        validForm: false,
-        controls: {
+    constructor(props) {
+        super(props);
+        this.generateInput = generateInput.bind(this);
+        this.validateInput = validateInput.bind(this);
+        this.state = {
+            isSignup: true,
+            validForm: false,
+            controls: {
             email: { ...this.generateInput('input', {
                     id: "email",
                     name: "email",                    
@@ -56,107 +62,7 @@ class Auth extends Component {
                 valid: false
             }
         }
-    }
-
-    validateInput = (value, rules, field) => {
-        let validationArray = [];
-        let requiredValidation = null;
-        let minLengthValidation = null;
-        let maxLengthValidation = null;
-        let isEmailValidation = null;
-        let isNumericValidation = null;
-
-        if (rules) {
-            if (rules.required) {                
-                value.trim() !== '' ? 
-                requiredValidation = {
-                    required: {
-                        ok: true
-                    }
-                    
-                } :
-                requiredValidation = {
-                    required: {
-                        ok: false
-                    }                    
-                }
-
-                validationArray.push((value.trim() !== ''))
-            }
-
-            if (rules.minLength) {
-                value.length >= rules.minLength.value ?
-                minLengthValidation = {
-                    minLength: {
-                        ok: true
-                    }
-                } :
-                minLengthValidation = {
-                    minLength: {
-                        ok: false
-                    }
-                }
-
-                validationArray.push((value.length >= rules.minLength.value));
-            }
-
-            if (rules.maxLength) {
-                value.length <= rules.maxLength.value ?
-                maxLengthValidation = {
-                    maxLength: {
-                        ok: true
-                    }
-                } :
-                maxLengthValidation = {
-                    maxLength: {
-                        ok: false
-                    }
-                }
-
-                validationArray.push((value.length <= rules.maxLength.value));
-            }
-
-            if (rules.isEmail) {
-
-                const isValidEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
-                
-                isValidEmail ?
-                isEmailValidation = {
-                    isEmail: {
-                        ok: true
-                    }
-                } :
-                isEmailValidation = {
-                    isEmail: {
-                        ok: false
-                    }
-                }
-
-                validationArray.push(isValidEmail);
-            }
-
-            if (rules.isNumeric) {
-                const isValidNumber = /^\d+$/.test(value);
-
-                isValidNumber ?
-                isNumericValidation = {
-                    isNumeric: {
-                        ok: true
-                    }
-                } :
-                isNumericValidation = {
-                    isNumeric: {
-                        ok: false
-                    }
-                }
-
-                validationArray.push(isValidNumber);
-            }
-        } else {
-            validationArray.push(true);
         }
-
-        return { valid: validationArray.every(entry => entry), validation: { ...requiredValidation, ...minLengthValidation, ...maxLengthValidation, ...isEmailValidation, ...isNumericValidation } }
     }
 
     handleInput = (e, field) => {
@@ -188,12 +94,6 @@ class Auth extends Component {
             controls: updatedControls,
             validForm: Object.keys(updatedControls).every(control => updatedControls[control].valid)
         });        
-    }   
-
-    generateInput(inputtype, config) {
-        let value = '';
-        if (inputtype === 'select') value = config.options[0].value;
-        return { inputtype, config, value, touched: false };
     }
 
     handleSubmit = e => {

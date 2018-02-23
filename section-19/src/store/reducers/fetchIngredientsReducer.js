@@ -1,5 +1,5 @@
 import actions from '../actions/actionTypes';
-import updateObject from './utils/utils';
+import updateObject from '../../shared/updateObject';
 
 const fetchIngredients = (state, action) => {
     return updateObject(state, {

@@ -1,5 +1,5 @@
 import actionTypes from "../actions/actionTypes";
-import updateObject from './utils/utils';
+import updateObject from '../../shared/updateObject';
 
 
 const sendOrder = (state, action) => {

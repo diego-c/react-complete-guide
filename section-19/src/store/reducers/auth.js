@@ -1,5 +1,5 @@
 import actionTypes from '../actions/actionTypes';
-import updateObject from './utils/utils';
+import updateObject from '../../shared/updateObject';
 import initialState from '../state/initialState';
 
 const authStart = (state, action) => {
