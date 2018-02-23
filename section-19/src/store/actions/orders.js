@@ -69,7 +69,6 @@ export function fetchOrdersAsync(token, idToken) {
         .get('/orders.json'+queryParams)
         .then(orders => {
             if (orders.data) {
-                console.log('got orders.data: ', orders.data);
                 dispatch(fetchOrdersSuccess(orders.data));
             } else {
                 dispatch(fetchOrdersFailure({
