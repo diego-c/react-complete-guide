@@ -9,11 +9,7 @@ import { fetchOrdersAsync, deleteOrderAsync } from '../../store/actions/index';
 
 class Orders extends Component {
 
-    componentWillReceiveProps(nextProps) {
-        console.log('next orders props: ', nextProps);
-    }
-
-    componentWillMount() {
+    componentDidMount() {
         if (this.props.auth) {
             this.props.fetchOrders(this.props.auth.idToken);
         }
