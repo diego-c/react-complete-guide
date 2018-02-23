@@ -24,7 +24,7 @@ const fetchOrdersFailure = (state, action) => {
         ordersStatus: updateObject(state.ordersStatus, {
             isFetching: false,
             error: true,
-            errorMsg: action.error.messsage
+            errorMsg: action.error.message
         })
     })
 }

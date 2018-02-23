@@ -17,7 +17,7 @@ function fetchOrdersSuccess(orders) {
 
 function fetchOrdersFailure(error) {
     return {
-        type: actionTypes.FETCH_INGREDIENTS_FAILURE,
+        type: actionTypes.FETCH_ORDERS_FAILURE,
         error
     }
 }
@@ -70,8 +70,12 @@ export function fetchOrdersAsync(token) {
             if (orders.data) {
                 dispatch(fetchOrdersSuccess(orders.data));
             } else {
-                throw new Error('Oops, could not fetch orders!');
+                dispatch(fetchOrdersFailure({
+                    message: 'Sorry, no orders to show at the moment.'
+                }))
             }
+        }, err => {
+            dispatch(fetchOrdersFailure(err));
         })
         .catch(err => {
             dispatch(fetchOrdersFailure(err));

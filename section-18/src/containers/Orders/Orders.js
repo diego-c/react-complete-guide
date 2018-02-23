@@ -9,7 +9,11 @@ import { fetchOrdersAsync, deleteOrderAsync } from '../../store/actions/index';
 
 class Orders extends Component {
 
-    componentDidMount() {
+    componentWillReceiveProps(nextProps) {
+        console.log('next orders props: ', nextProps);
+    }
+
+    componentWillMount() {
         if (this.props.auth) {
             this.props.fetchOrders(this.props.auth.idToken);
         }
@@ -23,6 +27,10 @@ class Orders extends Component {
         const { isFetching } = this.props.orders.ordersStatus;
         const { ordersInfo } = this.props.orders;
         const { isDeleting } = this.props.orders.ordersDeleteStatus;
+
+        if (this.props.orders.ordersStatus.error) {
+            return <h1 style={{ textAlign: 'center' }}>{ this.props.orders.ordersStatus.errorMsg }</h1>
+        }
 
         let ordersOrSpinner =
 
