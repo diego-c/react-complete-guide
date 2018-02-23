@@ -60,14 +60,16 @@ export function deleteOrderAsync(orderId, token) {
     }
 }
 
-export function fetchOrdersAsync(token) {
+export function fetchOrdersAsync(token, idToken) {
     return dispatch => {
         dispatch(fetchOrdersSync());
+        const queryParams = '?auth='+token+'&orderBy="idToken"&equalTo="'+idToken+'"';
 
         axios
-        .get(`/orders.json?auth=${token}`)
+        .get('/orders.json'+queryParams)
         .then(orders => {
             if (orders.data) {
+                console.log('got orders.data: ', orders.data);
                 dispatch(fetchOrdersSuccess(orders.data));
             } else {
                 dispatch(fetchOrdersFailure({
