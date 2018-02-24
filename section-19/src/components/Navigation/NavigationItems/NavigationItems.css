@@ -6,12 +6,11 @@
     height: 100%;
 }
 
-.NavigationItems li:not(:last-child) {
-    margin-right: 4rem;
-}
-
 @media (min-width: 768px) {
     .NavigationItems {
         flex-direction: row;
+    }
+    .NavigationItems li:not(:last-child) {
+        margin-right: 4rem;
     }
 }
