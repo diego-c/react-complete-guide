@@ -20,7 +20,7 @@ const initState = {
     showSpinner: false
 }
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
     state = { ...initState }
 
     purchaseHandler = () => {
@@ -90,6 +90,7 @@ class BurgerBuilder extends Component {
                 <Aux>
                     <Burger ingredients = { this.props.ingredients } />
                         <BuildControls 
+                        ingredients = { this.props.ingredients }
                         ingredientAdded = { this.props.addIngredient } 
                         ingredientRemoved = { this.props.removeIngredient }
                         disabledInfo = { disabledInfo }

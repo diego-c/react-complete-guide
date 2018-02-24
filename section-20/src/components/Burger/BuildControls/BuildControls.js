@@ -4,19 +4,19 @@ import BuildControl from './BuildControl/BuildControl';
 import classes from './BuildControls.css';
 import Spinner from '../../UI/Spinner/Spinner';
 
-const controls = [
-    { label: 'Salad', type: 'salad' },
-    { label: 'Bacon', type: 'bacon' },
-    { label: 'Cheese', type: 'cheese' },
-    { label: 'Meat', type: 'meat' }    
-];
-
 const buildControls = props => {
+
+    const controlsMap = Object.keys(props.ingredients).map(ingType => {
+        return {
+            label: ingType[0].toUpperCase().concat(ingType.slice(1)),
+            type: ingType
+        }
+    })
 
     const controlsOrSpinner = props.disabledInfo ? (
         <div className = { classes.BuildControls }>
             <p className = { classes.CurrentPrice }>Current Price: <strong>{ props.price.toFixed(2) }</strong></p>
-            { controls.map(({ label, type }) => (                           
+            { controlsMap.map(({ label, type }) => (                           
                 <BuildControl 
                 key = { label }
                 label = { label }
