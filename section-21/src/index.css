@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  color: #2E343B;
+  background-color: #b9db20;
+}
+
+@media (max-width: 500px) {
+  html {
+    font-size: 46.875%;
+  }
+}

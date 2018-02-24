@@ -1,0 +1,16 @@
+.Modal {
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 70%;
+    border: .1rem solid #ccc;
+    box-shadow: 
+    .5rem .5rem 2rem rgba(0, 0, 0, 0.3),
+    -.5rem -.5rem 2rem rgba(0, 0, 0, 0.3) ;
+    padding: 3rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+}
