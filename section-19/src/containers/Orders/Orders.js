@@ -50,9 +50,8 @@ class Orders extends Component {
             ) : <h1 style={{textAlign: 'center'}}>{ this.props.orders.ordersStatus.errorMsg }</h1>
         
         if (!this.props.auth) {
-            return <h1 style={{ textAlign: 'center' }}>Sorry, you don't seem to be authenticated</h1>
-        }
-        else {
+            return <h1 style={{ textAlign: 'center' }}>Sorry, you don't seem to be authenticated.</h1>
+        } else {
             return ordersOrSpinner;
         }
     }
