@@ -39,7 +39,7 @@ const authLogout = (state, action) => {
     })
 }
 
-export default (state = { }, action) => {
+export default (state = { ...initialState.auth }, action) => {
 
     switch(action.type) {
         case actionTypes.AUTH_START:
