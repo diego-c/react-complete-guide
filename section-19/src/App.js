@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
+import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Checkout from './containers/Checkout/Checkout';
-import Auth from './containers/Auth/Auth';
-import Logout from './containers/Auth/Logout/Logout';
-import NotFound from './components/NotFound/NotFound';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import Orders from './containers/Orders/Orders';
 import { checkAuth } from './store/actions/index';
 import { connect } from 'react-redux';
+
+const Checkout = asyncComponent(() => 
+  import('./containers/Checkout/Checkout').then(comp => comp.default)
+);
+const Logout = asyncComponent(() => 
+  import('./containers/Auth/Logout/Logout').then(comp => comp.default)
+);
+const Auth = asyncComponent(() => 
+  import('./containers/Auth/Auth').then(comp => comp.default)
+);
+const Orders = asyncComponent(() => 
+  import('./containers/Orders/Orders').then(comp => comp.default)
+);
+const NotFound = asyncComponent(() => 
+  import('./components/NotFound/NotFound').then(comp => comp.default)
+);
 
 class App extends Component {
 
