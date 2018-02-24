@@ -12,7 +12,7 @@ class Orders extends Component {
     componentDidMount() {
         if (this.props.auth) {
             const userAuth = JSON.parse(localStorage.getItem('auth'));
-            this.props.fetchOrders(userAuth.idToken,this.props.auth.idToken);
+            this.props.fetchOrders(this.props.auth.idToken, userAuth.localId);
         }
     }
 
@@ -65,7 +65,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrders: (token, idToken) => dispatch(fetchOrdersAsync(token, idToken)),
+        fetchOrders: (idToken, userId) => dispatch(fetchOrdersAsync(idToken, userId)),
         deleteOrder: (orderId, token) => dispatch(deleteOrderAsync(orderId, token))
     }    
 };

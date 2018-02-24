@@ -157,15 +157,15 @@ class ContactData extends Component {
             return acc;
         }, {});     
 
-        let idToken = null;
+        let userId = null;
         if(this.props.auth) { 
-            idToken = this.props.auth.idToken
+            userId = this.props.auth.localId
         }
         
         const orderInfo = {
             date: (new Date()).toString(),
             ingredients,
-            idToken,
+            userId,
             customer,
             price: controls.deliveryMethod.value === 'fast' ? price + 8 : price + 4,
             deliveryMethod: controls.deliveryMethod.value

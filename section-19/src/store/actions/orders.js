@@ -60,10 +60,10 @@ export function deleteOrderAsync(orderId, token) {
     }
 }
 
-export function fetchOrdersAsync(token, idToken) {
+export function fetchOrdersAsync(token, userId) {
     return dispatch => {
         dispatch(fetchOrdersSync());
-        const queryParams = '?auth='+token+'&orderBy="idToken"&equalTo="'+idToken+'"';
+        const queryParams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
 
         axios
         .get('/orders.json'+queryParams)
