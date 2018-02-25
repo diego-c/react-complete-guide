@@ -1,2 +1,4 @@
 node_modules/
 jsconfig.json
+firebase.json
+.firebaserc
