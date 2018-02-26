@@ -1,0 +1,18 @@
+{
+    "presets": [
+        ["env", {
+          "targets": {
+              "browsers": [
+                  "> 0.5%",
+                  "last 2 versions"
+                ]
+            },
+            "useBuiltIns": "entry"              
+        }],
+        "stage-2",
+        "react"
+    ],
+    "plugins": [
+        "syntax-dynamic-import"
+    ]
+}
