@@ -72,6 +72,53 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./components/User.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _jsxFileName = 'C:\\Users\\diego\\Documents\\react-complete-guide\\section-23\\components\\User.js';
+
+
+/* harmony default export */ __webpack_exports__["a"] = (function (_ref) {
+    var name = _ref.name,
+        age = _ref.age;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        {
+            __source: {
+                fileName: _jsxFileName,
+                lineNumber: 4
+            }
+        },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 5
+                }
+            },
+            'Name: ',
+            name
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 6
+                }
+            },
+            'Age: ',
+            age
+        )
+    );
+});
+
+/***/ }),
+
 /***/ "./pages/auth/index.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -79,9 +126,11 @@ module.exports =
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_next_link__ = __webpack_require__("next/link");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_next_link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_next_link__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_User__ = __webpack_require__("./components/User.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_next_link__ = __webpack_require__("next/link");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_next_link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_next_link__);
 var _jsxFileName = 'C:\\Users\\diego\\Documents\\react-complete-guide\\section-23\\pages\\auth\\index.js';
+
 
 
 
@@ -91,7 +140,7 @@ var _jsxFileName = 'C:\\Users\\diego\\Documents\\react-complete-guide\\section-2
         {
             __source: {
                 fileName: _jsxFileName,
-                lineNumber: 5
+                lineNumber: 6
             }
         },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -99,16 +148,31 @@ var _jsxFileName = 'C:\\Users\\diego\\Documents\\react-complete-guide\\section-2
             {
                 __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 6
+                    lineNumber: 7
                 }
             },
             'Auth page'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_1_next_link___default.a,
+            'h2',
+            {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 8
+                }
+            },
+            'User:'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_User__["a" /* default */], { name: 'Diego', age: 25, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 9
+            }
+        }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_2_next_link___default.a,
             { prefetch: true, href: { pathname: '/' }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 7
+                    lineNumber: 10
                 }
             },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -116,7 +180,7 @@ var _jsxFileName = 'C:\\Users\\diego\\Documents\\react-complete-guide\\section-2
                 {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 8
+                        lineNumber: 11
                     }
                 },
                 'Back home'
