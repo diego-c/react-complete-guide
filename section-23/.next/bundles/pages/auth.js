@@ -10547,7 +10547,7 @@ var _default = function _default() {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./pages/auth/index.js");
@@ -10555,7 +10555,7 @@ module.exports = __webpack_require__("./pages/auth/index.js");
 
 /***/ })
 
-},[3])
+},[4])
           return { page: comp.default }
         })
       ;

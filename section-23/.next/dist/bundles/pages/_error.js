@@ -67,23 +67,85 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 0:
+/***/ "./pages/_error.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_next_link__ = __webpack_require__("next/link");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_next_link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_next_link__);
+var _jsxFileName = 'C:\\Users\\diego\\Documents\\react-complete-guide\\section-23\\pages\\_error.js';
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        {
+            __source: {
+                fileName: _jsxFileName,
+                lineNumber: 5
+            }
+        },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h1',
+            {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 6
+                }
+            },
+            'Sorry, this page doesn\'t exist'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_next_link___default.a,
+            { prefetch: true, href: '/', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 7
+                }
+            },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'a',
+                {
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 7
+                    }
+                },
+                'Go home'
+            )
+        )
+    );
+});
+
+/***/ }),
+
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("C:\\Users\\diego\\Documents\\react-complete-guide\\section-23\\node_modules\\next\\dist\\pages\\_error.js");
+module.exports = __webpack_require__("./pages/_error.js");
 
 
 /***/ }),
 
-/***/ "C:\\Users\\diego\\Documents\\react-complete-guide\\section-23\\node_modules\\next\\dist\\pages\\_error.js":
+/***/ "next/link":
 /***/ (function(module, exports) {
 
-module.exports = require("C:\\Users\\diego\\Documents\\react-complete-guide\\section-23\\node_modules\\next\\dist\\pages\\_error.js");
+module.exports = require("next/link");
+
+/***/ }),
+
+/***/ "react":
+/***/ (function(module, exports) {
+
+module.exports = require("react");
 
 /***/ })
 
